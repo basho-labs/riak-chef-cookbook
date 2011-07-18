@@ -19,18 +19,18 @@
 
 # package.rb
 if (node.riak.package.type.eql?("source"))
-  default.riak.package.prefix = "/usr/local"
-  default.riak.package.config_dir = node.riak.package.prefix + "/riak/etc"
+  node.default.riak.package.prefix = "/usr/local"
+  node.default.riak.package.config_dir = node.riak.package.prefix + "/riak/etc"
 end
 
 # erlang.rb
-default.riak.erlang.node_name = "riak@#{node.ip_address}"
+node.default.riak.erlang.node_name = "riak@#{node.ipaddress}"
 
 # core.rb
 # Make sure the bare minimums are set so the cluster works
 if node.riak.core.to_hash['default_bucket_props'].is_a?(Mash)
-  default.riak.core.default_bucket_props.n_val = 3
-  default.riak.core.default_bucket_props.chash_keyfun = [:riak_core_util, :chash_std_keyfun]
+  node.default.riak.core.default_bucket_props.n_val = 3
+  node.default.riak.core.default_bucket_props.chash_keyfun = [:riak_core_util, :chash_std_keyfun]
 end
 
 # kernel.rb
