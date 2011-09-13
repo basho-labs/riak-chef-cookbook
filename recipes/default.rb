@@ -52,6 +52,11 @@ package_name = package_file.split("[-_]\d+\.").first
 
 if %w{debian ubuntu}.include?(node[:platform])
   include_recipe "riak::iptables"
+  template "/etc/default/riak" do
+    source "riak.default.erb"
+    owner "root"
+    mode 0644
+  end
 end
 
 group "riak"

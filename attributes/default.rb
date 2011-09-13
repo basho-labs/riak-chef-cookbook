@@ -16,6 +16,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
+default.riak.ulimit = "4096"
 
 include_attribute "riak::package"
 include_attribute "riak::core"
