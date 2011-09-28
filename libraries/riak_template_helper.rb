@@ -63,7 +63,7 @@ module RiakTemplateHelper
     riak.reject! {|k,_| RIAK_REMOVE_CONFIGS.include? k }
 
     # Rename sections
-    riak.each do |k,v|
+    riak.dup.each do |k,v|
       next if k.nil?
       if RIAK_TRANSLATE_CONFIGS.include? k
         riak[RIAK_TRANSLATE_CONFIGS[k]] = riak.delete(k)
