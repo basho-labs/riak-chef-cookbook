@@ -29,7 +29,12 @@ else
   base_filename = "riak-#{version_str}.#{node[:riak][:package][:version][:incremental]}"
 
 
-  machines = {"x86_64" => "amd64", "i386" => "i386", "i686" => "i386"}
+  case node[:platform]
+  when "debian","ubuntu"
+    machines = {"x86_64" => "amd64", "i386" => "i386", "i686" => "i386"}
+  when "redhat","centos","scientific","fedora","suse"
+    machines = {"x86_64" => "x86_64", "i386" => "i386", "i686" => "i686"}
+  end
   package_file =  case node[:riak][:package][:type]
                   when "binary"
                     case node[:platform]
@@ -50,9 +55,9 @@ end
 
 package_name = package_file.split("[-_]\d+\.").first
 
-if %w{debian ubuntu}.include?(node[:platform])
-  include_recipe "riak::iptables"
-end
+#if %w{debian ubuntu}.include?(node[:platform])
+#  include_recipe "riak::iptables"
+#end
 
 group "riak"
 
@@ -82,9 +87,9 @@ when "binary"
     source "/tmp/riak_pkg/#{package_file}"
     action :install
     provider value_for_platform(
-                                [ "ubuntu", "debian" ] => {"default" => Chef::Provider::Package::Dpkg},
-                                [ "redhat", "centos", "fedora", "suse" ] => {"default" => Chef::Provider::Package::Rpm}
-                                )
+      [ "ubuntu", "debian" ] => {"default" => Chef::Provider::Package::Dpkg},
+      [ "redhat", "centos", "fedora", "suse" ] => {"default" => Chef::Provider::Package::Rpm}
+    )
   end
 when "source"
   execute "riak-src-unpack" do
@@ -132,6 +137,6 @@ if node[:riak][:package][:type].eql?("binary")
     supports :start => true, :stop => true, :restart => true
     action [ :enable ]
     subscribes :restart, resources(:template => [ "#{node[:riak][:package][:config_dir]}/app.config",
-                                                  "#{node[:riak][:package][:config_dir]}/vm.args" ])
+                                   "#{node[:riak][:package][:config_dir]}/vm.args" ])
   end
 end
