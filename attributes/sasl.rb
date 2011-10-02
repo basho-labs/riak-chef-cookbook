@@ -17,8 +17,9 @@
 # limitations under the License.
 #
 
-default.riak.sasl.sasl_error_logger.file = "/var/log/riak/sasl-error.log"
-default.riak.sasl.errlog_type = :error
-default.riak.sasl.error_logger_mf_dir = "/var/log/riak/sasl"
-default.riak.sasl.error_logger_mf_maxbytes = 10485760
-default.riak.sasl.error_logger_mf_maxfiles = 5
+# default.riak.sasl.sasl_error_logger.file = "/var/log/riak/sasl-error.log"
+# default.riak.sasl.errlog_type = :error
+# default.riak.sasl.error_logger_mf_dir = "/var/log/riak/sasl"
+# default.riak.sasl.error_logger_mf_maxbytes = 10485760
+# default.riak.sasl.error_logger_mf_maxfiles = 5
+default.riak.sasl.sasl_error_logger = :false

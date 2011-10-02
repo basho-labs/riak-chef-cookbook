@@ -24,10 +24,14 @@ if node[:riak][:package][:url]
   package_uri = node[:riak][:package][:url]
   package_file = package_uri.split("/").last
 else
-  version_str = "#{node[:riak][:package][:version][:major]}.#{node[:riak][:package][:version][:minor]}"
+  if node[:riak][:package][:version][:major].to_i < 1
+    version_str = "#{node[:riak][:package][:version][:major]}.#{node[:riak][:package][:version][:minor]}"
+    base_filename = "riak-#{version_str}.#{node[:riak][:package][:version][:incremental]}"
+  else
+    version_str = "#{node[:riak][:package][:version][:major]}.#{node[:riak][:package][:version][:minor]}.#{node[:riak][:package][:version][:incremental]}"
+    base_filename = "riak-#{version_str}"
+  end
   base_uri = "http://downloads.basho.com/riak/riak-#{version_str}/"
-  base_filename = "riak-#{version_str}.#{node[:riak][:package][:version][:incremental]}"
-
 
   case node[:platform]
   when "debian","ubuntu"
@@ -52,6 +56,8 @@ else
                   end
   package_uri = base_uri + package_file
 end
+
+puts package_uri
 
 package_name = package_file.split("[-_]\d+\.").first
 

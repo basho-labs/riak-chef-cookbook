@@ -18,9 +18,9 @@
 #
 
 default.riak.package.type = "binary"
-default.riak.package.version.major = "0"
-default.riak.package.version.minor = "14"
-default.riak.package.version.incremental = "2"
+default.riak.package.version.major = "1"
+default.riak.package.version.minor = "0"
+default.riak.package.version.incremental = "0"
 default.riak.package.version.build = "1"
-default.riak.package.source_checksum = '89da3d10ed0ca47ed9f214b459f3f1fc05f0e8edf85ef716cef99dc3fb9baae6'
+default.riak.package.source_checksum = 'e2abbdeab025e1d7aad58e1213a1614cb48fe7c72c4da9c3924c47406af800a3'
 default.riak.package.config_dir = "/etc/riak"

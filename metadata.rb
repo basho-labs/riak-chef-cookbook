@@ -21,7 +21,7 @@ maintainer        "Basho Technologies, Inc."
 maintainer_email  "riak@basho.com"
 license           "Apache 2.0"
 description       "Installs and configures Riak distributed data store (v0.14.2)"
-version           "0.14.5"
+version           "1.0"
 recipe            "riak", "Installs Riak"
 recipe            "riak::autoconf", "Automatically configure nodes from chef-server information."
 recipe            "riak::innostore", "Install and configure the Innostore backend."
@@ -39,7 +39,7 @@ grouping "riak",
   :description => "Riak is a Dynamo-inspired key/value store"
 
 grouping "riak/package", :title => "Riak package options"
-  
+
 attribute "riak/package/type",
   :display_name => "Package type",
   :description => "Package type for installation (source or binary)",
@@ -49,23 +49,23 @@ attribute "riak/package/type",
 attribute "riak/package/version/major",
   :display_name => "Riak major version",
   :description => "Major version of Riak to install.",
-  :default => "0"
+  :default => "1"
 
 attribute "riak/package/version/minor",
   :display_name => "Riak minor version",
   :description => "Minor version of Riak to install.",
-  :default => "14"
-     
+  :default => "0"
+
 attribute "riak/package/version/incremental",
   :display_name => "Riak incremental version",
   :description => "Incremental release of Riak to install.",
-  :default => "1"
-  
+  :default => "0"
+
 attribute "riak/package/version/build",
   :display_name => "Riak binary package build version",
   :description => "For binary packages, the specific build to use.",
   :default => "1"
-      
+
 attribute "riak/package/prefix",
   :display_name => "Installation prefix",
   :description => "Installation prefix for source installs",
@@ -87,11 +87,11 @@ attribute "riak/kernel/limit_port_range",
   :display_name => "Limit port range",
   :description => "Boolean indicating whether to limit the range of ports used for Erlang node communication.",
   :default => "true"
-  
+
 attribute "riak/kernel/inet_dist_listen_min",
   :display_name => "Minimum port for Erlang node communication",
   :default => "6000"
-  
+
 attribute "riak/kernel/inet_dist_listen_max",
   :display_name => "Maximum port for Erlang node communication",
   :default => "7999"
@@ -100,7 +100,7 @@ attribute "riak/kernel/inet_dist_listen_max",
 # Erlang Configuration components
 #
 grouping "riak/erlang", :title => "Erlang virtual machine configuration"
-        
+
 attribute "riak/erlang/node_name",
   :display_name => "Erlang node name",
   :description => "The name of the Erlang node",
@@ -133,24 +133,24 @@ attribute "riak/erlang/env_vars/ERL_MAX_PORTS",
 attribute "riak/erlang/env_vars/ERL_FULLSWEEP_AFTER",
   :display_name => "How often (in reductions) to run a fullsweep in the garbage collector",
   :default => "0"
-  
+
 #
 # riak-core Configuration components
 #
 grouping "riak/core", :title => "Riak core", :description => "Riak core system configuration"
-      
+
 attribute "riak/core/cluster_name",
   :display_name => "Riak cluster name",
   :default => "default"
 
 attribute "riak/core/default_bucket_props",
   :display_name => "Default bucket properties"
-  
+
 attribute "riak/core/gossip_interval",
   :display_name => "Gossip interval",
   :description => "Gossip interval in milliseconds",
   :default => "60000"
-  
+
 attribute "riak/core/target_n_val",
   :display_name => "Target N",
   :default => "4"
@@ -159,7 +159,7 @@ attribute "riak/core/ring_state_dir",
   :display_name => "Ring state directory",
   :description => "The directory on-disk in which to store the ring state (default: data/ring)",
   :default => "/var/lib/riak/ring"
-  
+
 attribute "riak/core/ring_creation_size",
   :display_name => "Ring creation size",
   :description => "The number of partitions into which to divide the hash space (default: 64)",
@@ -271,7 +271,7 @@ attribute "riak/kv/pb_port",
   :display_name => " Protocol Buffers Client (PBC) port",
   :description => "The port on which Riak's PBC interface should listen",
   :default => "8087"
-    
+
 attribute "riak/kv/storage_backend",
   :display_name => "Storage backend",
   :description => "The module name of the storage backend that Riak should use.",
@@ -285,7 +285,7 @@ attribute "riak/kv/storage_backend",
 attribute "riak/kv/riak_kv_dets_backend_root",
   :display_name => "Data root directory",
   :description => "Directory where the data files will be stored.",
-  :default => "/var/lib/riak/dets"  
+  :default => "/var/lib/riak/dets"
 
 #
 # InnoDB Configuration components
@@ -306,28 +306,28 @@ attribute "riak/innostore/buffer_pool_size",
 attribute "riak/innostore/data_home_dir",
   :display_name => "Data home directory",
   :description => "Directory where the system files will be created. All database directories will also be created relative to this path.  Note: The path must end in a / or \\ depending on the platform.",
-  :default => "/var/lib/riak/innodb"  
+  :default => "/var/lib/riak/innodb"
 
-attribute "riak/innostore/log_group_home_dir",	
+attribute "riak/innostore/log_group_home_dir",
   :display_name => "Log file path",
   :description => "Path to the directory where the log files will be created.",
   :default => "/var/lib/riak/innodb"
 
-attribute "riak/innostore/log_buffer_size",	
+attribute "riak/innostore/log_buffer_size",
   :display_name => "Log buffer size",
   :description => "Size of the in-memory log buffer in bytes.",
   :default => "8388608"
 
-attribute "riak/innostore/log_files_in_group",	
+attribute "riak/innostore/log_files_in_group",
   :display_name => "Log files in group",
   :default => "8"
 
-attribute "riak/innostore/log_file_size",	
+attribute "riak/innostore/log_file_size",
   :display_name => "Log file size",
   :description => "Log file size in bytes.",
   :default => "268435456"
 
-attribute "riak/innostore/flush_log_at_trx_commit",	
+attribute "riak/innostore/flush_log_at_trx_commit",
   :display_name => "Log flush policy",
   :description => "This variable can be set to 0, 1 or 2.\n
                    0 - Force sync of log contents to disk once every second.\n
@@ -357,7 +357,7 @@ attribute "riak/bitcask/max_file_size",
   :display_name => "Maximum file size",
   :description => "Maximum size for a single Bitcask cask file.",
   :default => "2147483648"
-  
+
 # * none          - let the O/S decide
 # * o_sync        - use the O_SYNC flag to sync each write
 # * {seconds, N}  - call bitcask:sync/1 every N seconds
@@ -365,32 +365,32 @@ attribute "riak/bitcask/sync_strategy",
   :display_name => "Sync strategy",
   :description => "Sync strategy is one of: :none (let the OS decide), :o_sync, or {:seconds => N} (which requires application support)",
   :default => "none"
-  
+
 # Merge trigger variables. Files exceeding ANY of these
 # values will cause bitcask:needs_merge/1 to return true.
 attribute "riak/bitcask/frag_merge_trigger",
   :display_name => "Fragment merge trigger",
   :default => "60"
-  
+
 attribute "riak/bitcask/dead_bytes_merge_trigger",
   :display_name => "Dead bytes merge trigger",
   :default => "536870912"
-  
+
 # Merge thresholds. Files exceeding ANY of these values
 # will be included in the list of files marked for merging
 # by bitcask:needs_merge/1.
 attribute "riak/bitcask/frag_threshold",
   :display_name => "Fragment threshold",
   :default => "40"
-  
+
 attribute "riak/bitcask/dead_bytes_threshold",
   :display_name => "Dead bytes threshold",
   :default => "134217728"
-  
+
 attribute "riak/bitcask/small_file_threshold",
   :display_name => "Small file threshold",
   :default => "10485760"
-  
+
 attribute "riak/bitcask/expiry_secs",
   :display_name => "Data expiration threshold, in seconds",
   :description => "Data expiration can be caused by setting this to a positive value.  If set, items older than the value will be discarded.",
@@ -422,22 +422,72 @@ attribute "riak/luwak/enabled", :display_name => "Enable luwak", :default => "fa
 #
 grouping "riak/sasl", :title => "Erlang sasl configuration"
 
-attribute "riak/sasl/sasl_error_logger/file",
-  :display_name => "File that Riak will log errors to.",
-  :default => "/var/log/riak/sasl-error.log"
+attribute "riak/sasl/sasl_error_logger",
+  :display_name => "Enable SASL error logger",
+  :default => "false"
 
-attribute "riak/sasl/errlog_type",
-  :display_name => "Types of errors logged by sasl.",
-  :default => "error"
+# attribute "riak/sasl/sasl_error_logger/file",
+#   :display_name => "File that Riak will log errors to.",
+#   :default => "/var/log/riak/sasl-error.log"
 
-attribute "riak/sasl/error_logger_mf_dir",
-  :display_name => "Directory where structured sasl reports are stored.",
-  :default => "/var/log/riak/sasl"
+# attribute "riak/sasl/errlog_type",
+#   :display_name => "Types of errors logged by sasl.",
+#   :default => "error"
 
-attribute "riak/sasl/error_logger_mf_maxbytes",
-  :display_name => "Maximum size of any sasl db file.",
-  :default => "10485760"
+# attribute "riak/sasl/error_logger_mf_dir",
+#   :display_name => "Directory where structured sasl reports are stored.",
+#   :default => "/var/log/riak/sasl"
 
-attribute "riak/sasl/error_logger_mf_maxfiles",
-  :display_name => "Maximum number of sasl db files.",
-  :default => "5"
+# attribute "riak/sasl/error_logger_mf_maxbytes",
+#   :display_name => "Maximum size of any sasl db file.",
+#   :default => "10485760"
+
+# attribute "riak/sasl/error_logger_mf_maxfiles",
+#   :display_name => "Maximum number of sasl db files.",
+#   :default => "5"
+
+grouping "riak/riak_search", :title => "Riak Search configuration"
+
+attribute "riak/riak_search/enabled", :display_name => "Enable Riak Search", :default => "false"
+
+grouping "riak/merge_index", :title => "Merge Index configuration"
+
+attribute "riak/merge_index/data_root", :display_name => "The root dir to store search merge_index data", :default => "/var/lib/riak/merge_index"
+
+attribute "riak/merge_index/data_root_2i", :display_name => "The root dir to store secondary index merge_index data", :default => "/var/lib/riak/merge_index_2i"
+
+attribute "riak/merge_index/buffer_rollover_size", :display_name => "Size, in bytes, of the in-memory buffer. When this threshold has been reached the data is transformed into a segment file which resides on disk", :default => "1048576"
+
+attribute "riak/merge_index/max_compact_segments", :display_name => "Overtime the segment files need to be compacted. This is the maximum number of segments that will be compacted at once.  A lower value will lead to quicker but more frequent compactions.", :default => "20"
+
+grouping "riak/eleveldb", :title => "eLevelDB configuration"
+
+attribute "riak/eleveldb/data_root", :display_name => "LevelDB data root", :default => "/var/lib/riak/leveldb"
+
+grouping "riak/lager", :title => "Lager logfile configuration"
+
+attribute "riak/lager/handlers/lager_console_backend", :display_name => "Lager console backend", :default => "info"
+
+attribute "riak/lager/handlers/lager_file_backend", :display_name => "Lager file backend", :default => " [[\"/var/log/riak/error.log\", :error, 10485760, \"$D0\", 5],[\"/var/log/riak/console.log\", :info, 10485760, \"$D0\", 5]]"
+
+attribute "riak/lager/crash_log", :display_name => "Whether to write a crash log, and where. Commented/omitted/undefined means no crash logger.", :default => "/var/log/riak/crash.log"
+
+attribute "riak/lager/crash_log_msg_size", :display_name => "Maximum size in bytes of events in the crash log - defaults to 65536", :default => "65536"
+
+attribute "riak/lager/crash_log_size", :display_name => "Maximum size of the crash log in bytes, before its rotated, set to 0 to disable rotation - default is 0", :default => "10485760"
+
+attribute "riak/lager/crash_log_date", :display_name => "What time to rotate the crash log - default is no time rotation. See the lager README for a description of this format: https://github.com/basho/lager/blob/master/README.org", :default => "$D0"
+
+attribute "riak/lager/crash_log_count", :display_name => "Number of rotated crash logs to keep, 0 means keep only the current one - default is 0", :default => "5"
+
+attribute "riak/lager/error_logger_redirect", :display_name => "Whether to redirect error_logger messages into lager - defaults to true", :default => "true"
+
+grouping "riak/riak_sysmon", :title => "riak_sysmon configuration"
+
+attribute "riak/riak_sysmon/process_limit", :display_name => "Process limit", :default => "30"
+
+attribute "riak/riak_sysmon/port_limit", :display_name => "Port limit", :default => "30"
+
+attribute "riak/riak_sysmon/gc_ms_limit", :display_name => "gc_ms_limit", :default => "50"
+
+attribute "riak/riak_sysmon/heap_word_limit", :display_name => "Heap word limit", :default => "10485760"
