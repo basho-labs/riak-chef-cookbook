@@ -21,7 +21,7 @@ maintainer        "Basho Technologies, Inc."
 maintainer_email  "riak@basho.com"
 license           "Apache 2.0"
 description       "Installs and configures Riak distributed data store (v0.14.2)"
-version           "1.0"
+version           "1.0.0"
 recipe            "riak", "Installs Riak"
 recipe            "riak::autoconf", "Automatically configure nodes from chef-server information."
 recipe            "riak::innostore", "Install and configure the Innostore backend."
@@ -70,10 +70,6 @@ attribute "riak/package/prefix",
   :display_name => "Installation prefix",
   :description => "Installation prefix for source installs",
   :default => "/usr/local"
-
-attribute "riak/package/source_checksum",
-  :display_name => "Checksum of the package (source or binary).",
-  :description => "SHA256 checksum of the package file. Defaults to checksum of Debian/64-bit package."
 
 attribute "riak/package/config_dir",
   :display_name => "Riak configuration directory.",
