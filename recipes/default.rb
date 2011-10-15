@@ -82,7 +82,7 @@ remote_file "#{Chef::Config[:file_cache_path]}/#{package_file}" do
   source package_uri
   owner "root"
   mode 0644
-  checksum { File.new("#{Chef::Config[:file_cache_path]}/#{package_file}.sha", 'r').read() }
+  checksum { File.read("#{Chef::Config[:file_cache_path]}/#{package_file}.sha") }
 end
 
 case node[:riak][:package][:type]
