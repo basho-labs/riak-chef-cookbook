@@ -422,26 +422,6 @@ attribute "riak/sasl/sasl_error_logger",
   :display_name => "Enable SASL error logger",
   :default => "false"
 
-# attribute "riak/sasl/sasl_error_logger/file",
-#   :display_name => "File that Riak will log errors to.",
-#   :default => "/var/log/riak/sasl-error.log"
-
-# attribute "riak/sasl/errlog_type",
-#   :display_name => "Types of errors logged by sasl.",
-#   :default => "error"
-
-# attribute "riak/sasl/error_logger_mf_dir",
-#   :display_name => "Directory where structured sasl reports are stored.",
-#   :default => "/var/log/riak/sasl"
-
-# attribute "riak/sasl/error_logger_mf_maxbytes",
-#   :display_name => "Maximum size of any sasl db file.",
-#   :default => "10485760"
-
-# attribute "riak/sasl/error_logger_mf_maxfiles",
-#   :display_name => "Maximum number of sasl db files.",
-#   :default => "5"
-
 grouping "riak/riak_search", :title => "Riak Search configuration"
 
 attribute "riak/riak_search/enabled", :display_name => "Enable Riak Search", :default => "false"
@@ -449,8 +429,6 @@ attribute "riak/riak_search/enabled", :display_name => "Enable Riak Search", :de
 grouping "riak/merge_index", :title => "Merge Index configuration"
 
 attribute "riak/merge_index/data_root", :display_name => "The root dir to store search merge_index data", :default => "/var/lib/riak/merge_index"
-
-attribute "riak/merge_index/data_root_2i", :display_name => "The root dir to store secondary index merge_index data", :default => "/var/lib/riak/merge_index_2i"
 
 attribute "riak/merge_index/buffer_rollover_size", :display_name => "Size, in bytes, of the in-memory buffer. When this threshold has been reached the data is transformed into a segment file which resides on disk", :default => "1048576"
 
