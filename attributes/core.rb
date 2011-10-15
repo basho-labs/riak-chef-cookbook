@@ -17,8 +17,7 @@
 # limitations under the License.
 #
 
-# doesn't have any effect?
-#default.riak.core.cluster_name = "default"
+default.riak.core.cluster_name = "default"
 default.riak.core.http = [["127.0.0.1",8098]]
 default.riak.core.ring_state_dir = "/var/lib/riak/ring"
 default.riak.core.handoff_port = 8099
