@@ -18,8 +18,8 @@
 #
 
 # only for mapred_system = :legacy
-# default.riak.kv.mapred_queue_dir = "/var/lib/riak/mr_queue"
-#default.riak.kv.mapper_batch_size = 5
+default.riak.kv.mapred_queue_dir = "/var/lib/riak/mr_queue"
+default.riak.kv.mapper_batch_size = 5
 
 default.riak.kv.map_js_vm_count = 8
 default.riak.kv.reduce_js_vm_count = 6
