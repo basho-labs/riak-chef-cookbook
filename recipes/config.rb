@@ -43,7 +43,7 @@ end
 node.riak.kv.storage_backend = (node.riak.kv.storage_backend).to_s.to_sym
 
 # sasl.rb
-node.riak.sasl.errlog_type = (node.riak.sasl.errlog_type).to_s.to_sym
+node.riak.sasl.sasl_error_logger = (node.riak.sasl.sasl_error_logger).to_s.to_sym
 
 case node.riak.kv.storage_backend
 when :riak_kv_bitcask_backend # bitcask.rb

@@ -24,10 +24,14 @@ if node[:riak][:package][:url]
   package_uri = node[:riak][:package][:url]
   package_file = package_uri.split("/").last
 else
-  version_str = "#{node[:riak][:package][:version][:major]}.#{node[:riak][:package][:version][:minor]}"
+  if node[:riak][:package][:version][:major].to_i < 1
+    version_str = "#{node[:riak][:package][:version][:major]}.#{node[:riak][:package][:version][:minor]}"
+    base_filename = "riak-#{version_str}.#{node[:riak][:package][:version][:incremental]}"
+  else
+    version_str = "#{node[:riak][:package][:version][:major]}.#{node[:riak][:package][:version][:minor]}.#{node[:riak][:package][:version][:incremental]}"
+    base_filename = "riak-#{version_str}"
+  end
   base_uri = "http://downloads.basho.com/riak/riak-#{version_str}/"
-  base_filename = "riak-#{version_str}.#{node[:riak][:package][:version][:incremental]}"
-
 
   case node[:platform]
   when "debian","ubuntu"
@@ -68,23 +72,23 @@ user "riak" do
   system true
 end
 
-directory "/tmp/riak_pkg" do
+remote_file "#{Chef::Config[:file_cache_path]}/#{package_file}.sha" do
+  source "#{package_uri}.sha"
   owner "root"
-  mode 0755
-  action :create
+  mode 0644
 end
 
-remote_file "/tmp/riak_pkg/#{package_file}" do
+remote_file "#{Chef::Config[:file_cache_path]}/#{package_file}" do
   source package_uri
   owner "root"
   mode 0644
-  checksum node[:riak][:package][:source_checksum]
+  checksum { File.read("#{Chef::Config[:file_cache_path]}/#{package_file}.sha") }
 end
 
 case node[:riak][:package][:type]
 when "binary"
   package package_name do
-    source "/tmp/riak_pkg/#{package_file}"
+    source "#{Chef::Config[:file_cache_path]}/#{package_file}"
     action :install
     provider value_for_platform(
       [ "ubuntu", "debian" ] => {"default" => Chef::Provider::Package::Dpkg},
@@ -93,17 +97,17 @@ when "binary"
   end
 when "source"
   execute "riak-src-unpack" do
-    cwd "/tmp/riak_pkg"
+    cwd "#{Chef::Config[:file_cache_path]}"
     command "tar xvfz #{package_file}"
   end
 
   execute "riak-src-build" do
-    cwd "/tmp/riak_pkg/#{base_filename}"
+    cwd "#{Chef::Config[:file_cache_path]}/#{base_filename}"
     command "make clean all rel"
   end
 
   execute "riak-src-install" do
-    command "mv /tmp/riak_pkg/#{base_filename}/rel/riak #{node[:riak][:package][:prefix]}"
+    command "mv #{Chef::Config[:file_cache_path]}/#{base_filename}/rel/riak #{node[:riak][:package][:prefix]}"
     not_if { File.directory?("#{node[:riak][:package][:prefix]}/riak") }
   end
 end

@@ -17,6 +17,7 @@
 # limitations under the License.
 #
 require 'delegate'
+require 'pp'
 module RiakTemplateHelper
   class Tuple < DelegateClass(Array)
     include RiakTemplateHelper
@@ -52,7 +53,9 @@ module RiakTemplateHelper
   RIAK_TRANSLATE_CONFIGS = {
     'core' => 'riak_core',
     'kv' => 'riak_kv',
-    'err' => 'riak_err'
+    'err' => 'riak_err',
+    'search' => 'riak_search',
+    'sysmon' => 'riak_sysmon'
   }
 
   def prepare_app_config(riak)
@@ -77,6 +80,10 @@ module RiakTemplateHelper
       riak.delete 'kernel'
     end
 
+    riak['riak_search']['enabled'] = riak['riak_search']['enabled'].to_s.to_sym
+
+    riak['sasl'].delete('errlog_type')
+
     # Select the backend configuration
     riak['riak_kv']['storage_backend'] = riak['riak_kv']['storage_backend'].to_sym
     case riak['riak_kv']['storage_backend']
@@ -92,11 +99,12 @@ module RiakTemplateHelper
     end
 
     # Tuple-ize appropriate settings
-    riak['sasl']['sasl_error_logger'] = Tuple.new([:file, riak['sasl']['sasl_error_logger']['file']])
 
     riak['riak_core']['default_bucket_props']['chash_keyfun'] = Tuple.new(riak['riak_core']['default_bucket_props']['chash_keyfun'].map {|i| i.to_sym }) if riak['riak_core']['default_bucket_props'] && riak['riak_core']['default_bucket_props']['chash_keyfun']
 
     riak['riak_core']['default_bucket_props']['linkfun'] = Tuple.new(riak['riak_core']['default_bucket_props']['linkfun'].map {|i| i.to_sym }) if riak['riak_core']['default_bucket_props'] && riak['riak_core']['default_bucket_props']['linkfun']
+
+    riak['lager']['handlers']['lager_file_backend'] = riak['lager']['handlers']['lager_file_backend'].map{|loc,level,size,date,count| Tuple.new([loc,level,size,date,count])}
 
     allifs = lambda {|pair| pair[0] == "0.0.0.0" }
     %w{http https}.each do |protocol|
