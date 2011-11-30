@@ -68,7 +68,7 @@ A number of Erlang parameters may be configured through the cookbook.  The node 
 	node[:riak][:erlang][:async_threads] = 64
 	node[:riak][:erlang][:smp] = ("enable" | "disable")
 	node[:riak][:erlang][:env_vars][:ERL_MAX_PORTS] = 4096
-        node[:riak][:erlang][:env_vars][:ERL_FULLSWEEP_AFTER] = 10
+    node[:riak][:erlang][:env_vars][:ERL_FULLSWEEP_AFTER] = 10
 
 
 Storage Backends
@@ -100,7 +100,7 @@ DETS
 DETS is the default storage backend for Riak.  It's very simple to setup, only requiring a path where it should store data files.  However, for production use Innostore and Bitcask are better choices.
 
 	node[:riak][:kv][:riak_kv_dets_backend_root] = "/var/lib/riak/dets"
-\
+	
 
 Innostore
 ---------
