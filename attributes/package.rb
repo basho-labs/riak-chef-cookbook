@@ -18,8 +18,8 @@
 #
 
 default.riak.package.type = "binary"
-default.riak.package.version.major = "1.0"
-default.riak.package.version.minor = "2"
+default.riak.package.version.major = "1"
+default.riak.package.version.minor = "0"
 default.riak.package.version.incremental = "2"
 default.riak.package.version.build = "1"
 default.riak.package.source_checksum = '0ecad33a37b17457bd275272f2a964eacd6e656fee7365aa369814dd46ddff85'
