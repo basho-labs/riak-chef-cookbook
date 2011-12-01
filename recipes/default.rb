@@ -24,8 +24,8 @@ if node[:riak][:package][:url]
   package_uri = node[:riak][:package][:url]
   package_file = package_uri.split("/").last
 else
-  version_str = "#{node[:riak][:package][:version][:major]}.#{node[:riak][:package][:version][:minor]}.#{node[:riak][:package][:version][:incremental]}"
-  base_uri = "http://downloads.basho.com/riak/riak-#{version_str}/"
+  version_str = "#{node[:riak][:package][:version][:major]}.#{node[:riak][:package][:version][:minor]}"
+  base_uri = "http://downloads.basho.com/riak/riak-#{version_str}.#{node[:riak][:package][:version][:incremental]}/"
   base_filename = "riak-#{version_str}.#{node[:riak][:package][:version][:incremental]}"
 
 
