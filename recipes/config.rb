@@ -42,6 +42,7 @@ end
 # kv.rb
 node.riak.kv.storage_backend = (node.riak.kv.storage_backend).to_s.to_sym
 
+#riak control item. 
 node.riak.riak_control.auth  = (node.riak.riak_control.auth).to_s.to_sym
 
 # sasl.rb

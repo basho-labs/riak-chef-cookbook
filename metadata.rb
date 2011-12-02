@@ -31,6 +31,7 @@ depends           "iptables"
 %w{ubuntu debian}.each do |os|
   supports os
 end
+
 #
 # Global Configuration components
 #
