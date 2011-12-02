@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 #
 # Author:: Sean Carey (<densone@basho.com>)
 # Cookbook Name:: riak

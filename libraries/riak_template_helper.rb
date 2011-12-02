@@ -91,7 +91,6 @@ module RiakTemplateHelper
       riak.delete('bitcask')
     end
 
-     #riak['riak_control']['userlist'] = Tuple.new(['userlist', riak['riak_control']['userlist']])
     riak['riak_core']['default_bucket_props']['chash_keyfun'] = Tuple.new(riak['riak_core']['default_bucket_props']['chash_keyfun'].map {|i| i.to_sym }) if riak['riak_core']['default_bucket_props'] && riak['riak_core']['default_bucket_props']['chash_keyfun']
 
     riak['riak_core']['default_bucket_props']['linkfun'] = Tuple.new(riak['riak_core']['default_bucket_props']['linkfun'].map {|i| i.to_sym }) if riak['riak_core']['default_bucket_props'] && riak['riak_core']['default_bucket_props']['linkfun']
@@ -121,6 +120,7 @@ module RiakTemplateHelper
     "heart" => "-heart",
     "kernel_polling" => "+K",
     "async_threads" => "+A",
+    "error_logger_warnings" => "+W",
     "smp" => "-smp",
     "env_vars" => "-env"
   }
