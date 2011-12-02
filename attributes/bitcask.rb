@@ -17,15 +17,6 @@
 # limitations under the License.
 #
 
-default.riak.bitcask.data_root = "/var/lib/riak/bitcask"
-default.riak.bitcask.max_file_size = 2147483648
-default.riak.bitcask.open_timeout = 4
-# Sync strategy is one of: :none, :o_sync, {:seconds => N}
 default.riak.bitcask.sync_strategy = :none
-default.riak.bitcask.frag_merge_trigger = 60
-default.riak.bitcask.dead_bytes_merge_trigger = 536870912
-default.riak.bitcask.frag_threshold = 40
-default.riak.bitcask.dead_bytes_threshold = 134217728
-default.riak.bitcask.small_file_threshold = 10485760
-default.riak.bitcask.expiry_secs = -1
+default.riak.bitcask.data_root = "/var/lib/riak/bitcask"
 

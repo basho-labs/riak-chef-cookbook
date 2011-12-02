@@ -17,18 +17,21 @@
 # limitations under the License.
 #
 
-
 default.riak.kv.mapred_queue_dir = "/var/lib/riak/mr_queue"
-default.riak.kv.mapper_batch_size = 5
+default.riak.kv.mapred_name = "mapred"
+default.riak.kv.mapred_system = "pipe"
+default.riak.kv.mapred_2i_pipe = true
 default.riak.kv.map_js_vm_count = 8
 default.riak.kv.reduce_js_vm_count = 6
 default.riak.kv.hook_js_vm_count = 2
 default.riak.kv.js_max_vm_mem = 8
 default.riak.kv.js_thread_stack = 16
-default.riak.kv.mapred_name = "mapred"
+default.riak.kv.http_url_encoding = "on"
 default.riak.kv.raw_name = "riak"
 default.riak.kv.riak_kv_stat = true
-default.riak.kv.stats_urlpath = "stats"
+default.riak.kv.legacy_stats = true
+default.riak.kv.vnode_vclocks = true
+default.riak.kv.legacy_keylisting = false
 default.riak.kv.pb_ip = "127.0.0.1"
 default.riak.kv.pb_port = 8087
 default.riak.kv.storage_backend = :riak_kv_bitcask_backend
