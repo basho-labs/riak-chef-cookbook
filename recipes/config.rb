@@ -48,9 +48,6 @@ node.riak.lager.handlers.lager_console_backend = (node.riak.lager.handlers.lager
 # kv.rb
 node.riak.kv.storage_backend = (node.riak.kv.storage_backend).to_s.to_sym
 
-#riak control item. 
-node.riak.riak_control.auth  = (node.riak.riak_control.auth).to_s.to_sym
-
 # sasl.rb
 node.riak.sasl.errlog_type = (node.riak.sasl.errlog_type).to_s.to_sym
 
