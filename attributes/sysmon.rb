@@ -2,7 +2,7 @@
 # Author:: Sean Carey (<densone@basho.com>)
 # Cookbook Name:: riak
 #
-# Copyright (c) 2010 Basho Technologies, Inc.
+# Copyright (c) 2011 Basho Technologies, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -18,7 +18,7 @@
 #
 
 
-default.riak.riak_control.enabled = false
-default.riak.riak_control.admin = true
-default.riak.riak_control.auth = :userlist
-default.riak.riak_control.userlist.admin = 'password'
+default.riak.riak_sysmon.process_limit = 30 
+default.riak.riak_sysmon.port_limit = 30 
+default.riak.riak_sysmon.gc_ms_limit = 50 
+default.riak.riak_sysmon.heap_word_limit = 10485760
