@@ -1,5 +1,5 @@
 #
-# Author:: Benjamin Black (<b@b3k.us>) and Sean Cribbs (<sean@basho.com>)
+# Author:: Sean Carey (<densone@basho.com>)
 # Cookbook Name:: riak
 #
 # Copyright (c) 2010 Basho Technologies, Inc.
@@ -18,8 +18,7 @@
 #
 
 
-default.riak.sasl.sasl_error_logger = false
-default.riak.sasl.errlog_type = :error
-default.riak.sasl.error_logger_mf_dir = "/var/log/riak/sasl"
-default.riak.sasl.error_logger_mf_maxbytes = 10485760
-default.riak.sasl.error_logger_mf_maxfiles = 5
+default.riak.riak_control.enabled = false
+default.riak.riak_control.admin = true
+default.riak.riak_control.auth = "userlist"
+default.riak.riak_control.userlist = "admin"
