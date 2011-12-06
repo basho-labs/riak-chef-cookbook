@@ -79,6 +79,7 @@ remote_file "/tmp/riak_pkg/#{package_file}" do
   owner "root"
   mode 0644
   checksum node[:riak][:package][:source_checksum]
+  not_if { File.exists?("/tmp/riak_pkg/#{package_file}") }
 end
 
 case node[:riak][:package][:type]
