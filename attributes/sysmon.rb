@@ -17,7 +17,6 @@
 # limitations under the License.
 #
 
-
 default.riak.riak_sysmon.process_limit = 30 
 default.riak.riak_sysmon.port_limit = 30 
 default.riak.riak_sysmon.gc_ms_limit = 50 

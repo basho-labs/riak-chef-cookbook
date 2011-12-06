@@ -44,7 +44,8 @@ module RiakTemplateHelper
     parent_padding = '    ' * (depth-1)
     values = hash.map do |k,v|
       if KEYLESS_ATTRIBUTES.include?(k)
-        "{" << v.map {|i| "#{value_to_erlang(i, depth)}"}.join(", ") << "}"
+        #We make the assumption that all KEYLESS_ATTRIBUTES are arrays. 
+        Tuple.new(v)
       else
         "{#{k}, #{value_to_erlang(v, depth)}}"
       end
@@ -59,7 +60,6 @@ module RiakTemplateHelper
   
   #Remove these configs. This will make sure package and erlang vms are not processed into the riak app.config. 
   RIAK_REMOVE_CONFIGS = ['package', 'erlang']
-  
   
   RIAK_TRANSLATE_CONFIGS = {
     'core' => 'riak_core',
