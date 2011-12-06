@@ -31,7 +31,7 @@ module RiakTemplateHelper
       to_erlang_config(v, depth+1)
     when String
       "\"#{v}\""
-    when Array
+    when Array 
       "[" << v.map {|i| value_to_erlang(i) }.join(", ") << "]"
     else
       v.to_s
@@ -43,12 +43,24 @@ module RiakTemplateHelper
     padding = '    ' * depth
     parent_padding = '    ' * (depth-1)
     values = hash.map do |k,v|
-      "{#{k}, #{value_to_erlang(v, depth)}}"
+      if KEYLESS_ATTRIBUTES.include?(k)
+        "{" << v.map {|i| "#{value_to_erlang(i, depth)}"}.join(", ") << "}"
+      else
+        "{#{k}, #{value_to_erlang(v, depth)}}"
+      end
     end.join(",\n#{padding}")
     "[\n#{padding}#{values}\n#{parent_padding}]"
   end
-
+  
+  #There are several configurations that are not key/value. They should be added to KEYLESS_ATTRIBUTES. 
+  #A sample of this wold be the lager configuration. 
+  #{"{{platform_log_dir}}/error.log", error, 10485760, "$D0", 5}
+  KEYLESS_ATTRIBUTES = ['lager_error_log','lager_console_log']
+  
+  #Remove these configs. This will make sure package and erlang vms are not processed into the riak app.config. 
   RIAK_REMOVE_CONFIGS = ['package', 'erlang']
+  
+  
   RIAK_TRANSLATE_CONFIGS = {
     'core' => 'riak_core',
     'kv' => 'riak_kv',
@@ -124,7 +136,7 @@ module RiakTemplateHelper
     "smp" => "-smp",
     "env_vars" => "-env"
   }
-
+    
   def prepare_vm_args(config)
     config.map do |k,v|
       key = RIAK_VM_ARGS[k.to_s]

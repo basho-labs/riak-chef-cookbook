@@ -39,11 +39,6 @@ unless node.riak.kernel.limit_port_range
   node.riak.kernel.delete(:inet_dist_listen_max)
 end
 
-#erlang error logger warnings
-node.riak.erlang.error_logger_warnings = (node.riak.erlang.error_logger_warnings).to_s.to_sym
-
-# lager. rb 
-node.riak.lager.handlers.lager_console_backend = (node.riak.lager.handlers.lager_console_backend).to_s.to_sym
 
 # kv.rb
 node.riak.kv.storage_backend = (node.riak.kv.storage_backend).to_s.to_sym

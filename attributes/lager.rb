@@ -23,20 +23,8 @@ default.riak.lager.crash_log_date = "$D0"
 default.riak.lager.crash_log_msg_size = 65536
 default.riak.lager.crash_log_size = 10485760
 default.riak.lager.error_logger_redirect = true 
-default.riak.lager.handlers.lagerfile_backend = 
 
-#Lager Error Log Params 
-default.riak.lager.handlers.error_log.name = "/var/log/riak/error.log"
-default.riak.lager.handlers.error_log.type = :error
-default.riak.lager.handlers.error_log.size = 10485760
-default.riak.lager.handlers.error_log.date_format = "$D0"
-default.riak.lager.handlers.error_log.rotate_every = 5
-
-#Lager Console Log Params. 
-default.riak.lager.handlers.console_log = "/var/log/riak/error.log"
-default.riak.lager.handlers.console_log.type = :console
-default.riak.lager.handlers.console_log.size = 10485760
-default.riak.lager.handlers.console_log.date_format = "$D0"
-default.riak.lager.handlers.console_log.rotate_every = 5  
-
-
+#The following two attributes are KEYLESS.
+#They hold these values:[NAME,LOG_LEVEL,SIZE,DATE_FORMAT,ROTATION_TO_KEEP]
+default.riak.lager.handlers.lager_file_backend.lager_error_log = ["/var/log/riak/error.log", :error, 10485760, "$D0", 5]
+default.riak.lager.handlers.lager_file_backend.lager_console_log = ["/var/log/riak/console.log", :info, 10485760, "$D0", 5]
