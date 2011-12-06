@@ -17,14 +17,6 @@
 # limitations under the License.
 #
 
-default.riak.core.http = [["127.0.0.1",8098]]
-default.riak.core.ring_state_dir = "/var/lib/riak/ring"
-default.riak.core.handoff_port = 8099
-default.riak.core.cluster_name = "default"
-default.riak.core.platform_bin_dir = "/usr/sbin"
-default.riak.core.platform_etc_dir = "/etc/riak"
-default.riak.core.platform_data_dir = "/var/lib/riak"
-
 case node[:platform]
 
 when "debian","ubuntu"
@@ -35,4 +27,14 @@ when "redhat","centos","scientific","fedora","suse"
   else 
     default.riak.core.platform_lib_dir = "/usr/lib/riak"
   end
+else
+  default.riak.core.platform_lib_dir = "/usr/lib/riak"
 end
+
+default.riak.core.http = [["127.0.0.1",8098]]
+default.riak.core.ring_state_dir = "/var/lib/riak/ring"
+default.riak.core.handoff_port = 8099
+default.riak.core.cluster_name = "default"
+default.riak.core.platform_bin_dir = "/usr/sbin"
+default.riak.core.platform_etc_dir = "/etc/riak"
+default.riak.core.platform_data_dir = "/var/lib/riak"
