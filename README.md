@@ -16,7 +16,7 @@ The Riak cookbook can be used just by adding "riak" to the runlist for a node.  
 Package Installation
 --------------------
 
-There are two options for package installation: source and binary.  If you are using a RedHat or Debian/Ubuntu system, binary installation is recommended and is the default.  If you choose to do a source installation, be sure you are using Erlang/OTP R13B04 or later.
+There are two options for package installation: source and binary.  If you are using a RedHat or Debian/Ubuntu system, binary installation is recommended and is the default.  If you choose to do a source installation, be sure you are using Erlang/OTP R14B02 or later.
 
 The package parameters available are version, type and, optionally for source installation, an install prefix:
 
