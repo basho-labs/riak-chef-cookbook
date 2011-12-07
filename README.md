@@ -143,7 +143,7 @@ Sysmon monitors riaks gc process and logs relevant information to the status of 
 Index Merge
 -----------
 	node[:riak][:merge_index][:data_root] = "/var/lib/riak/merge_index"
-	node[:riak][:merge_index][:data_roor_2i] = "/var/lib/riak/merge_index_2i"
+	node[:riak][:merge_index][:data_root_2i] = "/var/lib/riak/merge_index_2i"
 	node[:riak][:merge_index][:buffer_rollover_size] = 1048576
 	node[:riak][:merge_index][:max_compact_segments] = 20
 	
