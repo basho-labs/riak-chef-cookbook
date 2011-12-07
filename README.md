@@ -118,20 +118,36 @@ Innostore is an Erlang wrapper around embedded InnoDB, a transactional storage e
 Lager 
 -----
 
-Lager is the logging framework used within Riak.
+[Lager][3] is the logging framework used within Riak. It can also be used with erlang/OTP. 
 
-	default.riak.lager.handlers.lager_console_backend = :info
-	default.riak.lager.crash_log = "/var/log/riak/crash.log"
-	default.riak.lager.crash_log_date = "$D0"
-	default.riak.lager.crash_log_msg_size = 65536
-	default.riak.lager.crash_log_size = 10485760
-	default.riak.lager.error_logger_redirect = true 
 
-	#The following two attributes are KEYLESS.
-	#They hold these values:[NAME,LOG_LEVEL,SIZE,DATE_FORMAT,ROTATION_TO_KEEP]
-	default.riak.lager.handlers.lager_file_backend.lager_error_log = ["/var/log/riak/error.log", :error, 10485760, "$D0", 5]
-	default.riak.lager.handlers.lager_file_backend.lager_console_log = ["/var/log/riak/console.log", :info, 10485760, "$D0", 5]
+    node[:riak][:lager][:handlers][:lager_console_backend]= :info
+	node[:riak][:lager][:crash_log] = "/var/log/riak/crash.log"
+	node[:riak][:lager][:crash_log_date] = "$D0"
+	node[:riak][:lager][:crash_log_msg_size]  = 65536
+	node[:riak][:lager][:crash_log_size] = 10485760
+	node[:riak][:lager][:error_logger_redirect] = true
+	node[:riak][:lager][:handlers][:lager_file_backend][:lager_error_log] =  ["/var/log/riak/error.log", :error, 10485760, "$D0", 5]
+	node[:riak][:lager][:handlers][:lager_file_backend][:lager_console_log] = ["/var/log/riak/console.log", :info, 10485760, "$D0", 5]
+
+Sysmon 
+------
+
+Sysmon monitors riaks gc process and logs relevant information to the status of garbage collection.
+
+	node[:riak][:sysmon][:process_limit] = 30
+	node[:riak][:sysmon][:port_limit] = 30
+	node[:riak][:sysmon][:gc_ms_limit] = 50 #if gc takes longer than 50ms. Spam the log. 
+	node[:riak][:sysmon][:heap_word_limit] = 10485760
+	
+Index Merge
+-----------
+	node[:riak][:merge_index][:data_root] = "/var/lib/riak/merge_index"
+	node[:riak][:merge_index][:data_roor_2i] = "/var/lib/riak/merge_index_2i"
+	node[:riak][:merge_index][:buffer_rollover_size] = 1048576
+	node[:riak][:merge_index][:max_compact_segments] = 20
 	
 
 [1]: http://basho.com/
 [2]: http://www.innodb.com/doc/embedded_innodb-1.0/#config-vars
+[3]: https://github.com/basho/lager

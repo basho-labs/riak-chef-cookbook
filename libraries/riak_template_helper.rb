@@ -64,7 +64,8 @@ module RiakTemplateHelper
   RIAK_TRANSLATE_CONFIGS = {
     'core' => 'riak_core',
     'kv' => 'riak_kv',
-    'err' => 'riak_err'
+    'err' => 'riak_err',
+    'sysmon' => 'riak_sysmon'
   }
 
   def prepare_app_config(riak)
