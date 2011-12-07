@@ -3,7 +3,7 @@
 # Cookbook Name:: riak
 # Recipe:: default
 #
-# Copyright (c) 2010 Basho Technologies, Inc.
+# Copyright (c) 2011 Basho Technologies, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -25,7 +25,7 @@ if node[:riak][:package][:url]
   package_file = package_uri.split("/").last
 else
   version_str = "#{node[:riak][:package][:version][:major]}.#{node[:riak][:package][:version][:minor]}"
-  base_uri = "http://downloads.basho.com/riak/riak-#{version_str}/"
+  base_uri = "http://downloads.basho.com/riak/riak-#{version_str}.#{node[:riak][:package][:version][:incremental]}/"
   base_filename = "riak-#{version_str}.#{node[:riak][:package][:version][:incremental]}"
 
 
@@ -39,13 +39,19 @@ else
                   when "binary"
                     case node[:platform]
                     when "debian","ubuntu"
-                      "#{base_filename.gsub(/\-/, '_')}-#{node[:riak][:package][:version][:build]}_#{machines[node[:kernel][:machine]]}.deb"
+                      if node[:platform_version] == "11.10"
+                        "#{base_filename.gsub(/\-/, '_')}-#{node[:riak][:package][:version][:build]}_ubuntu_11_#{machines[node[:kernel][:machine]]}.deb"
+                      else
+                        "#{base_filename.gsub(/\-/, '_')}-#{node[:riak][:package][:version][:build]}_#{machines[node[:kernel][:machine]]}.deb"
+                      end
                     when "centos","redhat","suse"
-                      "#{base_filename}-#{node[:riak][:package][:version][:build]}.el5.#{machines[node[:kernel][:machine]]}.rpm"
+                      if node[:platform_version].to_i == 6
+                        "#{base_filename}-#{node[:riak][:package][:version][:build]}.el6.#{machines[node[:kernel][:machine]]}.rpm"
+                      else
+                        "#{base_filename}-#{node[:riak][:package][:version][:build]}.el5.#{machines[node[:kernel][:machine]]}.rpm"
+                      end
                     when "fedora"
-                      "#{base_filename}-#{node[:riak][:package][:version][:build]}.fc12.#{node[:kernel][:machine]}.rpm"
-                      # when "mac_os_x"
-                      #  "#{base_filename}.osx.#{node[:kernel][:machine]}.tar.gz"
+                      "#{base_filename}-#{node[:riak][:package][:version][:build]}.fc13.#{node[:kernel][:machine]}.rpm"
                     end
                   when "source"
                     "#{base_filename}.tar.gz"
@@ -79,6 +85,7 @@ remote_file "/tmp/riak_pkg/#{package_file}" do
   owner "root"
   mode 0644
   checksum node[:riak][:package][:source_checksum]
+  not_if { File.exists?("/tmp/riak_pkg/#{package_file}") }
 end
 
 case node[:riak][:package][:type]

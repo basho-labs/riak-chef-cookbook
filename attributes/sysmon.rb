@@ -1,5 +1,5 @@
 #
-# Author:: Sean Cribbs (<sean@basho.com>)
+# Author:: Sean Carey (<densone@basho.com>)
 # Cookbook Name:: riak
 #
 # Copyright (c) 2011 Basho Technologies, Inc.
@@ -17,5 +17,7 @@
 # limitations under the License.
 #
 
-default.riak.err.term_max_size = 65536
-default.riak.err.fmt_max_bytes = 65536
+default.riak.sysmon.process_limit = 30 
+default.riak.sysmon.port_limit = 30 
+default.riak.sysmon.gc_ms_limit = 50 
+default.riak.sysmon.heap_word_limit = 10485760

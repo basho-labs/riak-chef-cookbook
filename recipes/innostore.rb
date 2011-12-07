@@ -3,7 +3,7 @@
 # Cookbook Name:: riak
 # Recipe:: inno
 #
-# Copyright (c) 2010 Basho Technologies, Inc.
+# Copyright (c) 2011 Basho Technologies, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.

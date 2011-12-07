@@ -2,7 +2,7 @@
 # Author:: Benjamin Black (<b@b3k.us>) and Sean Cribbs (<sean@basho.com>)
 # Cookbook Name:: riak
 #
-# Copyright (c) 2010 Basho Technologies, Inc.
+# Copyright (c) 2011 Basho Technologies, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -23,6 +23,8 @@ default.riak.erlang.node_name = "riak@127.0.0.1"
 default.riak.erlang.cookie = "riak"
 default.riak.erlang.kernel_polling = true
 default.riak.erlang.async_threads = 64
+default.riak.erlang.error_logger_warnings = :w
 default.riak.erlang.smp = "enable"
 default.riak.erlang.env_vars.ERL_MAX_PORTS = 4096
 default.riak.erlang.env_vars.ERL_FULLSWEEP_AFTER = 0
+default.riak.erlang.env_vars.ERL_CRASH_DUMP = "/var/log/riak/erl_crash.dump"

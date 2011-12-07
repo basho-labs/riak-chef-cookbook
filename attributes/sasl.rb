@@ -2,7 +2,7 @@
 # Author:: Benjamin Black (<b@b3k.us>) and Sean Cribbs (<sean@basho.com>)
 # Cookbook Name:: riak
 #
-# Copyright (c) 2010 Basho Technologies, Inc.
+# Copyright (c) 2011 Basho Technologies, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -17,7 +17,8 @@
 # limitations under the License.
 #
 
-default.riak.sasl.sasl_error_logger.file = "/var/log/riak/sasl-error.log"
+
+default.riak.sasl.sasl_error_logger = false
 default.riak.sasl.errlog_type = :error
 default.riak.sasl.error_logger_mf_dir = "/var/log/riak/sasl"
 default.riak.sasl.error_logger_mf_maxbytes = 10485760
