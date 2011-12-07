@@ -80,13 +80,28 @@ directory "/tmp/riak_pkg" do
   action :create
 end
 
-remote_file "/tmp/riak_pkg/#{package_file}" do
+tmp_package_path = "/tmp/riak_pkg/#{package_file}"
+
+remote_file tmp_package_path do
   source package_uri
   owner "root"
   mode 0644
+  action :nothing
   checksum node[:riak][:package][:source_checksum]
   not_if { File.exists?("/tmp/riak_pkg/#{package_file}") }
 end
+
+
+http_request "HEAD #{package_uri}" do
+  message ""
+  url package_uri
+  action :head
+  if File.exists?(tmp_package_path)
+    headers "If-Modified-Since" => File.mtime(tmp_package_path).httpdate
+  end
+  notifies :create, resources(:remote_file => tmp_package_path), :immediately
+end
+
 
 case node[:riak][:package][:type]
 when "binary"
