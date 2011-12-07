@@ -39,13 +39,19 @@ else
                   when "binary"
                     case node[:platform]
                     when "debian","ubuntu"
-                      "#{base_filename.gsub(/\-/, '_')}-#{node[:riak][:package][:version][:build]}_#{machines[node[:kernel][:machine]]}.deb"
+                      if node[:platform_version] == "11.10"
+                        "#{base_filename.gsub(/\-/, '_')}-#{node[:riak][:package][:version][:build]}_ubuntu_11_#{machines[node[:kernel][:machine]]}.deb"
+                      else
+                        "#{base_filename.gsub(/\-/, '_')}-#{node[:riak][:package][:version][:build]}_#{machines[node[:kernel][:machine]]}.deb"
+                      end
                     when "centos","redhat","suse"
-                      "#{base_filename}-#{node[:riak][:package][:version][:build]}.el5.#{machines[node[:kernel][:machine]]}.rpm"
+                      if node[:platform_version].to_i == 6
+                        "#{base_filename}-#{node[:riak][:package][:version][:build]}.el6.#{machines[node[:kernel][:machine]]}.rpm"
+                      else
+                        "#{base_filename}-#{node[:riak][:package][:version][:build]}.el5.#{machines[node[:kernel][:machine]]}.rpm"
+                      end
                     when "fedora"
-                      "#{base_filename}-#{node[:riak][:package][:version][:build]}.fc12.#{node[:kernel][:machine]}.rpm"
-                      # when "mac_os_x"
-                      #  "#{base_filename}.osx.#{node[:kernel][:machine]}.tar.gz"
+                      "#{base_filename}-#{node[:riak][:package][:version][:build]}.fc13.#{node[:kernel][:machine]}.rpm"
                     end
                   when "source"
                     "#{base_filename}.tar.gz"
