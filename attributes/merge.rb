@@ -1,5 +1,5 @@
 #
-# Author:: Sean Cribbs (<sean@basho.com>)
+# Author:: Sean Carey (<densone@basho.com>)
 # Cookbook Name:: riak
 #
 # Copyright (c) 2011 Basho Technologies, Inc.
@@ -17,5 +17,7 @@
 # limitations under the License.
 #
 
-default.riak.err.term_max_size = 65536
-default.riak.err.fmt_max_bytes = 65536
+default.riak.merge_index.data_root = "/var/lib/riak/merge_index"
+default.riak.merge_index.data_root_2i = "/var/lib/riak/merge_index_2i"
+default.riak.merge_index.buffer_rollover_size = 1048576
+default.riak.merge_index.max_compact_segments = 20

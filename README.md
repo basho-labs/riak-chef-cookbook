@@ -16,7 +16,7 @@ The Riak cookbook can be used just by adding "riak" to the runlist for a node.  
 Package Installation
 --------------------
 
-There are two options for package installation: source and binary.  If you are using a RedHat or Debian/Ubuntu system, binary installation is recommended and is the default.  If you choose to do a source installation, be sure you are using Erlang/OTP R13B04 or later.
+There are two options for package installation: source and binary.  If you are using a RedHat or Debian/Ubuntu system, binary installation is recommended and is the default.  If you choose to do a source installation, be sure you are using Erlang/OTP R14B02 or later.
 
 The package parameters available are version, type and, optionally for source installation, an install prefix:
 
@@ -68,7 +68,7 @@ A number of Erlang parameters may be configured through the cookbook.  The node 
 	node[:riak][:erlang][:async_threads] = 64
 	node[:riak][:erlang][:smp] = ("enable" | "disable")
 	node[:riak][:erlang][:env_vars][:ERL_MAX_PORTS] = 4096
-        node[:riak][:erlang][:env_vars][:ERL_FULLSWEEP_AFTER] = 10
+    node[:riak][:erlang][:env_vars][:ERL_FULLSWEEP_AFTER] = 10
 
 
 Storage Backends
@@ -100,7 +100,7 @@ DETS
 DETS is the default storage backend for Riak.  It's very simple to setup, only requiring a path where it should store data files.  However, for production use Innostore and Bitcask are better choices.
 
 	node[:riak][:kv][:riak_kv_dets_backend_root] = "/var/lib/riak/dets"
-\
+	
 
 Innostore
 ---------
@@ -115,6 +115,39 @@ Innostore is an Erlang wrapper around embedded InnoDB, a transactional storage e
 	node[:riak][:innostore][:log_group_home_dir] = "/var/lib/riak/innodb"
 	node[:riak][:innostore][:buffer_pool_size] = 2147483648
 
+Lager 
+-----
+
+[Lager][3] is the logging framework used within Riak. It can also be used with erlang/OTP. 
+
+
+    node[:riak][:lager][:handlers][:lager_console_backend]= :info
+	node[:riak][:lager][:crash_log] = "/var/log/riak/crash.log"
+	node[:riak][:lager][:crash_log_date] = "$D0"
+	node[:riak][:lager][:crash_log_msg_size]  = 65536
+	node[:riak][:lager][:crash_log_size] = 10485760
+	node[:riak][:lager][:error_logger_redirect] = true
+	node[:riak][:lager][:handlers][:lager_file_backend][:lager_error_log] =  ["/var/log/riak/error.log", :error, 10485760, "$D0", 5]
+	node[:riak][:lager][:handlers][:lager_file_backend][:lager_console_log] = ["/var/log/riak/console.log", :info, 10485760, "$D0", 5]
+
+Sysmon 
+------
+
+Sysmon monitors riaks gc process and logs relevant information to the status of garbage collection.
+
+	node[:riak][:sysmon][:process_limit] = 30
+	node[:riak][:sysmon][:port_limit] = 30
+	node[:riak][:sysmon][:gc_ms_limit] = 50 #if gc takes longer than 50ms. Spam the log. 
+	node[:riak][:sysmon][:heap_word_limit] = 10485760
+	
+Index Merge
+-----------
+	node[:riak][:merge_index][:data_root] = "/var/lib/riak/merge_index"
+	node[:riak][:merge_index][:data_root_2i] = "/var/lib/riak/merge_index_2i"
+	node[:riak][:merge_index][:buffer_rollover_size] = 1048576
+	node[:riak][:merge_index][:max_compact_segments] = 20
+	
 
 [1]: http://basho.com/
 [2]: http://www.innodb.com/doc/embedded_innodb-1.0/#config-vars
+[3]: https://github.com/basho/lager

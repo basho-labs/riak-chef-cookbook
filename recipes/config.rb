@@ -39,11 +39,13 @@ unless node.riak.kernel.limit_port_range
   node.riak.kernel.delete(:inet_dist_listen_max)
 end
 
+
 # kv.rb
 node.riak.kv.storage_backend = (node.riak.kv.storage_backend).to_s.to_sym
 
 # sasl.rb
 node.riak.sasl.errlog_type = (node.riak.sasl.errlog_type).to_s.to_sym
+
 
 case node.riak.kv.storage_backend
 when :riak_kv_bitcask_backend # bitcask.rb

@@ -2,7 +2,7 @@
 # Author:: Benjamin Black (<b@b3k.us>) and Sean Cribbs (<sean@basho.com>)
 # Cookbook Name:: riak
 #
-# Copyright (c) 2010 Basho Technologies, Inc.
+# Copyright (c) 2011 Basho Technologies, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -43,16 +43,29 @@ module RiakTemplateHelper
     padding = '    ' * depth
     parent_padding = '    ' * (depth-1)
     values = hash.map do |k,v|
-      "{#{k}, #{value_to_erlang(v, depth)}}"
+      if KEYLESS_ATTRIBUTES.include?(k)
+        #We make the assumption that all KEYLESS_ATTRIBUTES are arrays. 
+        Tuple.new(v)
+      else
+        "{#{k}, #{value_to_erlang(v, depth)}}"
+      end
     end.join(",\n#{padding}")
     "[\n#{padding}#{values}\n#{parent_padding}]"
   end
-
+  
+  #There are several configurations that are not key/value. They should be added to KEYLESS_ATTRIBUTES. 
+  #A sample of this wold be the lager configuration. 
+  #{"{{platform_log_dir}}/error.log", error, 10485760, "$D0", 5}
+  KEYLESS_ATTRIBUTES = ['lager_error_log','lager_console_log']
+  
+  #Remove these configs. This will make sure package and erlang vms are not processed into the riak app.config. 
   RIAK_REMOVE_CONFIGS = ['package', 'erlang']
+  
   RIAK_TRANSLATE_CONFIGS = {
     'core' => 'riak_core',
     'kv' => 'riak_kv',
-    'err' => 'riak_err'
+    'err' => 'riak_err',
+    'sysmon' => 'riak_sysmon'
   }
 
   def prepare_app_config(riak)
@@ -91,9 +104,6 @@ module RiakTemplateHelper
       riak.delete('bitcask')
     end
 
-    # Tuple-ize appropriate settings
-    riak['sasl']['sasl_error_logger'] = Tuple.new([:file, riak['sasl']['sasl_error_logger']['file']])
-
     riak['riak_core']['default_bucket_props']['chash_keyfun'] = Tuple.new(riak['riak_core']['default_bucket_props']['chash_keyfun'].map {|i| i.to_sym }) if riak['riak_core']['default_bucket_props'] && riak['riak_core']['default_bucket_props']['chash_keyfun']
 
     riak['riak_core']['default_bucket_props']['linkfun'] = Tuple.new(riak['riak_core']['default_bucket_props']['linkfun'].map {|i| i.to_sym }) if riak['riak_core']['default_bucket_props'] && riak['riak_core']['default_bucket_props']['linkfun']
@@ -123,10 +133,11 @@ module RiakTemplateHelper
     "heart" => "-heart",
     "kernel_polling" => "+K",
     "async_threads" => "+A",
+    "error_logger_warnings" => "+W",
     "smp" => "-smp",
     "env_vars" => "-env"
   }
-
+    
   def prepare_vm_args(config)
     config.map do |k,v|
       key = RIAK_VM_ARGS[k.to_s]
