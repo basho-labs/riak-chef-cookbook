@@ -2,7 +2,7 @@
 # Author:: Benjamin Black (<b@b3k.us>) and Sean Cribbs (<sean@basho.com>)
 # Cookbook Name:: riak
 #
-# Copyright (c) 2010 Basho Technologies, Inc.
+# Copyright (c) 2011 Basho Technologies, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -31,7 +31,7 @@ module RiakTemplateHelper
       to_erlang_config(v, depth+1)
     when String
       "\"#{v}\""
-    when Array 
+    when Array
       "[" << v.map {|i| value_to_erlang(i) }.join(", ") << "]"
     else
       v.to_s
