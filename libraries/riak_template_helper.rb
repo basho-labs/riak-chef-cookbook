@@ -45,7 +45,7 @@ module RiakTemplateHelper
     values = hash.map do |k,v|
       if KEYLESS_ATTRIBUTES.include?(k)
         #We make the assumption that all KEYLESS_ATTRIBUTES are arrays. 
-        Tuple.new(v)
+        Tuple.new(v).to_s
       else
         "{#{k}, #{value_to_erlang(v, depth)}}"
       end
