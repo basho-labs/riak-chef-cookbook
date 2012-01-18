@@ -18,6 +18,9 @@
 #
 
 default.riak.sysmon.process_limit = 30 
-default.riak.sysmon.port_limit = 30 
-default.riak.sysmon.gc_ms_limit = 50 
-default.riak.sysmon.heap_word_limit = 10485760
+default.riak.sysmon.port_limit = 2
+default.riak.sysmon.gc_ms_limit = 100
+default.riak.sysmon.heap_word_limit = 40111000
+default.riak.sysmon.busy_port = true  
+default.riak.sysmon.busy_dist_port = true  
+
