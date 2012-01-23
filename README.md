@@ -100,7 +100,15 @@ DETS
 DETS is the default storage backend for Riak.  It's very simple to setup, only requiring a path where it should store data files.  However, for production use Innostore and Bitcask are better choices.
 
 	node[:riak][:kv][:riak_kv_dets_backend_root] = "/var/lib/riak/dets"
-	
+
+eLevelDB
+--------
+
+driver based on google leveldb. see http://wiki.basho.com/LevelDB.html
+for more info. currently only setting the root dir is supported. if
+you want support for more options, just add it in attributes/eleveldb.rb
+
+	node[:riak][:kv][:riak_kv_eleveldb_backend_root] = "/var/lib/riak/leveldb"
 
 Innostore
 ---------
