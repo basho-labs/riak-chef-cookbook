@@ -19,7 +19,7 @@
 
 default.riak.kv.mapred_queue_dir = "/var/lib/riak/mr_queue"
 default.riak.kv.mapred_name = "mapred"
-default.riak.kv.mapred_system = "pipe"
+default.riak.kv.mapred_system = :pipe
 default.riak.kv.mapred_2i_pipe = true
 default.riak.kv.map_js_vm_count = 8
 default.riak.kv.reduce_js_vm_count = 6
