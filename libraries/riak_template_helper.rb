@@ -95,14 +95,21 @@ module RiakTemplateHelper
     riak['riak_kv']['storage_backend'] = riak['riak_kv']['storage_backend'].to_sym
     case riak['riak_kv']['storage_backend']
     when :riak_kv_bitcask_backend
+      riak.delete('eleveldb')
+      riak.delete('innostore')
+      riak['riak_kv'].delete('riak_kv_dets_backend_root')
+    when :riak_kv_eleveldb_backend
+      riak.delete('bitcask')
       riak.delete('innostore')
       riak['riak_kv'].delete('riak_kv_dets_backend_root')
     when :riak_kv_innostore_backend
       riak.delete('bitcask')
+      riak.delete('eleveldb')
       riak['riak_kv'].delete('riak_kv_dets_backend_root')
     when :riak_kv_dets_backend
-      riak.delete('innostore')
       riak.delete('bitcask')
+      riak.delete('eleveldb')
+      riak.delete('innostore')
     end
 
     riak['riak_core']['default_bucket_props']['chash_keyfun'] = Tuple.new(riak['riak_core']['default_bucket_props']['chash_keyfun'].map {|i| i.to_sym }) if riak['riak_core']['default_bucket_props'] && riak['riak_core']['default_bucket_props']['chash_keyfun']
