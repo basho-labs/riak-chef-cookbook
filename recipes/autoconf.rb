@@ -33,6 +33,7 @@ bash "Start riak and wait for riak_kv to be available" do
 #{bin_path}/riak start
 #{bin_path}/riak-admin wait-for-service riak_kv #{node[:riak][:erlang][:node_name]}
 SCRIPT
+  retries 3
   timeout 45
 end
 
