@@ -20,13 +20,13 @@
 maintainer        "Basho Technologies, Inc."
 maintainer_email  "riak@basho.com"
 license           "Apache 2.0"
-description       "Installs and configures Riak distributed data store (v1.0.2)"
-version           "1.0.3"
+description       "Installs and configures Riak distributed data store"
+version           "1.1.0"
 recipe            "riak", "Installs Riak"
 recipe            "riak::autoconf", "Automatically configure nodes from chef-server information."
 recipe            "riak::innostore", "Install and configure the Innostore backend."
 recipe            "riak::iptables", "Automatically configure iptables rules for Riak."
 
-%w{ubuntu debian}.each do |os|
+%w{ubuntu debian centos redhat suse fedora}.each do |os|
   supports os
 end
