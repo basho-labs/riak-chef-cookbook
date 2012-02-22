@@ -56,7 +56,7 @@ module RiakTemplateHelper
   #There are several configurations that are not key/value. They should be added to KEYLESS_ATTRIBUTES. 
   #A sample of this wold be the lager configuration. 
   #{"{{platform_log_dir}}/error.log", error, 10485760, "$D0", 5}
-  KEYLESS_ATTRIBUTES = ['lager_error_log','lager_console_log','userlist']
+  KEYLESS_ATTRIBUTES = ['lager_error_log','lager_console_log','default_user']
   
   #Remove these configs. This will make sure package and erlang vms are not processed into the riak app.config. 
   RIAK_REMOVE_CONFIGS = ['package', 'erlang']
