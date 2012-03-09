@@ -39,11 +39,8 @@ else
                   when "binary"
                     case node[:platform]
                     when "debian","ubuntu"
-                      if node[:platform_version] == "11.10"
-                        "#{base_filename.gsub(/\-/, '_')}-#{node[:riak][:package][:version][:build]}_ubuntu_11_#{machines[node[:kernel][:machine]]}.deb"
-                      else
-                        "#{base_filename.gsub(/\-/, '_')}-#{node[:riak][:package][:version][:build]}_#{machines[node[:kernel][:machine]]}.deb"
-                      end
+                      package "libssl0.9.8" if node[:platform_version] == "11.10"
+                      "#{base_filename.gsub(/\-/, '_')}-#{node[:riak][:package][:version][:build]}_#{machines[node[:kernel][:machine]]}.deb"
                     when "centos","redhat","suse"
                       if node[:platform_version].to_i == 6
                         "#{base_filename}-#{node[:riak][:package][:version][:build]}.el6.#{machines[node[:kernel][:machine]]}.rpm"
