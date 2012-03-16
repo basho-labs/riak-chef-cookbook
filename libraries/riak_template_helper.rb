@@ -44,7 +44,7 @@ module RiakTemplateHelper
     parent_padding = '    ' * (depth-1)
     values = hash.map do |k,v|
       if KEYLESS_ATTRIBUTES.include?(k)
-        #We make the assumption that all KEYLESS_ATTRIBUTES are arrays. 
+        #We make the assumption that all KEYLESS_ATTRIBUTES are arrays.
         Tuple.new(v).to_s
       else
         "{#{k}, #{value_to_erlang(v, depth)}}"
@@ -52,15 +52,15 @@ module RiakTemplateHelper
     end.join(",\n#{padding}")
     "[\n#{padding}#{values}\n#{parent_padding}]"
   end
-  
-  #There are several configurations that are not key/value. They should be added to KEYLESS_ATTRIBUTES. 
-  #A sample of this wold be the lager configuration. 
+
+  #There are several configurations that are not key/value. They should be added to KEYLESS_ATTRIBUTES.
+  #A sample of this wold be the lager configuration.
   #{"{{platform_log_dir}}/error.log", error, 10485760, "$D0", 5}
   KEYLESS_ATTRIBUTES = ['lager_error_log','lager_console_log','default_user']
-  
-  #Remove these configs. This will make sure package and erlang vms are not processed into the riak app.config. 
+
+  #Remove these configs. This will make sure package and erlang vms are not processed into the riak app.config.
   RIAK_REMOVE_CONFIGS = ['package', 'erlang']
-  
+
   RIAK_TRANSLATE_CONFIGS = {
     'core' => 'riak_core',
     'kv' => 'riak_kv',
@@ -145,16 +145,17 @@ module RiakTemplateHelper
     "smp" => "-smp",
     "env_vars" => "-env"
   }
-    
+
   def prepare_vm_args(config)
-    config.map do |k,v|
+    config.keys.sort.map do |k|
+      v   = config[k]
       key = RIAK_VM_ARGS[k.to_s]
       case v
       when false
         nil
       when Hash
         # Mostly for env_vars
-        v.map {|ik,iv| "#{key} #{ik} #{iv}" }
+        v.keys.sort.map { |ik| "#{key} #{ik} #{v[ik]}" }
       else
         "#{key} #{v}"
       end
