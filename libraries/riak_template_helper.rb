@@ -64,6 +64,7 @@ module RiakTemplateHelper
   RIAK_TRANSLATE_CONFIGS = {
     'core' => 'riak_core',
     'kv' => 'riak_kv',
+    'search' => 'riak_search',
     'err' => 'riak_err',
     'sysmon' => 'riak_sysmon',
     'control' => 'riak_control'
