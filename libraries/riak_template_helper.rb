@@ -42,7 +42,12 @@ module RiakTemplateHelper
   def to_erlang_config(hash, depth = 1)
     padding = '    ' * depth
     parent_padding = '    ' * (depth-1)
-    values = hash.map do |k,v|
+
+    # Traverse through the hash in key sorted order so that we avoid
+    # any issues with the traversal order changing and forcing a Riak restart.
+    values = hash.keys.sort.map do |k|
+      v = hash[k]
+
       if KEYLESS_ATTRIBUTES.include?(k)
         #We make the assumption that all KEYLESS_ATTRIBUTES are arrays.
         Tuple.new(v).to_s
