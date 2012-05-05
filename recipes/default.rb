@@ -130,7 +130,7 @@ template "#{node[:riak][:package][:config_dir]}/app.config" do
 end
 
 template "#{node[:riak][:package][:config_dir]}/vm.args" do
-  variables :switches => prepare_vm_args(node[:riak][:erlang])
+  variables :switches => prepare_vm_args(node[:riak][:erlang].to_hash)
   source "vm.args.erb"
   owner "root"
   mode 0644
