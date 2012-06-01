@@ -158,7 +158,7 @@ module RiakTemplateHelper
       case v
       when false
         nil
-      when Hash
+      when Hash, Chef::Node::Attribute
         # Mostly for env_vars
         v.keys.sort.map { |ik| "#{key} #{ik} #{v[ik]}" }
       else
