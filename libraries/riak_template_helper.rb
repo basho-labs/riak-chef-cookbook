@@ -69,9 +69,9 @@ module RiakTemplateHelper
   RIAK_TRANSLATE_CONFIGS = {
     'core' => 'riak_core',
     'kv' => 'riak_kv',
+    'err' => 'riak_err',
     'sysmon' => 'riak_sysmon',
-    'control' => 'riak_control',
-    'search' => 'riak_search'
+    'control' => 'riak_control'
   }
 
   def prepare_app_config(riak)
@@ -89,6 +89,12 @@ module RiakTemplateHelper
       end
     end
 
+    # Only limit Erlang port range if limit_port_range is true
+    if riak['kernel'] && riak['kernel']['limit_port_range']
+      riak['kernel'].delete 'limit_port_range'
+    else
+      riak.delete 'kernel'
+    end
 
     # Select the backend configuration
     riak['riak_kv']['storage_backend'] = riak['riak_kv']['storage_backend'].to_sym

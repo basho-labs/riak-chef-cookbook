@@ -17,6 +17,7 @@
 # limitations under the License.
 #
 
+default.riak.kv.mapred_queue_dir = "/var/lib/riak/mr_queue"
 default.riak.kv.mapred_name = "mapred"
 default.riak.kv.mapred_system = :pipe
 default.riak.kv.mapred_2i_pipe = true
@@ -26,6 +27,7 @@ default.riak.kv.hook_js_vm_count = 2
 default.riak.kv.js_max_vm_mem = 8
 default.riak.kv.js_thread_stack = 16
 default.riak.kv.http_url_encoding = "on"
+default.riak.kv.raw_name = "riak"
 default.riak.kv.riak_kv_stat = true
 default.riak.kv.legacy_stats = true
 default.riak.kv.vnode_vclocks = true

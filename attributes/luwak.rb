@@ -1,5 +1,5 @@
 #
-# Author:: Benjamin Black (<b@b3k.us>) and Sean Cribbs (<sean@basho.com>)
+# Author:: Sean Cribbs (<sean@basho.com>)
 # Cookbook Name:: riak
 #
 # Copyright (c) 2011 Basho Technologies, Inc.
@@ -17,10 +17,4 @@
 # limitations under the License.
 #
 
-default.riak.package.type = "binary"
-default.riak.package.version.major = "1"
-default.riak.package.version.minor = "1"
-default.riak.package.version.incremental = "0"
-default.riak.package.version.build = "1"
-default.riak.package.source_checksum = '844cdca59582658f3d16b94af0b3cbb5cd5274834b753ff85c5845b20c91ba2b'
-default.riak.package.config_dir = "/etc/riak"
+default.riak.luwak.enabled = false

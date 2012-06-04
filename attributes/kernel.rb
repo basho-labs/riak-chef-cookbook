@@ -17,10 +17,6 @@
 # limitations under the License.
 #
 
-default.riak.package.type = "binary"
-default.riak.package.version.major = "1"
-default.riak.package.version.minor = "1"
-default.riak.package.version.incremental = "0"
-default.riak.package.version.build = "1"
-default.riak.package.source_checksum = '844cdca59582658f3d16b94af0b3cbb5cd5274834b753ff85c5845b20c91ba2b'
-default.riak.package.config_dir = "/etc/riak"
+default.riak.kernel.limit_port_range = true
+default.riak.kernel.inet_dist_listen_min = 6000
+default.riak.kernel.inet_dist_listen_max = 7999
