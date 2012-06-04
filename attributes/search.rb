@@ -1,5 +1,5 @@
 #
-# Author:: Sean Cribbs (<sean@basho.com>)
+# Author:: Seth Thomas (<sthomas@basho.com>)
 # Cookbook Name:: riak
 #
 # Copyright (c) 2011 Basho Technologies, Inc.
@@ -17,5 +17,4 @@
 # limitations under the License.
 #
 
-default.riak.err.term_max_size = 65536
-default.riak.err.fmt_max_bytes = 65536
+default.riak.search.enabled = false

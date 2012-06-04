@@ -33,12 +33,6 @@ if node.riak.core.to_hash['default_bucket_props'].is_a?(Mash)
   node.default.riak.core.default_bucket_props.chash_keyfun = [:riak_core_util, :chash_std_keyfun]
 end
 
-# kernel.rb
-unless node.riak.kernel.limit_port_range
-  node.riak.kernel.delete(:inet_dist_listen_min)
-  node.riak.kernel.delete(:inet_dist_listen_max)
-end
-
 
 # kv.rb
 node.riak.kv.storage_backend = (node.riak.kv.storage_backend).to_s.to_sym
