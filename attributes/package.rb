@@ -20,7 +20,7 @@
 default.riak.package.type = "binary"
 default.riak.package.version.major = "1"
 default.riak.package.version.minor = "1"
-default.riak.package.version.incremental = "0"
+default.riak.package.version.incremental = "2"
 default.riak.package.version.build = "1"
-default.riak.package.source_checksum = '844cdca59582658f3d16b94af0b3cbb5cd5274834b753ff85c5845b20c91ba2b'
+default.riak.package.source_checksum = '34878ed258fa4bc63b8440ad624909e3773a560a00d753d73f8c5467005123de'
 default.riak.package.config_dir = "/etc/riak"
