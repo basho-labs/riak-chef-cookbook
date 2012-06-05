@@ -71,7 +71,8 @@ module RiakTemplateHelper
     'kv' => 'riak_kv',
     'err' => 'riak_err',
     'sysmon' => 'riak_sysmon',
-    'control' => 'riak_control'
+    'control' => 'riak_control',
+    'search' => 'riak_search'
   }
 
   def prepare_app_config(riak)

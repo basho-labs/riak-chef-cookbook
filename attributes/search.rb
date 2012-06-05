@@ -1,5 +1,5 @@
 #
-# Author:: Sean Cribbs (<sean@basho.com>)
+# Author:: Seth Thomas (<sthomas@basho.com>)
 # Cookbook Name:: riak
 #
 # Copyright (c) 2011 Basho Technologies, Inc.
@@ -17,4 +17,4 @@
 # limitations under the License.
 #
 
-default.riak.luwak.enabled = false
+default.riak.search.enabled = false
