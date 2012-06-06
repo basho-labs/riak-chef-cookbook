@@ -19,7 +19,7 @@
 
 include_attribute "riak::core"
 
-default.riak.erlang.node_name = "riak@127.0.0.1"
+default.riak.erlang.node_name = node['hostname'] + "@" + node['cloud']['local_ipv4'] || node['ipaddress']
 default.riak.erlang.cookie = "riak"
 default.riak.erlang.kernel_polling = true
 default.riak.erlang.async_threads = 64
