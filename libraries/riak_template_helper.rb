@@ -20,8 +20,8 @@ require 'delegate'
 module RiakTemplateHelper
   class Tuple < DelegateClass(Array)
     include RiakTemplateHelper
-    def to_s
-      "{" << map {|i| value_to_erlang(i) }.join(", ") << "}"
+    def to_s(depth=1)
+      "{" << map {|i| value_to_erlang(i,depth) }.join(", ") << "}"
     end
   end
 
@@ -50,7 +50,7 @@ module RiakTemplateHelper
 
       if KEYLESS_ATTRIBUTES.include?(k)
         #We make the assumption that all KEYLESS_ATTRIBUTES are arrays.
-        Tuple.new(v).to_s
+        Tuple.new(v).to_s(depth)
       else
         "{#{k}, #{value_to_erlang(v, depth)}}"
       end
@@ -75,9 +75,21 @@ module RiakTemplateHelper
     'control' => 'riak_control'
   }
 
+
   def prepare_app_config(riak)
+
+    node.riak.core.http[0][0] = node[:network][:interfaces][node.riak.net_dev_int][:addresses].select { |address, data| data[:family] == "inet" }[0][0]
+    node.riak.kv.pb_ip        = node[:network][:interfaces][node.riak.net_dev_int][:addresses].select { |address, data| data[:family] == "inet" }[0][0]
+
+    #Each backend in multi-backend will be a keyless tuple, so add them to KEYLESS_ATTRIBUTES
+    riak[:kv][:multi_backend].each_key { |k| KEYLESS_ATTRIBUTES.push(k) }
+
+
     # Don't muck with the node attributes
     riak = riak.to_hash
+
+    #remove net_dev_int from app.config
+    riak.delete('net_dev_int')
 
     # Remove sections we don't care about
     riak.reject! {|k,_| RIAK_REMOVE_CONFIGS.include? k }
@@ -99,23 +111,15 @@ module RiakTemplateHelper
 
     # Select the backend configuration
     riak['riak_kv']['storage_backend'] = riak['riak_kv']['storage_backend'].to_sym
-    case riak['riak_kv']['storage_backend']
-    when :riak_kv_bitcask_backend
-      riak.delete('eleveldb')
-      riak.delete('innostore')
-      riak['riak_kv'].delete('riak_kv_dets_backend_root')
-    when :riak_kv_eleveldb_backend
-      riak.delete('bitcask')
-      riak.delete('innostore')
-      riak['riak_kv'].delete('riak_kv_dets_backend_root')
-    when :riak_kv_innostore_backend
-      riak.delete('bitcask')
-      riak.delete('eleveldb')
-      riak['riak_kv'].delete('riak_kv_dets_backend_root')
-    when :riak_kv_dets_backend
-      riak.delete('bitcask')
-      riak.delete('eleveldb')
-      riak.delete('innostore')
+    riak.delete('innostore') unless riak['riak_kv']['storage_backend']==:riak_kv_innostore_backend
+    riak.delete('eleveldb')  unless riak['riak_kv']['storage_backend']==:riak_kv_eleveldb_backend
+    riak.delete('bitcask')   unless riak['riak_kv']['storage_backend']==:riak_kv_bitcask_backend
+    riak['riak_kv'].delete('riak_kv_dets_backend_root') unless riak['riak_kv']['storage_backend']==:riak_kv_dets_backend
+    #This adds the multibackends in their own section of app.config for cs
+    if riak['riak_kv']['storage_backend']==:riak_cs_kv_multi_backend
+      node.riak.kv.multi_backend.each do |k,v|
+        riak[v[1].to_s.split('_')[2]] = v[2]
+      end
     end
 
     riak['riak_core']['default_bucket_props']['chash_keyfun'] = Tuple.new(riak['riak_core']['default_bucket_props']['chash_keyfun'].map {|i| i.to_sym }) if riak['riak_core']['default_bucket_props'] && riak['riak_core']['default_bucket_props']['chash_keyfun']
