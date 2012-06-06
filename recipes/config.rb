@@ -24,7 +24,7 @@ if (node.riak.package.type.eql?("source"))
 end
 
 # erlang.rb
-node.default.riak.erlang.node_name = "riak@#{node.ipaddress}"
+node.default.riak.erlang.node_name = node['hostname'] + "@" + node['cloud']['local_ipv4'] || node['ipaddress']
 
 # core.rb
 # Make sure the bare minimums are set so the cluster works

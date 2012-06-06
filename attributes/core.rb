@@ -31,7 +31,8 @@ else
   default.riak.core.platform_lib_dir = "/usr/lib/riak"
 end
 
-default.riak.core.http = [["127.0.0.1",8098]]
+default.riak.core.http = [[node['cloud']['local_ipv4'] || node['ipaddress'], 8098]]
+default.riak.core.https = [[node['cloud']['local_ipv4'] || node['ipaddress'], 8096]]
 default.riak.core.ring_state_dir = "/var/lib/riak/ring"
 default.riak.core.handoff_port = 8099
 default.riak.core.cluster_name = "default"
