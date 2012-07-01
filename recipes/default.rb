@@ -92,7 +92,7 @@ when "binary"
     action :install
     options case node[:platform]
             when "debian","ubuntu"
-              "--forceconfnew"
+              "--force-confnew"
             end       
     provider value_for_platform(
       [ "ubuntu", "debian" ] => {"default" => Chef::Provider::Package::Dpkg},
