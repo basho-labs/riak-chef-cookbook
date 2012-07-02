@@ -90,6 +90,10 @@ when "binary"
   package package_name do
     source "/tmp/riak_pkg/#{package_file}"
     action :install
+    options case node[:platform]
+            when "debian","ubuntu"
+              "--force-confnew"
+            end       
     provider value_for_platform(
       [ "ubuntu", "debian" ] => {"default" => Chef::Provider::Package::Dpkg},
       [ "redhat", "centos", "fedora", "suse" ] => {"default" => Chef::Provider::Package::Rpm}
