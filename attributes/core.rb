@@ -17,24 +17,24 @@
 # limitations under the License.
 #
 
-case node[:platform]
+case node['platform']
 
 when "debian","ubuntu"
-  default.riak.core.platform_lib_dir = "/usr/lib/riak"
-when "redhat","centos","scientific","fedora","suse"
-  if node[:kernel][:machine] == 'x86_64'
-    default.riak.core.platform_lib_dir = "/usr/lib64/riak"
+  default['riak']['core']['platform_lib_dir'] = "/usr/lib/riak"
+when "redhat","centos","scientific","fedora","suse","amazon"
+  if node['kernel']['machine'] == 'x86_64'
+    default['riak']['core']['platform_lib_dir'] = "/usr/lib64/riak"
   else 
-    default.riak.core.platform_lib_dir = "/usr/lib/riak"
+    default['riak']['core']['platform_lib_dir'] = "/usr/lib/riak"
   end
 else
-  default.riak.core.platform_lib_dir = "/usr/lib/riak"
+  default['riak']['core']['platform_lib_dir'] = "/usr/lib/riak"
 end
 
-default.riak.core.http = [["127.0.0.1",8098]]
-default.riak.core.ring_state_dir = "/var/lib/riak/ring"
-default.riak.core.handoff_port = 8099
-default.riak.core.cluster_name = "default"
-default.riak.core.platform_bin_dir = "/usr/sbin"
-default.riak.core.platform_etc_dir = "/etc/riak"
-default.riak.core.platform_data_dir = "/var/lib/riak"
+default['riak']['core']['http'] = [["127.0.0.1",8098]]
+default['riak']['core']['ring_state_dir'] = "/var/lib/riak/ring"
+default['riak']['core']['handoff_port'] = 8099
+default['riak']['core']['cluster_name'] = "default"
+default['riak']['core']['platform_bin_dir'] = "/usr/sbin"
+default['riak']['core']['platform_etc_dir'] = "/etc/riak"
+default['riak']['core']['platform_data_dir'] = "/var/lib/riak"

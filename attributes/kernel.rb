@@ -17,6 +17,6 @@
 # limitations under the License.
 #
 
-default.riak.kernel.limit_port_range = true
-default.riak.kernel.inet_dist_listen_min = 6000
-default.riak.kernel.inet_dist_listen_max = 7999
+default['riak']['kernel']['limit_port_range'] = true
+default['riak']['kernel']['inet_dist_listen_min'] = 6000
+default['riak']['kernel']['inet_dist_listen_max'] = 7999

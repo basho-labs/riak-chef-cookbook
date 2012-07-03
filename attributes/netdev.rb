@@ -19,4 +19,4 @@
 
 
 #repl config options
-default.riak.net_dev_int = "eth0"
+default['riak']['net_dev_int'] = "eth0"

@@ -17,6 +17,6 @@
 # limitations under the License.
 #
 
-default.riak.bitcask.sync_strategy = :none
-default.riak.bitcask.data_root = "/var/lib/riak/bitcask"
+default['riak']['bitcask']['sync_strategy'] = :none
+default['riak']['bitcask']['data_root'] = "/var/lib/riak/bitcask"
 

@@ -17,4 +17,4 @@
 # limitations under the License.
 #
 
-default.riak.kv.riak_kv_dets_backend_root = "/var/lib/riak/dets"
+default['riak']['kv']['riak_kv_dets_backend_root'] = "/var/lib/riak/dets"

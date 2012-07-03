@@ -17,7 +17,7 @@
 # limitations under the License.
 #
 
-default.riak.control.enabled = :false
-default.riak.control.auth = :userlist
-default.riak.control.userlist.default_user = ["user","pass"]
-default.riak.control.admin = :true
+default['riak']['control']['enabled'] = :false
+default['riak']['control']['auth'] = :userlist
+default['riak']['control']['userlist']['default_user'] = ["user","pass"]
+default['riak']['controlvadmin'] = :true
