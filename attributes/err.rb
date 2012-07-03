@@ -17,5 +17,5 @@
 # limitations under the License.
 #
 
-default.riak.err.term_max_size = 65536
-default.riak.err.fmt_max_bytes = 65536
+default['riak']['err']['term_max_size'] = 65536
+default['riak']['err']['fmt_max_bytes'] = 65536

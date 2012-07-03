@@ -16,4 +16,4 @@
 # limitations under the License.
 #
 
-default.riak.search.enabled = false
+default['riak']['search']['enabled'] = false

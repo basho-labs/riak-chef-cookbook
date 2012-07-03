@@ -17,12 +17,12 @@
 # limitations under the License.
 #
 
-default.riak.innostore.log_buffer_size = 8388608
-default.riak.innostore.log_files_in_group = 8
-default.riak.innostore.log_file_size = 268435456
-default.riak.innostore.flush_log_at_trx_commit = 1
-default.riak.innostore.data_home_dir = "/var/lib/riak/innodb"
-default.riak.innostore.log_group_home_dir = "/var/lib/riak/innodb"
-default.riak.innostore.buffer_pool_size = 2147483648
-default.riak.innostore.flush_method = "O_DIRECT"
+default['riak']['innostore']['log_buffer_size'] = 8388608
+default['riak']['innostore']['log_files_in_group'] = 8
+default['riak']['innostore']['log_file_size'] = 268435456
+default['riak']['innostore']['flush_log_at_trx_commit'] = 1
+default['riak']['innostore']['data_home_dir'] = "/var/lib/riak/innodb"
+default['riak']['innostore']['log_group_home_dir'] = "/var/lib/riak/innodb"
+default['riak']['innostore']['buffer_pool_size'] = 2147483648
+default['riak']['innostore']['flush_method'] = "O_DIRECT"
 

@@ -17,50 +17,50 @@
 # limitations under the License.
 #
 
-default.riak.kv.mapred_queue_dir = "/var/lib/riak/mr_queue"
-default.riak.kv.mapred_name = "mapred"
-default.riak.kv.mapred_system = :pipe
-default.riak.kv.mapred_2i_pipe = true
-default.riak.kv.map_js_vm_count = 8
-default.riak.kv.reduce_js_vm_count = 6
-default.riak.kv.hook_js_vm_count = 2
-default.riak.kv.js_max_vm_mem = 8
-default.riak.kv.js_thread_stack = 16
-default.riak.kv.http_url_encoding = "on"
-default.riak.kv.raw_name = "riak"
-default.riak.kv.riak_kv_stat = true
-default.riak.kv.legacy_stats = true
-default.riak.kv.vnode_vclocks = true
-default.riak.kv.legacy_keylisting = false
-default.riak.kv.pb_ip = "127.0.0.1"
-default.riak.kv.pb_port = 8087
+default['riak']['kv']['mapred_queue_dir'] = "/var/lib/riak/mr_queue"
+default['riak']['kv']['mapred_name'] = "mapred"
+default['riak']['kv']['mapred_system'] = :pipe
+default['riak']['kv']['mapred_2i_pipe'] = true
+default['riak']['kv']['map_js_vm_count'] = 8
+default['riak']['kv']['reduce_js_vm_count'] = 6
+default['riak']['kv']['hook_js_vm_count'] = 2
+default['riak']['kv']['js_max_vm_mem'] = 8
+default['riak']['kv']['js_thread_stack'] = 16
+default['riak']['kv']['http_url_encoding'] = "on"
+default['riak']['kv']['raw_name'] = "riak"
+default['riak']['kv']['riak_kv_stat'] = true
+default['riak']['kv']['legacy_stats'] = true
+default['riak']['kv']['vnode_vclocks'] = true
+default['riak']['kv']['legacy_keylisting'] = false
+default['riak']['kv']['pb_ip'] = "127.0.0.1"
+default['riak']['kv']['pb_port'] = 8087
 
 # +-------------------------+
 # | Standard Single Backend |
 # +-------------------------+
 #
-#default.riak.kv.storage_backend = :riak_kv_eleveldb_backend
+#default['riak']['kv']['storage_backend = :riak_kv_eleveldb_backend
 
 # +-------------------------+
 # |  Multi Backend for CS   |
 # +-------------------------+
 
-default.riak.kv.storage_backend = :riak_cs_kv_multi_backend
-default.riak.kv.multi_backend_prefix_list = {:"<<\"0b:\">>" => :be_blocks}
-default.riak.kv.multi_backend_default = :be_default
+default['riak']['kv']['storage_backend'] = :riak_cs_kv_multi_backend
+default['riak']['kv']['multi_backend_prefix_list'] = {':<<"0b:">>' => :be_blocks}
+default['riak']['kv']['multi_backend_default'] = :be_default
 
-default.riak.kv.multi_backend.backend1 = [:be_default, :riak_kv_eleveldb_backend, {:max_open_files => 50,:data_root => "/var/lib/riak/leveldb"} ]
-default.riak.kv.multi_backend.backend2 = [:be_blocks, :riak_kv_bitcask_backend,   {:data_root => "/var/lib/riak/bitcask"} ]
+default['riak']['kv']['multi_backend.backend1'] = [:be_default, :riak_kv_eleveldb_backend, {:max_open_files => 50,:data_root => "/var/lib/riak/leveldb"} ]
+default['riak']['kv']['multi_backend.backend2'] = [:be_blocks, :riak_kv_bitcask_backend,   {:data_root => "/var/lib/riak/bitcask"} ]
 
 # +-------------------------+
 # |  Multi Backend NOT CS   |
 # +-------------------------+
 #
-#default.riak.kv.storage_backend = :riak_kv_multi_backend
-#default.riak.kv.multi_backend_default = :"<<\"bitcask_mult\">>"
+#default['riak']['kv']['storage_backend'] = :riak_kv_multi_backend
+#default['riak']['kv']['multi_backend_default'] = ':<<"bitcask_mult">>'
 
 ## format:                    .anyname  = [         name                   ,           module          ,               [Configs]                 ]
-#default.riak.kv.multi_backend.backend1 = [:"<<\"bitcask_mult\">>"         , :riak_kv_bitcask_backend  , {:data_root => "/var/lib/riak/bitcask"} ]
-#default.riak.kv.multi_backend.backend2 = [:"<<\"eleveldb_mult\">>"        , :riak_kv_eleveldb_backend , {:max_open_files => 50, :data_root => "/var/lib/riak/leveldb"} ]
-#default.riak.kv.multi_backend.backend3 = [:"<<\"second_eleveldb_mult\">>" , :riak_kv_eleveldb_backend , {:max_open_files => 35, :data_root => "/var/lib/riak/leveldb"} ]
-#default.riak.kv.multi_backend.backend4 = [:"<<\"memory_mult\">>"          , :riak_kv_memory_backend   , {:max_memory => 4096, :ttl => 86400} ]
+#default['riak']['kv']['multi_backend.backend1'] = [':<<"bitcask_mult">>'         , :riak_kv_bitcask_backend  , {:data_root => "/var/lib/riak/bitcask"} ]
+#default['riak']['kv']['multi_backend.backend2'] = [':<<"eleveldb_mult">>'        , :riak_kv_eleveldb_backend , {:max_open_files => 50, :data_root => "/var/lib/riak/leveldb"} ]
+#default['riak']['kv']['multi_backend.backend3'] = [':<<"second_eleveldb_mult">>' , :riak_kv_eleveldb_backend , {:max_open_files => 35, :data_root => "/var/lib/riak/leveldb"} ]
+#default['riak']['kv']['multi_backend.backend4'] = [':<<"memory_mult">>'          , :riak_kv_memory_backend   , {:max_memory => 4096, :ttl => 86400} ]

@@ -17,10 +17,10 @@
 # limitations under the License.
 #
 
-default.riak.package.type = "binary"
-default.riak.package.version.major = "1"
-default.riak.package.version.minor = "1"
-default.riak.package.version.incremental = "4"
-default.riak.package.version.build = "1"
-default.riak.package.source_checksum = '202c7b969a8b389cde176f267ab4f90fb17dc71c6a2b785fc67915719d0b06f2'
-default.riak.package.config_dir = "/etc/riak"
+default['riak']['package']['type'] = "binary"
+default['riak']['package']['version']['major'] = "1"
+default['riak']['package']['version']['minor'] = "1"
+default['riak']['package']['version']['incremental'] = "4"
+default['riak']['package']['version']['build'] = "1"
+default['riak']['package']['source_checksum'] = '202c7b969a8b389cde176f267ab4f90fb17dc71c6a2b785fc67915719d0b06f2'
+default['riak']['package']['config_dir'] = "/etc/riak"
