@@ -17,7 +17,7 @@
 # limitations under the License.
 #
 
-# package.rb
+# package
 if node['riak']['package']['type'].eql?("source")
   node['default']['riak']['package']['prefix'] = "/usr/local"
   node['default']['riak']['package']['config_dir'] = node['riak']['package']['prefix'] + "/riak/etc"

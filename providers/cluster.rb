@@ -30,7 +30,7 @@ def load_current_resource
   current_resource.ring_ready(ringready)
   Chef::Application.fatal!("Can't join a Riak cluster if the local node is not running.") unless current_resource.ring_ready[:running]
   current_resource.joined(!current_resource.ring_ready[:ready] || current_resource.ring_ready[:members].size > 1)
-  if new_resource.cluster_members
+  if Chef::Config[:solo] && new_resource.cluster_members
     current_resource.cluster_members(new_resource.cluster_members)
   else
     current_resource.cluster_members([])
