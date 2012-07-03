@@ -17,6 +17,7 @@
 # limitations under the License.
 #
 actions :join, :leave
+default_action :join
 
 attribute :cluster_name, :kind_of => [String], :name_attribute => true
 attribute :cluster_members, :kind_of => [Array]

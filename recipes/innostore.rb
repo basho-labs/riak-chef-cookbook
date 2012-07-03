@@ -20,55 +20,55 @@
 
 include_recipe "riak"
 
-inno_version = node[:riak][:innostore][:version]
-inno_build = node[:riak][:innostore][:build]
+inno_version = node['riak']['innostore']['version']
+inno_build = node['riak']['innostore']['build']
 base_uri = "http://downloads.basho.com/innostore/innostore-#{inno_version}/"
 base_filename = "innostore-#{inno_version}"
 
-package_file =  case node[:riak][:package][:type]
+package_file =  case node['riak']['package']['type']
                 when "binary"
-                  case node[:platform]
+                  case node['platform']
                   when "debian","ubuntu"
                     machines = {"x86_64" => "amd64", "i386" => "i386"} 
-                    "#{base_filename.gsub(/\-/, '_')}-#{inno_build}_#{machines[node[:kernel][:machine]]}.deb"
-                  when "centos","redhat","fedora","suse"
-                    "#{base_filename}-#{inno_build}.#{node[:kernel][:machine]}.rpm"
+                    "#{base_filename.gsub(/\-/, '_')}-#{inno_build}_#{machines[node['kernel']['machine']]}.deb"
+                  when "centos","redhat","fedora","suse","amazon","scientific"
+                    "#{base_filename}-#{inno_build}.#{node['kernel']['machine']}.rpm"
                   end
                 when "source"
                   "#{base_filename}.tar.gz"
                 end
 
-remote_file "/tmp/riak_pkg/#{package_file}" do
+remote_file "#{Chef::Config[:file_cache_path]}/riak_pkg/#{package_file}" do
   source base_uri + package_file
   owner "root"
   mode "0644"
 end
 
-case node[:riak][:package][:type]
+case node['riak']['package']['type']
 when "binary"
   package "innostore" do
-    source "/tmp/riak_pkg/#{package_file}"
+    source "#{Chef::Config[:file_cache_path]}/riak_pkg/#{package_file}"
     action :install
     provider value_for_platform(
       [ "ubuntu", "debian" ] => {"default" => Chef::Provider::Package::Dpkg},
-      [ "redhat", "centos", "fedora", "suse" ] => {"default" => Chef::Provider::Package::Rpm}
+      [ "redhat", "centos", "fedora", "suse", "scientific", "amazon" ] => {"default" => Chef::Provider::Package::Rpm}
     )
   end
 when "source"
   execute "riak-inno-src-unpack" do
-    cwd "/tmp/riak_pkg"    
+    cwd "#{Chef::Config[:file_cache_path]}/riak_pkg"
     command "tar xvfz #{package_file}"
   end
   
   execute "riak-inno-src-build" do
-    cwd "/tmp/riak_pkg/#{base_filename}"
+    cwd "#{Chef::Config[:file_cache_path]}/riak_pkg/#{base_filename}"
     command "make"
   end
   
   execute "riak-inno-src-install" do
-    cwd "/tmp/riak_pkg/#{base_filename}"
-    command "./rebar install target=#{node[:riak][:package][:prefix]}/riak/lib"
-    not_if "test -d #{node[:riak][:package][:prefix]}/riak/lib/#{base_filename}"
+    cwd "#{Chef::Config[:file_cache_path]}/riak_pkg/#{base_filename}"
+    command "./rebar install target=#{node['riak']['package']['prefix']}/riak/lib"
+    not_if "test -d #{node['riak']['package']['prefix']}/riak/lib/#{base_filename}"
   end
 end
 

@@ -23,15 +23,18 @@ include Chef::Mixin::ShellOut
 include Timeout
 
 def load_current_resource
-  Chef::Application.fatal!("Can't join a Riak cluster without cluster_members.") if Chef::Config[:solo] && new_resource.cluster_members.blank?  
+  if Chef::Config[:solo] && new_resource.cluster_members.blank?
+    Chef::Application.fatal!("Can't join a Riak cluster without cluster_members.")
+  end
   @current_resource ||= Chef::Resource::RiakCluster.new(new_resource.cluster_name)
   current_resource.ring_ready(ringready)
   Chef::Application.fatal!("Can't join a Riak cluster if the local node is not running.") unless current_resource.ring_ready[:running]
   current_resource.joined(!current_resource.ring_ready[:ready] || current_resource.ring_ready[:members].size > 1)
-  if new_resource.cluster_members
+  if Chef::Config[:solo] && new_resource.cluster_members
     current_resource.cluster_members(new_resource.cluster_members)
   else
     current_resource.cluster_members([])
+
     search(:node, "riak_core_cluster_name:#{new_resource.cluster_name}") do |n|
       current_resource.cluster_members << n.riak.erlang.node_name
     end
