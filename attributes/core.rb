@@ -17,12 +17,12 @@
 # limitations under the License.
 #
 
-case node["platform"]
+case node['platform']
 
 when "debian","ubuntu"
   default['riak']['core']['platform_lib_dir'] = "/usr/lib/riak"
 when "redhat","centos","scientific","fedora","suse","amazon"
-  if node["kernel"]["machine"] == 'x86_64'
+  if node['kernel']['machine'] == 'x86_64'
     default['riak']['core']['platform_lib_dir'] = "/usr/lib64/riak"
   else 
     default['riak']['core']['platform_lib_dir'] = "/usr/lib/riak"
