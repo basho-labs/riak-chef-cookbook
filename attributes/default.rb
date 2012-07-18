@@ -177,7 +177,7 @@ default['riak']['innostore']['flush_method'] = "O_DIRECT"
 # | Standard Single Backend |
 # +-------------------------+
 #
-default['riak']['kv']['storage_backend'] = :riak_kv_eleveldb_backend
+default['riak']['kv']['storage_backend'] = :riak_kv_bitcask_backend
 
 # +-------------------------+
 # |  Multi Backend for CS   |
