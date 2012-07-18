@@ -177,18 +177,18 @@ default['riak']['innostore']['flush_method'] = "O_DIRECT"
 # | Standard Single Backend |
 # +-------------------------+
 #
-#default['riak']['kv']['storage_backend = :riak_kv_eleveldb_backend
+default['riak']['kv']['storage_backend'] = :riak_kv_eleveldb_backend
 
 # +-------------------------+
 # |  Multi Backend for CS   |
 # +-------------------------+
 
-default['riak']['kv']['storage_backend'] = :riak_cs_kv_multi_backend
-default['riak']['kv']['multi_backend_prefix_list'] = {':<<"0b:">>' => :be_blocks}
-default['riak']['kv']['multi_backend_default'] = :be_default
+#default['riak']['kv']['storage_backend'] = :riak_cs_kv_multi_backend
+#default['riak']['kv']['multi_backend_prefix_list'] = {':<<"0b:">>' => :be_blocks}
+#default['riak']['kv']['multi_backend_default'] = :be_default
 
-default['riak']['kv']['multi_backend.backend1'] = [:be_default, :riak_kv_eleveldb_backend, {:max_open_files => 50,:data_root => "/var/lib/riak/leveldb"} ]
-default['riak']['kv']['multi_backend.backend2'] = [:be_blocks, :riak_kv_bitcask_backend,   {:data_root => "/var/lib/riak/bitcask"} ]
+#default['riak']['kv']['multi_backend.backend1'] = [:be_default, :riak_kv_eleveldb_backend, {:max_open_files => 50,:data_root => "/var/lib/riak/leveldb"} ]
+#default['riak']['kv']['multi_backend.backend2'] = [:be_blocks, :riak_kv_bitcask_backend,   {:data_root => "/var/lib/riak/bitcask"} ]
 
 # +-------------------------+
 # |  Multi Backend NOT CS   |
