@@ -149,9 +149,9 @@ if node[:riak][:package][:type].eql?("binary")
   end
 end
 
-if !node[:riak][:core][:ssl].empty?
+if !node[:riak][:core][:ssl_cert].empty?
   template "#{node[:riak][:package][:config_dir]}/cert.pem" do
-      variables :banner => "CERTIFICATE", :key => node[:riak][:core][:ssl][:cert]
+      variables :banner => "CERTIFICATE", :key => node[:riak][:core][:ssl_cert][:cert]
       source "ssl.erb"
       owner "root"
       mode 0644
@@ -160,7 +160,7 @@ if !node[:riak][:core][:ssl].empty?
   end
 
   template "#{node[:riak][:package][:config_dir]}/key.pem" do
-      variables :banner => "RSA PRIVATE KEY", :key => node[:riak][:core][:ssl][:key]
+      variables :banner => "RSA PRIVATE KEY", :key => node[:riak][:core][:ssl_cert][:key]
       source "ssl.erb"
       owner "root"
       mode 0644
