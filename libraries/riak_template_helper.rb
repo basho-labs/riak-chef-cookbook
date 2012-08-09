@@ -18,7 +18,7 @@
 #
 require 'delegate'
 module RiakTemplateHelper
-  class Tuple < DelegateClass(Array)
+  class Tuple < Array
     include RiakTemplateHelper
     def to_s
       "{" << map {|i| value_to_erlang(i) }.join(", ") << "}"
