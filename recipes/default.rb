@@ -20,35 +20,35 @@
 
 include_recipe "riak::config"
 
-if node[:riak][:package][:url]
-  package_uri = node[:riak][:package][:url]
+if node['riak']['package']['url']
+  package_uri = node['riak']['package']['url']
   package_file = package_uri.split("/").last
 else
-  version_str = "#{node[:riak][:package][:version][:major]}.#{node[:riak][:package][:version][:minor]}"
-  base_uri = "http://downloads.basho.com/riak/riak-#{version_str}.#{node[:riak][:package][:version][:incremental]}/"
-  base_filename = "riak-#{version_str}.#{node[:riak][:package][:version][:incremental]}"
+  version_str = "#{node['riak']['package']['version']['major']}.#{node['riak']['package']['version']['minor']}"
+  base_uri = "http://downloads.basho.com/riak/riak-#{version_str}.#{node['riak']['package']['version']['incremental']}/"
+  base_filename = "riak-#{version_str}.#{node['riak']['package']['version']['incremental']}"
 
 
-  case node[:platform]
+  case node['platform']
   when "debian","ubuntu"
     machines = {"x86_64" => "amd64", "i386" => "i386", "i686" => "i386"}
-  when "redhat","centos","scientific","fedora","suse"
+  when "redhat","centos","scientific","fedora","suse","amazon"
     machines = {"x86_64" => "x86_64", "i386" => "i386", "i686" => "i686"}
   end
-  package_file =  case node[:riak][:package][:type]
+  package_file =  case node['riak']['package']['type']
                   when "binary"
-                    case node[:platform]
+                    case node['platform']
                     when "debian","ubuntu"
-                      package "libssl0.9.8" if node[:platform_version] >= "11.10"
-                      "#{base_filename.gsub(/\-/, '_')}-#{node[:riak][:package][:version][:build]}_#{machines[node[:kernel][:machine]]}.deb"
-                    when "centos","redhat","suse"
-                      if node[:platform_version].to_i == 6
-                        "#{base_filename}-#{node[:riak][:package][:version][:build]}.el6.#{machines[node[:kernel][:machine]]}.rpm"
+                      package "libssl0.9.8" if node['platform_version'] >= "11.10"
+                      "#{base_filename.gsub(/\-/, '_')}-#{node['riak']['package']['version']['build']}_#{machines[node['kernel']['machine']]}.deb"
+                    when "centos","redhat","suse","amazon","scientific"
+                      if node['platform_version'].to_i == 6
+                        "#{base_filename}-#{node['riak']['package']['version']['build']}.el6.#{machines[node['kernel']['machine']]}.rpm"
                       else
-                        "#{base_filename}-#{node[:riak][:package][:version][:build]}.el5.#{machines[node[:kernel][:machine]]}.rpm"
+                        "#{base_filename}-#{node['riak']['package']['version']['build']}.el5.#{machines[node['kernel']['machine']]}.rpm"
                       end
                     when "fedora"
-                      "#{base_filename}-#{node[:riak][:package][:version][:build]}.fc13.#{node[:kernel][:machine]}.rpm"
+                      "#{base_filename}-#{node['riak']['package']['version']['build']}.fc13.#{node['kernel']['machine']}.rpm"
                     end
                   when "source"
                     "#{base_filename}.tar.gz"
@@ -58,7 +58,7 @@ end
 
 package_name = package_file.split("[-_]\d+\.").first
 
-#if %w{debian ubuntu}.include?(node[:platform])
+#if %w{debian ubuntu}.include?(node['platform'])
 #  include_recipe "riak::iptables"
 #end
 
@@ -77,20 +77,20 @@ directory "/tmp/riak_pkg" do
   action :create
 end
 
-remote_file "/tmp/riak_pkg/#{package_file}" do
+remote_file "#{Chef::Config[:file_cache_path]}/riak_pkg/#{package_file}" do
   source package_uri
   owner "root"
   mode 0644
-  checksum node[:riak][:package][:source_checksum]
-  not_if { File.exists?("/tmp/riak_pkg/#{package_file}") }
+  checksum node['riak']['package']['source_checksum']
+  not_if { File.exists?("#{Chef::Config[:file_cache_path]}/riak_pkg/#{package_file}") }
 end
 
-case node[:riak][:package][:type]
+case node['riak']['package']['type']
 when "binary"
   package package_name do
-    source "/tmp/riak_pkg/#{package_file}"
+    source "#{Chef::Config[:file_cache_path]}/riak_pkg/#{package_file}"
     action :install
-    options case node[:platform]
+    options case node['platform']
             when "debian","ubuntu"
               "--force-confnew"
             end       
@@ -101,50 +101,52 @@ when "binary"
   end
 when "source"
   execute "riak-src-unpack" do
-    cwd "/tmp/riak_pkg"
+    cwd "#{Chef::Config[:file_cache_path]}/riak_pkg"
     command "tar xvfz #{package_file}"
   end
 
   execute "riak-src-build" do
-    cwd "/tmp/riak_pkg/#{base_filename}"
+    cwd "#{Chef::Config[:file_cache_path]}/riak_pkg/#{base_filename}"
     command "make clean all rel"
   end
 
   execute "riak-src-install" do
-    command "mv /tmp/riak_pkg/#{base_filename}/rel/riak #{node[:riak][:package][:prefix]}"
-    not_if { File.directory?("#{node[:riak][:package][:prefix]}/riak") }
+    command "mv #{Chef::Config[:file_cache_path]}/riak_pkg/#{base_filename}/rel/riak #{node['riak']['package']['prefix']}"
+    not_if { File.directory?("#{node['riak']['package']['prefix']}/riak") }
   end
 end
 
-case node[:riak][:kv][:storage_backend]
-when :riak_kv_innostore_backend
+case node['riak']['kv']['storage_backend']
+when 'riak_kv_innostore_backend'
   include_recipe "riak::innostore"
 end
 
-directory node[:riak][:package][:config_dir] do
+directory node['riak']['package']['config_dir'] do
   owner "root"
   mode "0755"
   action :create
 end
 
-template "#{node[:riak][:package][:config_dir]}/app.config" do
+template "#{node['riak']['package']['config_dir']}/app.config" do
   source "app.config.erb"
   owner "root"
   mode 0644
 end
 
-template "#{node[:riak][:package][:config_dir]}/vm.args" do
-  variables :switches => prepare_vm_args(node[:riak][:erlang].to_hash)
+template "#{node['riak']['package']['config_dir']}/vm.args" do
+  variables :switches => prepare_vm_args(node['riak']['erlang'].to_hash)
   source "vm.args.erb"
   owner "root"
   mode 0644
 end
 
-if node[:riak][:package][:type].eql?("binary")
-  service "riak" do
-    supports :start => true, :stop => true, :restart => true
-    action [ :enable ]
-    subscribes :restart, resources(:template => [ "#{node[:riak][:package][:config_dir]}/app.config",
-                                   "#{node[:riak][:package][:config_dir]}/vm.args" ])
-  end
+
+service "riak" do
+  supports :start => true, :stop => true, :restart => true
+  action [ :enable ]
+  subscribes :restart, resources(:template => [
+                                "#{node['riak']['package']['config_dir']}/app.config",
+                                "#{node['riak']['package']['config_dir']}/vm.args"
+                                ])
+  only_if { node['riak']['package']['type'].eql?("binary") }
 end

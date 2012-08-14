@@ -20,10 +20,10 @@
 
 include_recipe "riak::default"
 
-if node[:riak][:package][:type] == "binary"
-  bin_path = "/usr/sbin"
+if node['riak']['package']['type'] == "binary"
+  bin_path = '/usr/sbin'
 else
-  bin_path = "#{node[:riak][:package][:prefix]}/riak/bin"
+  bin_path = node['riak']['package']['prefix'] + "/riak/bin"
 end
 
 # Riak's packaged init.d script doesn't work. We'll use the bin script
@@ -31,7 +31,7 @@ end
 bash "Start riak and wait for riak_kv to be available" do
   code <<-SCRIPT
 #{bin_path}/riak start
-#{bin_path}/riak-admin wait-for-service riak_kv #{node[:riak][:erlang][:node_name]}
+#{bin_path}/riak-admin wait-for-service riak_kv #{node['riak']['erlang']['node_name']}
 SCRIPT
   timeout 45
 end
@@ -40,8 +40,8 @@ end
 # don't blow up in the riak_cluster provider on not having a node name.
 node.save
 
-riak_cluster node[:riak][:core][:cluster_name] do
-  node_name node[:riak][:erlang][:node_name]
+riak_cluster node['riak']['core']['cluster_name'] do
+  node_name node['riak']['erlang']['node_name']
   action :join
   riak_admin_path bin_path
 end
