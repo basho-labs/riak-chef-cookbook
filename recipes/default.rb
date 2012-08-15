@@ -34,7 +34,10 @@ else
     base_uri = "#{base_uri}/#{node[:platform]}/#{node[:lsb][:codename]}/" 
   when "redhat","centos","scientific","fedora","suse"
     machines = {"x86_64" => "x86_64", "i386" => "i386", "i686" => "i686"}
-    base_uri = "#{base_uri}#{node[:platform_family]}/#{node[:platform_version].to_i}/"
+    base_uri = "#{base_uri}/rhel/#{node[:platform_version].to_i}/"
+  when "fedora"
+    machines = {"x86_64" => "x86_64", "i386" => "i386", "i686" => "i686"}
+    base_uri = "#{base_uri}/#{node[:platform]}/#{node[:platform_version].to_i}/"
   end
   package_file =  case node[:riak][:package][:type]
                   when "binary"
