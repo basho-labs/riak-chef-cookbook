@@ -18,7 +18,7 @@
 #
 require 'delegate'
 module RiakTemplateHelper
-  class Tuple < Array
+  class Tuple < DelegateClass(Array)
     include RiakTemplateHelper
     def to_s(depth=1)
       "{" << map {|i| value_to_erlang(i,depth) }.join(", ") << "}"
@@ -67,6 +67,7 @@ module RiakTemplateHelper
   RIAK_REMOVE_CONFIGS = ['package', 'erlang']
 
   RIAK_TRANSLATE_CONFIGS = {
+    'api' => 'riak_api',
     'core' => 'riak_core',
     'kv' => 'riak_kv',
     'search' => 'riak_search',
@@ -82,7 +83,7 @@ module RiakTemplateHelper
     node.riak.kv.pb_ip        = node[:network][:interfaces][node.riak.net_dev_int][:addresses].select { |address, data| data[:family] == "inet" }[0][0]
 
     #Each backend in multi-backend will be a keyless tuple, so add them to KEYLESS_ATTRIBUTES
-    riak[:kv][:multi_backend].each_key { |k| KEYLESS_ATTRIBUTES.push(k) }
+    #riak[:kv][:multi_backend].each_key { |k| KEYLESS_ATTRIBUTES.push(k) }
 
 
     # Don't muck with the node attributes
