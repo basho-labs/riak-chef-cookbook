@@ -1,8 +1,8 @@
 #
-# Author:: Benjamin Black (<b@b3k.us>)
+# Author:: Seth Thomas (<sthomas@basho.com>)
 # Cookbook Name:: riak
 #
-# Copyright (c) 2011 Basho Technologies, Inc.
+# Copyright (c) 2012 Basho Technologies, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -17,4 +17,5 @@
 # limitations under the License.
 #
 
-default.riak.kv.riak_kv_dets_backend_root = "/var/lib/riak/dets"
+default.riak.api.pb_ip = "127.0.0.1"
+default.riak.api.pb_port = 8087
