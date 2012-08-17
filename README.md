@@ -65,7 +65,7 @@ A number of Erlang parameters may be configured through the cookbook.  The node 
 	node[:riak][:erlang][:async_threads] = 64
 	node[:riak][:erlang][:smp] = ("enable" | "disable")
 	node[:riak][:erlang][:env_vars][:ERL_MAX_PORTS] = 4096
-    	node[:riak][:erlang][:env_vars][:ERL_FULLSWEEP_AFTER] = 10
+	node[:riak][:erlang][:env_vars][:ERL_FULLSWEEP_AFTER] = 10
 
 
 Storage Backends
