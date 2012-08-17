@@ -112,10 +112,8 @@ module RiakTemplateHelper
 
     # Select the backend configuration
     riak['riak_kv']['storage_backend'] = riak['riak_kv']['storage_backend'].to_sym
-    riak.delete('innostore') unless riak['riak_kv']['storage_backend']==:riak_kv_innostore_backend
     riak.delete('eleveldb')  unless riak['riak_kv']['storage_backend']==:riak_kv_eleveldb_backend
     riak.delete('bitcask')   unless riak['riak_kv']['storage_backend']==:riak_kv_bitcask_backend
-    riak['riak_kv'].delete('riak_kv_dets_backend_root') unless riak['riak_kv']['storage_backend']==:riak_kv_dets_backend
     #This adds the multibackends in their own section of app.config for cs
     if riak['riak_kv']['storage_backend']==:riak_cs_kv_multi_backend
       node.riak.kv.multi_backend.each do |k,v|

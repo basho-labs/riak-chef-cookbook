@@ -30,6 +30,7 @@ default.riak.kv.http_url_encoding = "on"
 default.riak.kv.raw_name = "riak"
 default.riak.kv.vnode_vclocks = true
 default.riak.kv.legacy_keylisting = false
+default.riak.kv.listkeys_backpressure = true
 
 # +-------------------------+
 # | Standard Single Backend |
