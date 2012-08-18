@@ -25,19 +25,19 @@ if node[:riak][:package][:url]
   package_file = package_uri.split("/").last
 else
   version_str = "#{node[:riak][:package][:version][:major]}.#{node[:riak][:package][:version][:minor]}"
-  base_uri = "http://s3.amazonaws.com/downloads.basho.com/riak/#{version_str}/#{version_str}.#{node[:riak][:package][:version][:incremental]}"
+  base_uri = "http://s3.amazonaws.com/downloads.basho.com/riak/#{version_str}/#{version_str}.#{node[:riak][:package][:version][:incremental]}/"
   base_filename = "riak-#{version_str}.#{node[:riak][:package][:version][:incremental]}"
 
   case node[:platform]
   when "debian","ubuntu"
     machines = {"x86_64" => "amd64", "i386" => "i386", "i686" => "i386"}
-    base_uri = "#{base_uri}/#{node[:platform]}/#{node[:lsb][:codename]}/" 
-  when "redhat","centos","scientific","fedora","suse"
+    base_uri = "#{base_uri}#{node[:platform]}/#{node[:lsb][:codename]}/" 
+  when "redhat","centos","scientific","suse"
     machines = {"x86_64" => "x86_64", "i386" => "i386", "i686" => "i686"}
-    base_uri = "#{base_uri}/rhel/#{node[:platform_version].to_i}/"
+    base_uri = "#{base_uri}rhel/#{node[:platform_version].to_i}/"
   when "fedora"
     machines = {"x86_64" => "x86_64", "i386" => "i386", "i686" => "i686"}
-    base_uri = "#{base_uri}/#{node[:platform]}/#{node[:platform_version].to_i}/"
+    base_uri = "#{base_uri}#{node[:platform]}/#{node[:platform_version].to_i}/"
   end
   package_file =  case node[:riak][:package][:type]
                   when "binary"
@@ -61,10 +61,6 @@ else
 end
 
 package_name = package_file.split("[-_]\d+\.").first
-
-#if %w{debian ubuntu}.include?(node[:platform])
-#  include_recipe "riak::iptables"
-#end
 
 group "riak"
 
@@ -118,11 +114,6 @@ when "source"
     command "mv /tmp/riak_pkg/#{base_filename}/rel/riak #{node[:riak][:package][:prefix]}"
     not_if { File.directory?("#{node[:riak][:package][:prefix]}/riak") }
   end
-end
-
-case node[:riak][:kv][:storage_backend]
-when :riak_kv_innostore_backend
-  include_recipe "riak::innostore"
 end
 
 directory node[:riak][:package][:config_dir] do
