@@ -3,7 +3,7 @@
 # Cookbook Name:: riak
 # Recipe:: default
 #
-# Copyright (c) 2011 Basho Technologies, Inc.
+# Copyright (c) 2012 Basho Technologies, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -122,15 +122,14 @@ directory node[:riak][:package][:config_dir] do
   action :create
 end
 
-template "#{node[:riak][:package][:config_dir]}/app.config" do
-  source "app.config.erb"
+file "#{node[:riak][:package][:config_dir]}/app.config" do
+  content Eth::Config.new(node['riak']['config'].to_hash).pp
   owner "root"
   mode 0644
 end
 
-template "#{node[:riak][:package][:config_dir]}/vm.args" do
-  variables :switches => prepare_vm_args(node[:riak][:erlang].to_hash)
-  source "vm.args.erb"
+file "#{node[:riak][:package][:config_dir]}/vm.args" do
+  content Eth::Args.new(node['riak']['args'].to_hash).pp
   owner "root"
   mode 0644
 end
@@ -139,7 +138,7 @@ if node[:riak][:package][:type].eql?("binary")
   service "riak" do
     supports :start => true, :stop => true, :restart => true
     action [ :enable ]
-    subscribes :restart, resources(:template => [ "#{node[:riak][:package][:config_dir]}/app.config",
+    subscribes :restart, resources(:file => [ "#{node[:riak][:package][:config_dir]}/app.config",
                                    "#{node[:riak][:package][:config_dir]}/vm.args" ])
   end
 end

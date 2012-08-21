@@ -132,7 +132,13 @@ Index Merge
 	node[:riak][:merge_index][:buffer_rollover_size] = 1048576
 	node[:riak][:merge_index][:max_compact_segments] = 20
 	
+Notes
+-----
+The Chef 10.10 release has a [bug][4] where changes to a file resource does not properly notify restart. This is fixed in Chef 10.12.
+
+
 
 [1]: http://basho.com/
 [2]: http://www.innodb.com/doc/embedded_innodb-1.0/#config-vars
 [3]: https://github.com/basho/lager
+[4]: http://tickets.opscode.com/browse/CHEF-3125
