@@ -18,7 +18,7 @@
 #
 
 # vm.args
-default['riak']['args']['-name'] = "riak@127.0.0.1"
+default['riak']['args']['-name'] = "riak@#{node['ipaddress']}"
 default['riak']['args']['-setcookie'] = "riak"
 default['riak']['args']['+K'] = true
 default['riak']['args']['+A'] = 64
@@ -41,12 +41,13 @@ default['riak']['config']['kernel']['inet_dist_listen_min'] = 6000
 default['riak']['config']['kernel']['inet_dist_listen_max'] = 7999
 
 #riak_api
-default['riak']['config']['riak_api']['pb_ip'] = "127.0.0.1".to_erl_string
+default['riak']['config']['riak_api']['pb_ip'] = "#{node['ipaddress']}".to_erl_string
 default['riak']['config']['riak_api']['pb_port'] = 8087
 
 # riak_core
 default['riak']['config']['riak_core']['ring_state_dir'] = "/var/lib/riak/ring".to_erl_string
-default['riak']['config']['riak_core']['http']["127.0.0.1".to_erl_string] = 8098
+default['riak']['config']['riak_core']['ring_creation_size'] = 64
+default['riak']['config']['riak_core']['http']["#{node['ipaddress']}".to_erl_string] = 8098
 default['riak']['config']['riak_core']['handoff_port'] = 8099
 default['riak']['config']['riak_core']['dtrace_support'] = false
 default['riak']['config']['riak_core']['platform_bin_dir'] = "/usr/sbin".to_erl_string
@@ -105,6 +106,7 @@ default['riak']['config']['riak_sysmon']['busy_dist_port'] = true
 
 # sasl
 default['riak']['config']['sasl']['sasl_error_logger'] = false
+default['riak']['config']['sasl']['utc_log'] = true
 
 # riak_control
 default['riak']['config']['riak_control']['enabled'] = false

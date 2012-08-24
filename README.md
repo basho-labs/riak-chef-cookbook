@@ -102,7 +102,6 @@ Lager
 [Lager][4] is the logging framework used within Riak. It can also be used with erlang/OTP. 
 
 
-    node['riak']['lager'][:handlers]['lager_console_backend']= :info
 	node['riak']['config']['lager']['crash_log'] = "/var/log/riak/crash.log".to_erl_string
 	node['riak']['config']['lager']['crash_log_date'] = "$D0".to_erl_string
 	node['riak']['config']['lager']['crash_log_msg_size']  = 65536
