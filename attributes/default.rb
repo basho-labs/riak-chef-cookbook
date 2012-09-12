@@ -110,6 +110,6 @@ default['riak']['config']['sasl']['utc_log'] = true
 
 # riak_control
 default['riak']['config']['riak_control']['enabled'] = false
-default['riak']['config']['riak_control']['auth'] = "userlist".to_erl_string
-default['riak']['config']['riak_control']['userlist'] = ["user".to_erl_string,"pass".to_erl_string].to_erl_tuple
+default['riak']['config']['riak_control']['auth'] = "userlist"
+default['riak']['config']['riak_control']['userlist'] = [["user".to_erl_string,"pass".to_erl_string].to_erl_tuple]
 default['riak']['config']['riak_control']['admin'] = true
