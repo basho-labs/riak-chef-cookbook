@@ -2,7 +2,7 @@
 # Author:: Benjamin Black (<b@b3k.us>) and Sean Cribbs (<sean@basho.com>)
 # Cookbook Name:: riak
 #
-# Copyright (c) 2011 Basho Technologies, Inc.
+# Copyright (c) 2012 Basho Technologies, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -24,6 +24,6 @@ description       "Installs and configures Riak distributed data store"
 version           "1.2.0"
 recipe            "riak", "Installs Riak"
 
-%w{ubuntu debian centos redhat suse fedora}.each do |os|
+%w{ubuntu debian centos redhat fedora}.each do |os|
   supports os
 end
