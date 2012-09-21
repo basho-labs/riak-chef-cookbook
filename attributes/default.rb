@@ -47,7 +47,7 @@ default['riak']['config']['riak_api']['pb_port'] = 8087
 # riak_core
 default['riak']['config']['riak_core']['ring_state_dir'] = "/var/lib/riak/ring".to_erl_string
 default['riak']['config']['riak_core']['ring_creation_size'] = 64
-default['riak']['config']['riak_core']['http']["#{node['ipaddress']}".to_erl_string] = 8098
+default['riak']['config']['riak_core']['http'] = [["#{node['ipaddress']}".to_erl_string, 8098].to_erl_tuple]
 default['riak']['config']['riak_core']['handoff_port'] = 8099
 default['riak']['config']['riak_core']['dtrace_support'] = false
 default['riak']['config']['riak_core']['platform_bin_dir'] = "/usr/sbin".to_erl_string
@@ -57,7 +57,6 @@ default['riak']['config']['riak_core']['platform_lib_dir'] = "/usr/lib/riak".to_
 default['riak']['config']['riak_core']['platform_log_dir'] = "/var/log/riak".to_erl_string
 
 # riak_kv
-default['riak']['config']['riak_kv']['storage_backend'] = "riak_kv_bitcask_backend"
 default['riak']['config']['riak_kv']['mapred_name'] = "mapred".to_erl_string
 default['riak']['config']['riak_kv']['mapred_system'] = "pipe"
 default['riak']['config']['riak_kv']['mapred_2i_pipe'] = true
@@ -71,6 +70,15 @@ default['riak']['config']['riak_kv']['vnode_vclocks'] = true
 default['riak']['config']['riak_kv']['legacy_keylisting'] = false
 default['riak']['config']['riak_kv']['listkeys_backpressure'] = true
 
+# riak_kv storage_backend
+default['riak']['config']['riak_kv']['storage_backend'] = "riak_kv_bitcask_backend"
+case node['riak']['config']['riak_kv']['storage_backend']
+  when "riak_kv_bitcask_backend"
+    default['riak']['config']['bitcask']['data_root'] = "/var/lib/riak/bitcask".to_erl_string
+  when "riak_kv_eleveldb_backend"
+    default['riak']['config']['eleveldb']['data_root'] = "/var/lib/riak/leveldb".to_erl_string
+end
+
 # riak_search
 default['riak']['config']['riak_search']['enabled'] = false
 
@@ -78,12 +86,6 @@ default['riak']['config']['riak_search']['enabled'] = false
 default['riak']['config']['merge_index']['data_root'] = "/var/lib/riak/merge_index".to_erl_string
 default['riak']['config']['merge_index']['buffer_rollover_size'] = 1048576
 default['riak']['config']['merge_index']['max_compact_segments'] = 20
-
-# bitcask
-default['riak']['config']['bitcask']['data_root'] = "/var/lib/riak/bitcask".to_erl_string
-
-# eleveldb
-default['riak']['config']['eleveldb']['data_root'] = "/var/lib/riak/leveldb".to_erl_string
 
 # lager
 error_log = ["/var/log/riak/error.log".to_erl_string,"error",10485760,"$D0".to_erl_string,5].to_erl_tuple
