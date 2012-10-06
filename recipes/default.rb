@@ -46,7 +46,7 @@ case node['riak']['package']['type']
       node['riak']['config']['riak_core']['platform_lib_dir'] = "/usr/lib64/riak".to_erl_string if node['kernel']['machine'] == 'x86_64'
     end
   when "source"
-    package_file = "#{base_filename.sub(/\-/, '_')}.tar.gz"
+    package_file = "#{base_filename}.tar.gz"
     node['riak']['package']['prefix'] = "/usr/local"
     node['riak']['package']['config_dir'] = node['riak_eds']['package']['prefix'] + "/riak/etc"
   end
