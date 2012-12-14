@@ -32,8 +32,8 @@ case node['riak']['package']['type']
       package_file = "#{base_filename.gsub(/\-/, '_')}-#{node['riak']['package']['version']['build']}_#{machines[node['kernel']['machine']]}.deb"
     when "debian"
       machines = {"x86_64" => "amd64", "i386" => "i386", "i686" => "i386"}
-      base_uri = "#{base_uri}#{node['platform']}/squeeze/"
-      package_file = "#{base_filename.gsub(/\-/, '_').sub(/_/,'-')}-#{node['riak']['package']['version']['build']}_#{machines[node['kernel']['machine']]}.deb"
+      base_uri = "#{base_uri}#{node['platform']}/6/"
+      package_file = "#{base_filename.gsub(/\-/, '_')}-#{node['riak']['package']['version']['build']}_#{machines[node['kernel']['machine']]}.deb"
     when "redhat","centos"
       machines = {"x86_64" => "x86_64", "i386" => "i386", "i686" => "i686"}
       base_uri = "#{base_uri}rhel/#{node['platform_version'].to_i}/"
@@ -80,7 +80,7 @@ when "binary"
     options case node['platform']
             when "debian","ubuntu"
               "--force-confdef --force-confold"
-            end       
+            end
     provider value_for_platform(
       [ "ubuntu", "debian" ] => {"default" => Chef::Provider::Package::Dpkg},
       [ "redhat", "centos", "fedora" ] => {"default" => Chef::Provider::Package::Rpm}
