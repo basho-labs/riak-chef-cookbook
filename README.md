@@ -23,7 +23,12 @@ The package parameters available are version, type and, optionally for source in
 	node['riak']['package']['version']['major'] = "1"
 	node['riak']['package']['version']['minor'] = "3"
 	node['riak']['package']['version']['incremental'] = "0"
-	node['riak']['package']['prefix'] = "/usr/local"
+
+
+Source Installation
+------------------
+
+The riak::source recipe can be used to install Riak from source. The source installation requires the build-essential and erlang cookbooks. 
 
 
 Basic Configuration
