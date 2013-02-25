@@ -2,7 +2,7 @@
 # Author:: Benjamin Black (<b@b3k.us>) and Sean Cribbs (<sean@basho.com>)
 # Cookbook Name:: riak
 #
-# Copyright (c) 2012 Basho Technologies, Inc.
+# Copyright (c) 2013 Basho Technologies, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -17,10 +17,13 @@
 # limitations under the License.
 #
 
-default['riak']['package']['type'] = "binary"
+default['riak']['package']['url'] = "http://s3.amazonaws.com/downloads.basho.com/riak"
 default['riak']['package']['version']['major'] = "1"
-default['riak']['package']['version']['minor'] = "2"
-default['riak']['package']['version']['incremental'] = "1"
+default['riak']['package']['version']['minor'] = "3"
+default['riak']['package']['version']['incremental'] = "0"
 default['riak']['package']['version']['build'] = "1"
-default['riak']['package']['source_checksum'] = '7646c0deba6730d45e211b487e16e0b4f1d41ffbc47af358e85c7bf59cfa0a98'
 default['riak']['package']['config_dir'] = "/etc/riak"
+default['riak']['package']['local_package'] = false
+
+default['riak']['package']['checksum']['fedora']['17']                = "3c8dfccab67e74a886c6bfdcaa7a0f81bcb29b2c656a41b99d50b58d329cdde3"
+default['riak']['package']['checksum']['local']                       = nil

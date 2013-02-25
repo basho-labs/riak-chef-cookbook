@@ -16,21 +16,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
+default['riak']['source']['url'] = "http://s3.amazonaws.com/downloads.basho.com/riak"
+default['riak']['source']['version']['major'] = "1"
+default['riak']['source']['version']['minor'] = "3"
+default['riak']['source']['version']['incremental'] = "0"
+default['riak']['source']['prefix'] = "/usr/local"
+default['riak']['source']['config_dir'] = node['riak']['source']['prefix'] + "/riak/etc"
 
-maintainer        "Basho Technologies, Inc."
-maintainer_email  "riak@basho.com"
-license           "Apache 2.0"
-description       "Installs and configures Riak distributed data store"
-version           "1.3.0"
-depends           "apt"
-depends           "yum"
-depends           "build-essential"
-depends           "erlang"
+default['riak']['source']['checksum'] = '424d159a848825614a5e719df7b743dbeee6c1828566a6c9ec2e06c33b0b86fe'
 
-recipe            "riak", "Installs Riak from a package"
-recipe            "riak::source", "Installs Erlang and Riak from source"
-
-
-%w{ubuntu debian centos redhat fedora}.each do |os|
-  supports os
-end
