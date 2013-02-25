@@ -21,16 +21,20 @@ There are two options for package installation: binary and source.  If you are u
 The package parameters available are version, type and, optionally for source installation, an install prefix:
 
 	node['riak']['package']['version']['major'] = "1"
-	node['riak']['package']['version']['minor'] = "2"
+	node['riak']['package']['version']['minor'] = "3"
 	node['riak']['package']['version']['incremental'] = "0"
-	node['riak']['package']['type'] = ("binary" | "source")
-	node['riak']['package']['prefix'] = "/usr/local"
+
+
+Source Installation
+------------------
+
+The riak::source recipe can be used to install Riak from source. The source installation requires the build-essential and erlang cookbooks. 
 
 
 Basic Configuration
 -------------------
 
-Most Riak configuration is for networking, Erlang, and storage backends.  The only, interesting configuration options outside of those is the filesystem path where ring state files should be stored.
+Most Riak configuration is for networking, Erlang, and storage backends.  The only interesting configuration options outside of those is the filesystem path where ring state files should be stored.
 
 	node['riak']['config']['riak_core']['ring_state_dir'] = "/var/lib/riak/ring".to_erl_string
 
