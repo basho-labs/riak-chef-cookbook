@@ -102,6 +102,19 @@ case node['riak']['config']['riak_kv']['storage_backend']
     default['riak']['config']['bitcask']['data_root'] = "#{platform_data_dir}/bitcask".to_erl_string
   when "riak_kv_eleveldb_backend"
     default['riak']['config']['eleveldb']['data_root'] = "#{platform_data_dir}/leveldb".to_erl_string
+  when "riak_cs_kv_multi_backend"
+    default['riak']['cs_version'] = "1.3.0"
+    if node['platform_family'] == "rhel" && node['kernel']['machine'] == "x86_64"
+       default['riak']['config']['riak_kv']['add_paths'] = ["/usr/lib64/riak-cs/lib/riak_cs-#{node['riak']['cs_version']}/ebin".to_erl_string]
+    else
+       default['riak']['config']['riak_kv']['add_paths'] = ["/usr/lib/riak-cs/lib/riak_cs-#{node['riak']['cs_version']}/ebin".to_erl_string]
+    end
+    prefix_list = ["0b:".to_erl_binary, "be_blocks"]
+    default['riak']['config']['riak_kv']['multi_backend_prefix_list'] = [prefix_list.to_erl_tuple]
+    default['riak']['config']['riak_kv']['multi_backend_default'] = "be_default"
+    be_default = ["be_default", "riak_kv_eleveldb_backend", {"data_root" => "#{platform_data_dir}/leveldb".to_erl_string, "max_open_files" => 50}]
+    be_blocks = ["be_blocks", "riak_kv_bitcask_backend", {"data_root" => "#{platform_data_dir}/bitcask".to_erl_string}]
+    default['riak']['config']['riak_kv']['multi_backend'] = [be_default.to_erl_tuple, be_blocks.to_erl_tuple]
 end
 
 # riak_search
