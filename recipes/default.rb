@@ -117,7 +117,7 @@ end
 
 service "riak" do
   supports :start => true, :stop => true, :restart => true
-  action [ :enable ]
+  action [ :enable, :start ]
   subscribes :restart, resources(:file => [ "#{node['riak']['package']['config_dir']}/app.config",
                                    "#{node['riak']['package']['config_dir']}/vm.args" ])
 end
