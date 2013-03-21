@@ -1,5 +1,6 @@
 Riak Cookbook
 =============
+[![Build Status](https://travis-ci.org/basho/riak-chef-cookbook.png)](https://travis-ci.org/basho/riak-chef-cookbook)
 
 Overview
 ========
