@@ -1,0 +1,6 @@
+rvm:
+  - 1.9.3
+bundler_args: --without=development
+script: bundle exec rake foodcritic
+notifications:
+  email: devops@basho.com
