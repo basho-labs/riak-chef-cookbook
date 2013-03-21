@@ -53,13 +53,13 @@ default['riak']['config']['kernel']['inet_dist_listen_max'] = 7999
 
 # riak_api
 default['riak']['config']['riak_api']['pb_backlog'] = 64
-default['riak']['config']['riak_api']['pb_ip'] = "#{node['ipaddress']}".to_erl_string
+default['riak']['config']['riak_api']['pb_ip'] = node['ipaddress'].to_erl_string
 default['riak']['config']['riak_api']['pb_port'] = 8087
 
 # riak_core
 default['riak']['config']['riak_core']['ring_state_dir'] = "#{platform_data_dir}/ring".to_erl_string
 default['riak']['config']['riak_core']['ring_creation_size'] = 64
-default['riak']['config']['riak_core']['http'] = [["#{node['ipaddress']}".to_erl_string, 8098].to_erl_tuple]
+default['riak']['config']['riak_core']['http'] = [[node['ipaddress'].to_erl_string, 8098].to_erl_tuple]
 #default['riak']['config']['riak_core']['https'] = [["#{node['ipaddress']}".to_erl_string, 8098].to_erl_tuple]
 #default['riak']['config']['riak_core']['ssl'] = [["certfile", "./etc/cert.pem".to_erl_string].to_erl_tuple, ["keyfile", "./etc/key.pem".to_erl_string].to_erl_tuple]
 default['riak']['config']['riak_core']['handoff_port'] = 8099

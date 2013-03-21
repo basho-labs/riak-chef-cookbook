@@ -97,12 +97,14 @@ file "#{node['riak']['package']['config_dir']}/app.config" do
   content Eth::Config.new(node['riak']['config'].to_hash).pp
   owner "root"
   mode 0644
+  notifies :restart, "service[riak]"
 end
 
 file "#{node['riak']['package']['config_dir']}/vm.args" do
   content Eth::Args.new(node['riak']['args'].to_hash).pp
   owner "root"
   mode 0644
+  notifies :restart, "service[riak]"
 end
 
 node['riak']['patches'].each do |patch|
@@ -118,6 +120,4 @@ end
 service "riak" do
   supports :start => true, :stop => true, :restart => true
   action [ :enable, :start ]
-  subscribes :restart, resources(:file => [ "#{node['riak']['package']['config_dir']}/app.config",
-                                   "#{node['riak']['package']['config_dir']}/vm.args" ])
 end
