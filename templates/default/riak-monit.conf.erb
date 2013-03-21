@@ -1,0 +1,7 @@
+check process riak matching "<%= @process_matching %>"
+  group riak
+  start program = "<%= @start_program %>"
+  if failed host <%= @http_host %> port <%= @http_port %> protocol http
+    and request "/"
+    with timeout 2 seconds for 2 cycles
+  then restart
