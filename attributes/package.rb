@@ -20,10 +20,10 @@
 default['riak']['package']['url'] = "http://s3.amazonaws.com/downloads.basho.com/riak"
 default['riak']['package']['version']['major'] = "1"
 default['riak']['package']['version']['minor'] = "3"
-default['riak']['package']['version']['incremental'] = "0"
+default['riak']['package']['version']['incremental'] = "1"
 default['riak']['package']['version']['build'] = "1"
 default['riak']['package']['config_dir'] = "/etc/riak"
 default['riak']['package']['local_package'] = false
 
-default['riak']['package']['checksum']['fedora']['17']                = "3c8dfccab67e74a886c6bfdcaa7a0f81bcb29b2c656a41b99d50b58d329cdde3"
+default['riak']['package']['checksum']['fedora']['17']                = "fff0f7f2033a09cb721f3e438ddeb2f35d474df6ea900f3a6fbe4882e5d2d9e9"
 default['riak']['package']['checksum']['local']                       = nil
