@@ -17,6 +17,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
+include_recipe "ulimit"
 
 version_str = "#{node['riak']['package']['version']['major']}.#{node['riak']['package']['version']['minor']}"
 base_uri = "#{node['riak']['package']['url']}/#{version_str}/#{version_str}.#{node['riak']['package']['version']['incremental']}/"
@@ -105,6 +106,10 @@ file "#{node['riak']['package']['config_dir']}/vm.args" do
   owner "root"
   mode 0644
   notifies :restart, "service[riak]"
+end
+
+user_ulimit "riak" do
+  filehandle_limit node['riak']['limits']['nofile']
 end
 
 node['riak']['patches'].each do |patch|
