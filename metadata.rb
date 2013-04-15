@@ -23,14 +23,13 @@ maintainer_email  "riak@basho.com"
 license           "Apache 2.0"
 description       "Installs and configures Riak distributed data store"
 version           "1.3.1"
-depends           "apt"
-depends           "yum"
-depends           "build-essential"
-depends           "erlang"
 
 recipe            "riak", "Installs Riak from a package"
 recipe            "riak::source", "Installs Erlang and Riak from source"
 
+%w{apt yum build-essential erlang ulimit}.each do |d|
+  depends d
+end
 
 %w{ubuntu debian centos redhat fedora}.each do |os|
   supports os
