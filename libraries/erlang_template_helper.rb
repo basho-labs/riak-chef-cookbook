@@ -121,7 +121,7 @@ module Eth
       when /^[a-z][\w@]*$/
         str
       else
-        "'#{str}'"
+        "\"#{str}\""
       end
     end
   end
