@@ -19,9 +19,11 @@ platforms:
 suites:
 - name: default
   run_list:
+  - recipe[minitest-handler]
   - recipe[riak]
   attributes: {}
 - name: source
   run_list:
+  - recipe[minitest-handler]
   - recipe[riak::source]
   attributes: {}
