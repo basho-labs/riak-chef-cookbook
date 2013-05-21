@@ -17,7 +17,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-include_recipe "ulimit"
 
 version_str = "#{node['riak']['package']['version']['major']}.#{node['riak']['package']['version']['minor']}"
 base_uri = "#{node['riak']['package']['url']}/#{version_str}/#{version_str}.#{node['riak']['package']['version']['incremental']}/"
@@ -25,7 +24,6 @@ base_filename = "riak-#{version_str}.#{node['riak']['package']['version']['incre
 
 case node['platform']
 when "fedora", "centos", "redhat"
-  node.set['riak']['config']['riak_core']['platform_lib_dir'] = "/usr/lib64/riak".to_erl_string if node['kernel']['machine'] == 'x86_64'
   machines = {"x86_64" => "x86_64", "i386" => "i386", "i686" => "i686"}
   base_uri = "#{base_uri}#{node['platform']}/#{node['platform_version'].to_i}/"
   package_file = "#{base_filename}-#{node['riak']['package']['version']['build']}.fc#{node['platform_version'].to_i}.#{node['kernel']['machine']}.rpm"
@@ -94,35 +92,4 @@ else
   end
 end
 
-file "#{node['riak']['package']['config_dir']}/app.config" do
-  content Eth::Config.new(node['riak']['config'].to_hash).pp
-  owner "root"
-  mode 0644
-  notifies :restart, "service[riak]"
-end
-
-file "#{node['riak']['package']['config_dir']}/vm.args" do
-  content Eth::Args.new(node['riak']['args'].to_hash).pp
-  owner "root"
-  mode 0644
-  notifies :restart, "service[riak]"
-end
-
-user_ulimit "riak" do
-  filehandle_limit node['riak']['limits']['nofile']
-end
-
-node['riak']['patches'].each do |patch|
-  cookbook_file "#{node['riak']['config']['riak_core']['platform_lib_dir'].gsub(/__string_/,'')}/lib/basho-patches/#{patch}" do
-    source patch
-    owner "root"
-    mode 0644
-    checksum
-    notifies :restart, "service[riak]"
-  end
-end
-
-service "riak" do
-  supports :start => true, :stop => true, :restart => true
-  action [ :enable, :start ]
-end
+include_recipe "riak::base"
