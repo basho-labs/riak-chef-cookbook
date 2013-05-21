@@ -1,7 +1,7 @@
 #
 # Author:: Seth Thomas (<sthomas@basho.com>)
 # Cookbook Name:: riak
-# Recipe:: default
+# Recipe:: base
 #
 # Copyright (c) 2013 Basho Technologies, Inc.
 #
