@@ -14,4 +14,13 @@ describe "riak::default" do
   it "responds to riak ping" do
     assert(`riak ping` =~ /pong/)
   end
+
+  it "emits riak stats" do
+    if node['riak']['config']['riak_kv']['riak_kv_stat']
+      response = Net::HTTP.get_response(URI.parse("http://#{node['ipaddress']}:8098/stats"))
+      assert(response.body =~ /sys_system_version/)
+    else
+      assert(true)
+    end
+  end
 end
