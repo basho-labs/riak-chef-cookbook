@@ -93,6 +93,7 @@ default['riak']['config']['riak_kv']['http_url_encoding'] = "on"
 default['riak']['config']['riak_kv']['vnode_vclocks'] = true
 default['riak']['config']['riak_kv']['listkeys_backpressure'] = true
 default['riak']['config']['riak_kv']['vnode_mailbox_limit'] = [1, 5000].to_erl_tuple
+default['riak']['config']['riak_kv']['riak_kv_stat'] = true
 
 # riak_kv storage_backend
 default['riak']['config']['riak_kv']['storage_backend'] = "riak_kv_bitcask_backend"
