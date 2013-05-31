@@ -103,7 +103,7 @@ case node['riak']['config']['riak_kv']['storage_backend']
     default['riak']['config']['bitcask']['data_root'] = "#{platform_data_dir}/bitcask".to_erl_string
   when "riak_kv_eleveldb_backend"
     default['riak']['config']['eleveldb']['data_root'] = "#{platform_data_dir}/leveldb".to_erl_string
-  when "riak_cs_kv_multi_backend"
+  when "riak_kv_multi_backend"
     default['riak']['cs_version'] = "1.3.1"
     if node['platform_family'] == "rhel" && node['kernel']['machine'] == "x86_64"
        default['riak']['config']['riak_kv']['add_paths'] = ["/usr/lib64/riak-cs/lib/riak_cs-#{node['riak']['cs_version']}/ebin".to_erl_string]
