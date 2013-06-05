@@ -22,6 +22,14 @@ suites:
   - recipe[minitest-handler]
   - recipe[riak]
   attributes: {}
+- name: enterprise
+  run_list:
+  - recipe[minitest-handler]
+  - recipe[riak]
+  attributes:
+    riak:
+      package:
+        enterprise_key: <%= (ENV["RIAK_ENTERPRISE_KEY"].nil? ? false : ENV["RIAK_ENTERPRISE_KEY"]) %>
 - name: source
   run_list:
   - recipe[minitest-handler]
