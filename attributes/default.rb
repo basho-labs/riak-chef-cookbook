@@ -17,11 +17,11 @@
 # limitations under the License.
 #
 
-platform_bin_dir = "/usr/sbin"
-platform_data_dir = "/var/lib/riak"
-platform_etc_dir = "/etc/riak"
-platform_lib_dir = "/usr/lib/riak"
-platform_log_dir = "/var/log/riak"
+default['riak']['bin_dir'] = "/usr/sbin"
+default['riak']['data_dir'] = "/var/lib/riak"
+default['riak']['etc_dir'] = "/etc/riak"
+default['riak']['lib_dir'] = "/usr/lib/riak"
+default['riak']['log_dir'] = "/var/log/riak"
 
 # vm.args
 default['riak']['args']['-name'] = "riak@#{node['fqdn']}"
@@ -31,12 +31,12 @@ default['riak']['args']['+A'] = 64
 default['riak']['args']['+W'] = "w"
 default['riak']['args']['-env']['ERL_MAX_PORTS'] = 4096
 default['riak']['args']['-env']['ERL_FULLSWEEP_AFTER'] = 0
-default['riak']['args']['-env']['ERL_CRASH_DUMP'] = "#{platform_log_dir}/erl_crash.dump"
+default['riak']['args']['-env']['ERL_CRASH_DUMP'] = "#{node['riak']['log_dir']}/erl_crash.dump"
 default['riak']['args']['-env']['ERL_MAX_ETS_TABLES'] = 8192
 default['riak']['args']['-smp'] =  "enable"
 #default['riak']['args']['-proto_dist'] = "inet_ssl"
-#default['riak']['args']['-ssl_dist_opt']['client_certfile'] = "\"#{platform_etc_dir}/erlclient.pem\""
-#default['riak']['args']['-ssl_dist_opt']['server_certfile'] = "\"#{platform_etc_dir}/erlserver.pem\""
+#default['riak']['args']['-ssl_dist_opt']['client_certfile'] = "\"#{node['riak']['etc_dir']}/erlclient.pem\""
+#default['riak']['args']['-ssl_dist_opt']['server_certfile'] = "\"#{node['riak']['etc_dir']}/erlserver.pem\""
 
 # app.config
 class ::String
@@ -57,7 +57,7 @@ default['riak']['config']['riak_api']['pb_ip'] = node['ipaddress'].to_erl_string
 default['riak']['config']['riak_api']['pb_port'] = 8087
 
 # riak_core
-default['riak']['config']['riak_core']['ring_state_dir'] = "#{platform_data_dir}/ring".to_erl_string
+default['riak']['config']['riak_core']['ring_state_dir'] = "#{node['riak']['data_dir']}/ring".to_erl_string
 default['riak']['config']['riak_core']['ring_creation_size'] = 64
 default['riak']['config']['riak_core']['http'] = [[node['ipaddress'].to_erl_string, 8098].to_erl_tuple]
 #default['riak']['config']['riak_core']['https'] = [["#{node['ipaddress']}".to_erl_string, 8098].to_erl_tuple]
@@ -66,11 +66,11 @@ default['riak']['config']['riak_core']['handoff_port'] = 8099
 #default['riak']['config']['riak_core']['handoff_ssl_options'] = [["certfile", "tmp/erlserver.pem".to_erl_string].to_erl_tuple]
 default['riak']['config']['riak_core']['dtrace_support'] = false
 default['riak']['config']['riak_core']['enable_health_checks'] = true
-default['riak']['config']['riak_core']['platform_bin_dir'] = platform_bin_dir.to_erl_string
-default['riak']['config']['riak_core']['platform_data_dir'] = platform_data_dir.to_erl_string
-default['riak']['config']['riak_core']['platform_etc_dir'] = platform_etc_dir.to_erl_string
-default['riak']['config']['riak_core']['platform_lib_dir'] = platform_lib_dir.to_erl_string
-default['riak']['config']['riak_core']['platform_log_dir'] = platform_log_dir.to_erl_string
+default['riak']['config']['riak_core']['platform_bin_dir'] = node['riak']['bin_dir'].to_erl_string
+default['riak']['config']['riak_core']['platform_data_dir'] = node['riak']['data_dir'].to_erl_string
+default['riak']['config']['riak_core']['platform_etc_dir'] = node['riak']['etc_dir'].to_erl_string
+default['riak']['config']['riak_core']['platform_lib_dir'] = node['riak']['lib_dir'].to_erl_string
+default['riak']['config']['riak_core']['platform_log_dir'] = node['riak']['log_dir'].to_erl_string
 
 # riak_kv
 default['riak']['config']['riak_kv']['anti_entropy'] = ["on", []].to_erl_tuple
@@ -78,7 +78,7 @@ default['riak']['config']['riak_kv']['anti_entropy_build_limit'] = [1, 3600000].
 default['riak']['config']['riak_kv']['anti_entropy_expire'] = 604800000
 default['riak']['config']['riak_kv']['anti_entropy_concurrency'] = 2
 default['riak']['config']['riak_kv']['anti_entropy_tick'] = 1500
-default['riak']['config']['riak_kv']['anti_entropy_data_dir'] = "#{platform_data_dir}/anti_entropy".to_erl_string
+default['riak']['config']['riak_kv']['anti_entropy_data_dir'] = "#{node['riak']['data_dir']}/anti_entropy".to_erl_string
 default['riak']['config']['riak_kv']['anti_entropy_leveldb_opts'] = [["write_buffer_size", 4194304].to_erl_tuple, ["max_open_files", 20].to_erl_tuple]
 default['riak']['config']['riak_kv']['mapred_name'] = "mapred".to_erl_string
 default['riak']['config']['riak_kv']['mapred_system'] = "pipe"
@@ -100,9 +100,9 @@ default['riak']['config']['riak_kv']['storage_backend'] = "riak_kv_bitcask_backe
 case node['riak']['config']['riak_kv']['storage_backend']
   when "riak_kv_bitcask_backend"
     default['riak']['config']['bitcask']['io_mode'] = "erlang"
-    default['riak']['config']['bitcask']['data_root'] = "#{platform_data_dir}/bitcask".to_erl_string
+    default['riak']['config']['bitcask']['data_root'] = "#{node['riak']['data_dir']}/bitcask".to_erl_string
   when "riak_kv_eleveldb_backend"
-    default['riak']['config']['eleveldb']['data_root'] = "#{platform_data_dir}/leveldb".to_erl_string
+    default['riak']['config']['eleveldb']['data_root'] = "#{node['riak']['data_dir']}/leveldb".to_erl_string
   when "riak_kv_multi_backend"
     default['riak']['config']['riak_kv']['multi_backend_default'] = "bitcask_mult"
     bitcask_mult = ["bitcask_mult", "riak_kv_bitcask_backend", {"data_root" => "#{platform_data_dir}/bitcask".to_erl_string}]
@@ -118,8 +118,8 @@ case node['riak']['config']['riak_kv']['storage_backend']
     prefix_list = ["0b:".to_erl_binary, "be_blocks"]
     default['riak']['config']['riak_kv']['multi_backend_prefix_list'] = [prefix_list.to_erl_tuple]
     default['riak']['config']['riak_kv']['multi_backend_default'] = "be_default"
-    be_default = ["be_default", "riak_kv_eleveldb_backend", {"data_root" => "#{platform_data_dir}/leveldb".to_erl_string, "max_open_files" => 50}]
-    be_blocks = ["be_blocks", "riak_kv_bitcask_backend", {"data_root" => "#{platform_data_dir}/bitcask".to_erl_string}]
+    be_default = ["be_default", "riak_kv_eleveldb_backend", {"data_root" => "#{node['riak']['data_dir']}/leveldb".to_erl_string, "max_open_files" => 50}]
+    be_blocks = ["be_blocks", "riak_kv_bitcask_backend", {"data_root" => "#{node['riak']['data_dir']}/bitcask".to_erl_string}]
     default['riak']['config']['riak_kv']['multi_backend'] = [be_default.to_erl_tuple, be_blocks.to_erl_tuple]
 end
 
@@ -127,15 +127,15 @@ end
 default['riak']['config']['riak_search']['enabled'] = false
 
 # merge_index
-default['riak']['config']['merge_index']['data_root'] = "#{platform_data_dir}/merge_index".to_erl_string
+default['riak']['config']['merge_index']['data_root'] = "#{node['riak']['data_dir']}/merge_index".to_erl_string
 default['riak']['config']['merge_index']['buffer_rollover_size'] = 1048576
 default['riak']['config']['merge_index']['max_compact_segments'] = 20
 
 # lager
-error_log = ["#{platform_log_dir}/error.log".to_erl_string,"error",10485760,"$D0".to_erl_string,5].to_erl_tuple
-info_log = ["#{platform_log_dir}/console.log".to_erl_string,"info",10485760,"$D0".to_erl_string,5].to_erl_tuple
+error_log = ["#{node['riak']['log_dir']}/error.log".to_erl_string,"error",10485760,"$D0".to_erl_string,5].to_erl_tuple
+info_log = ["#{node['riak']['log_dir']}/console.log".to_erl_string,"info",10485760,"$D0".to_erl_string,5].to_erl_tuple
 default['riak']['config']['lager']['handlers']['lager_file_backend'] = [error_log, info_log]
-default['riak']['config']['lager']['crash_log'] = "#{platform_log_dir}/crash.log".to_erl_string
+default['riak']['config']['lager']['crash_log'] = "#{node['riak']['log_dir']}/crash.log".to_erl_string
 default['riak']['config']['lager']['crash_log_msg_size'] = 65536
 default['riak']['config']['lager']['crash_log_size'] = 10485760
 default['riak']['config']['lager']['crash_log_date'] = "$D0".to_erl_string
@@ -159,6 +159,18 @@ default['riak']['config']['riak_control']['enabled'] = false
 default['riak']['config']['riak_control']['auth'] = "userlist"
 default['riak']['config']['riak_control']['userlist'] = [["user".to_erl_string,"pass".to_erl_string].to_erl_tuple]
 default['riak']['config']['riak_control']['admin'] = true
+
+# riak_repl
+default['riak']['config']['riak_repl']['data_root'] = "#{node['riak']['data_dir']}/riak_repl".to_erl_string
+
+#jmx config options
+default['riak']['config']['riak_jmx']['enabled'] = false
+
+#snmp config options
+default['riak']['config']['snmp']['agent']['net_if']['options']['bind_to'] = true
+default['riak']['config']['snmp']['agent']['config']['dir'] = "#{node['riak']['etc_dir']}/snmp/agent/conf".to_erl_string
+default['riak']['config']['snmp']['agent']['config']['force_load'] = true
+default['riak']['config']['snmp']['agent']['db_dir'] = "#{node['riak']['data_dir']}/snmp/agent/db".to_erl_string
 
 # limits
 default['riak']['limits']['nofile'] = 4096
