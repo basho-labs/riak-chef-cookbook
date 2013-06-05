@@ -103,6 +103,11 @@ case node['riak']['config']['riak_kv']['storage_backend']
     default['riak']['config']['bitcask']['data_root'] = "#{platform_data_dir}/bitcask".to_erl_string
   when "riak_kv_eleveldb_backend"
     default['riak']['config']['eleveldb']['data_root'] = "#{platform_data_dir}/leveldb".to_erl_string
+  when "riak_kv_multi_backend"
+    default['riak']['config']['riak_kv']['multi_backend_default'] = "bitcask_mult"
+    bitcask_mult = ["bitcask_mult", "riak_kv_bitcask_backend", {"data_root" => "#{platform_data_dir}/bitcask".to_erl_string}]
+    eleveldb_mult = ["eleveldb_mult", "riak_kv_eleveldb_backend", {"data_root" => "#{platform_data_dir}/leveldb".to_erl_string}]
+    default['riak']['config']['riak_kv']['multi_backend'] = [bitcask_mult.to_erl_tuple, eleveldb_mult.to_erl_tuple]
   when "riak_cs_kv_multi_backend"
     default['riak']['cs_version'] = "1.3.1"
     if node['platform_family'] == "rhel" && node['kernel']['machine'] == "x86_64"
