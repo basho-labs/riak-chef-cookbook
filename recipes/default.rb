@@ -19,7 +19,7 @@
 #
 include_recipe "ulimit"
 
-if node['riak']['package']['enterprise_key'] == false
+if node['riak']['package']['enterprise_key'].empty?
   include_recipe "riak::package"
 else
   include_recipe "riak::enterprise_package"

@@ -51,15 +51,6 @@ end
 package_uri = base_uri + package_file
 package_name = package_file.split("[-_]\d+\.").first
 
-group "riak"
-
-user "riak" do
-  gid "riak"
-  shell "/bin/bash"
-  home "/var/lib/riak"
-  system true
-end
-
 if node['riak']['package']['local_package'] == false
   remote_file "#{Chef::Config[:file_cache_path]}/#{package_file}" do
     source package_uri
