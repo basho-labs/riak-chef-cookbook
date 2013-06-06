@@ -34,7 +34,7 @@ end
 user "riak" do
   gid "riak"
   shell "/bin/bash"
-  home "/var/lib/riak"
+  home node['riak']['data_dir']
   system true
 end
 
