@@ -16,7 +16,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-default['riak']['package']['enterprise_key'] = false
+default['riak']['package']['enterprise_key'] = ""
 
 default['riak']['package']['url'] = "http://s3.amazonaws.com/downloads.basho.com/riak"
 default['riak']['package']['version']['major'] = "1"
