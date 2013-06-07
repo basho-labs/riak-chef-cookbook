@@ -4,7 +4,7 @@ describe "riak::default" do
   include Helpers::Riak
 
   it "installs riak" do
-    package("riak").must_be_installed
+    package(node["riak"]["package"]["enterprise_key"].empty? ? "riak" : "riak-ee").must_be_installed
   end
 
   it "runs a service named riak" do

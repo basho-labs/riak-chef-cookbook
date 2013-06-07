@@ -31,6 +31,13 @@ Source Installation
 
 The riak::source recipe can be used to install Riak from source. The source installation requires the build-essential and erlang cookbooks. 
 
+Enterprise Installation
+-------------------
+
+To install Riak Enterprise populate the following attribute with a Basho provided key:  
+
+	node['riak']['package']['enterprise_key']
+
 
 Basic Configuration
 -------------------
