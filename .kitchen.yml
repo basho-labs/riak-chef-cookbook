@@ -7,6 +7,8 @@ platforms:
     box: opscode-ubuntu-12.04
     box_url: https://opscode-vm.s3.amazonaws.com/vagrant/opscode_ubuntu-12.04_provisionerless.box
     require_chef_omnibus: true
+    customize:
+      memory: 512
   run_list:
   - recipe[apt]
 - name: centos-6.4
@@ -14,6 +16,8 @@ platforms:
     box: opscode-centos-6.4
     box_url: https://opscode-vm.s3.amazonaws.com/vagrant/opscode_centos-6.4_provisionerless.box
     require_chef_omnibus: true
+    customize:
+      memory: 512
   run_list:
   - recipe[yum::epel]
 suites:
@@ -29,7 +33,7 @@ suites:
   attributes:
     riak:
       package:
-        enterprise_key: <%= (ENV["RIAK_ENTERPRISE_KEY"].nil? ? false : ENV["RIAK_ENTERPRISE_KEY"]) %>
+        enterprise_key: <%= (ENV["RIAK_ENTERPRISE_KEY"].nil? ? "" : ENV["RIAK_ENTERPRISE_KEY"]) %>
 - name: source
   run_list:
   - recipe[minitest-handler]
