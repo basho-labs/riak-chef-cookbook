@@ -17,7 +17,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-include_recipe "ulimit"
+include_recipe "ulimit" unless node['platform_family'] == "debian"
 
 if node['riak']['package']['enterprise_key'].empty?
   include_recipe "riak::package"
@@ -39,8 +39,18 @@ file "#{node['riak']['package']['config_dir']}/vm.args" do
   notifies :restart, "service[riak]"
 end
 
-user_ulimit "riak" do
-  filehandle_limit node['riak']['limits']['nofile']
+if node['platform_family'] == "debian"
+  file "/etc/default/riak" do
+    content "ulimit -n #{node['riak']['limits']['nofile']}"
+    owner "root"
+    mode 0644
+    action :create_if_missing
+    notifies :restart, "service[riak]"
+  end
+else
+  user_ulimit "riak" do
+    filehandle_limit node['riak']['limits']['nofile']
+  end
 end
 
 node['riak']['patches'].each do |patch|
