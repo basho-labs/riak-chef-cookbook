@@ -55,9 +55,8 @@ default['riak']['config']['kernel']['inet_dist_listen_min'] = 6000
 default['riak']['config']['kernel']['inet_dist_listen_max'] = 7999
 
 # riak_api
-default['riak']['config']['riak_api']['pb_backlog'] = 64
-default['riak']['config']['riak_api']['pb_ip'] = node['ipaddress'].to_erl_string
-default['riak']['config']['riak_api']['pb_port'] = 8087
+#default['riak']['config']['riak_api']['pb_backlog'] = 64
+default['riak']['config']['riak_api']['pb'] = [[node['ipaddress'].to_erl_string, 8087].to_erl_tuple]
 
 # riak_core
 default['riak']['config']['riak_core']['ring_state_dir'] = "#{node['riak']['data_dir']}/ring".to_erl_string
@@ -68,7 +67,7 @@ default['riak']['config']['riak_core']['http'] = [[node['ipaddress'].to_erl_stri
 default['riak']['config']['riak_core']['handoff_port'] = 8099
 #default['riak']['config']['riak_core']['handoff_ssl_options'] = [["certfile", "tmp/erlserver.pem".to_erl_string].to_erl_tuple]
 default['riak']['config']['riak_core']['dtrace_support'] = false
-default['riak']['config']['riak_core']['enable_health_checks'] = true
+#default['riak']['config']['riak_core']['enable_health_checks'] = true
 default['riak']['config']['riak_core']['platform_bin_dir'] = node['riak']['bin_dir'].to_erl_string
 default['riak']['config']['riak_core']['platform_data_dir'] = node['riak']['data_dir'].to_erl_string
 default['riak']['config']['riak_core']['platform_etc_dir'] = node['riak']['etc_dir'].to_erl_string
@@ -80,11 +79,10 @@ default['riak']['config']['riak_kv']['anti_entropy'] = ["on", []].to_erl_tuple
 default['riak']['config']['riak_kv']['anti_entropy_build_limit'] = [1, 3600000].to_erl_tuple
 default['riak']['config']['riak_kv']['anti_entropy_expire'] = 604800000
 default['riak']['config']['riak_kv']['anti_entropy_concurrency'] = 2
-default['riak']['config']['riak_kv']['anti_entropy_tick'] = 1500
+default['riak']['config']['riak_kv']['anti_entropy_tick'] = 15000
 default['riak']['config']['riak_kv']['anti_entropy_data_dir'] = "#{node['riak']['data_dir']}/anti_entropy".to_erl_string
 default['riak']['config']['riak_kv']['anti_entropy_leveldb_opts'] = [["write_buffer_size", 4194304].to_erl_tuple, ["max_open_files", 20].to_erl_tuple]
 default['riak']['config']['riak_kv']['mapred_name'] = "mapred".to_erl_string
-default['riak']['config']['riak_kv']['mapred_system'] = "pipe"
 default['riak']['config']['riak_kv']['mapred_2i_pipe'] = true
 default['riak']['config']['riak_kv']['map_js_vm_count'] = 8
 default['riak']['config']['riak_kv']['reduce_js_vm_count'] = 6
@@ -95,8 +93,8 @@ default['riak']['config']['riak_kv']['js_thread_stack'] = 16
 default['riak']['config']['riak_kv']['http_url_encoding'] = "on"
 default['riak']['config']['riak_kv']['vnode_vclocks'] = true
 default['riak']['config']['riak_kv']['listkeys_backpressure'] = true
-default['riak']['config']['riak_kv']['vnode_mailbox_limit'] = [1, 5000].to_erl_tuple
-default['riak']['config']['riak_kv']['riak_kv_stat'] = true
+default['riak']['config']['riak_kv']['fsm_limit'] = 50000
+default['riak']['config']['riak_kv']['object_format'] = "v1"
 
 # riak_kv storage_backend
 default['riak']['config']['riak_kv']['storage_backend'] = "riak_kv_bitcask_backend"
@@ -144,6 +142,7 @@ default['riak']['config']['lager']['crash_log_size'] = 10485760
 default['riak']['config']['lager']['crash_log_date'] = "$D0".to_erl_string
 default['riak']['config']['lager']['crash_log_count'] = 5
 default['riak']['config']['lager']['error_logger_redirect'] = true
+default['riak']['config']['lager']['error_logger_hwm'] = 100
 
 # riak_sysmon
 default['riak']['config']['riak_sysmon']['process_limit'] = 30
@@ -155,7 +154,6 @@ default['riak']['config']['riak_sysmon']['busy_dist_port'] = true
 
 # sasl
 default['riak']['config']['sasl']['sasl_error_logger'] = false
-default['riak']['config']['sasl']['utc_log'] = true
 
 # riak_control
 default['riak']['config']['riak_control']['enabled'] = false

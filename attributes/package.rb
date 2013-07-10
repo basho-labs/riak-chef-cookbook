@@ -26,4 +26,4 @@ default['riak']['package']['version']['build'] = "1"
 default['riak']['package']['config_dir'] = "/etc/riak"
 default['riak']['package']['local_package'] = false
 
-default['riak']['package']['checksum']['local']                       = nil
+default['riak']['package']['checksum']['local'] = nil
