@@ -22,8 +22,8 @@ There are two options for package installation: binary and source.  If you are u
 The package parameters available are version, type and, optionally for source installation, an install prefix:
 
 	node['riak']['package']['version']['major'] = "1"
-	node['riak']['package']['version']['minor'] = "3"
-	node['riak']['package']['version']['incremental'] = "2"
+	node['riak']['package']['version']['minor'] = "4"
+	node['riak']['package']['version']['incremental'] = "0"
 
 
 Source Installation
