@@ -42,6 +42,9 @@ if node['riak']['package']['local_package'] == nil
     not_if(File.exists?("#{Chef::Config[:file_cache_path]}/#{package_file}") && Digest::SHA256.file("#{Chef::Config[:file_cache_path]}/#{package_file}").hexdigest == checksum_val)
   end
 else
+
+  package_version = "#{version_str}.#{node['riak']['package']['version']['incremental']}-#{node['riak']['package']['version']['build']}"
+
   case node['platform']
   when "ubuntu", "debian"
     include_recipe "apt"
@@ -55,6 +58,7 @@ else
 
     package "riak" do
       action :install
+      version package_version
     end
 
   when "centos", "redhat"
@@ -75,6 +79,7 @@ else
 
     package "riak" do
       action :install
+      version package_version
     end
 
   when "fedora"
