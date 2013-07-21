@@ -58,7 +58,7 @@ else
 
     package "riak" do
       action :install
-      version package_version
+      version (package_version == "1.3.2-1" ? package_version.gsub(/-/, "~precise") : package_version)
     end
 
   when "centos", "redhat"
@@ -79,7 +79,7 @@ else
 
     package "riak" do
       action :install
-      version package_version
+      version "#{package_version}.el#{node['platform_version'].to_i}"
     end
 
   when "fedora"

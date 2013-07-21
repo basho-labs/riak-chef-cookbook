@@ -26,6 +26,26 @@ suites:
   - recipe[minitest-handler]
   - recipe[riak]
   attributes: {}
+- name: default13
+  run_list:
+  - recipe[minitest-handler]
+  - recipe[riak]
+  attributes:
+    riak:
+      package:
+        version:
+          minor: 3
+          incremental: 2
+- name: default12
+  run_list:
+  - recipe[minitest-handler]
+  - recipe[riak]
+  attributes:
+    riak:
+      package:
+        version:
+          minor: 2
+          incremental: 1
 - name: enterprise
   run_list:
   - recipe[minitest-handler]
@@ -34,8 +54,50 @@ suites:
     riak:
       package:
         enterprise_key: <%= (ENV["RIAK_ENTERPRISE_KEY"].nil? ? "" : ENV["RIAK_ENTERPRISE_KEY"]) %>
+- name: enterprise13
+  run_list:
+  - recipe[minitest-handler]
+  - recipe[riak]
+  attributes:
+    riak:
+      package:
+        version:
+          minor: 3
+          incremental: 2
+        enterprise_key: <%= (ENV["RIAK_ENTERPRISE_KEY"].nil? ? "" : ENV["RIAK_ENTERPRISE_KEY"]) %>
+- name: enterprise12
+  run_list:
+  - recipe[minitest-handler]
+  - recipe[riak]
+  attributes:
+    riak:
+      package:
+        version:
+          minor: 2
+          incremental: 1
+        enterprise_key: <%= (ENV["RIAK_ENTERPRISE_KEY"].nil? ? "" : ENV["RIAK_ENTERPRISE_KEY"]) %>
 - name: source
   run_list:
   - recipe[minitest-handler]
   - recipe[riak::source]
   attributes: {}
+- name: source13
+  run_list:
+  - recipe[minitest-handler]
+  - recipe[riak::source]
+  attributes:
+    riak:
+      source:
+        version:
+          minor: 3
+          incremental: 2
+- name: source12
+  run_list:
+  - recipe[minitest-handler]
+  - recipe[riak::source]
+  attributes:
+    riak:
+      source:
+        version:
+          minor: 2
+          incremental: 1

@@ -1,3 +1,7 @@
+## v2.2.1:
+
+* Fixed package installation so that it respects version numbers.
+
 ## v2.2.0:
 
 * Riak `1.4.0` is the default.
