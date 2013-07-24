@@ -1,6 +1,7 @@
-## v2.2.1:
+## v2.3.0:
 
 * Fixed package installation so that it respects version numbers.
+* Added Test Kitchen support for CentOS 5.9.
 
 ## v2.2.0:
 

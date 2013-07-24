@@ -21,13 +21,14 @@
 version_str = "#{node['riak']['package']['version']['major']}.#{node['riak']['package']['version']['minor']}"
 base_uri = "#{node['riak']['package']['url']}/#{version_str}/#{version_str}.#{node['riak']['package']['version']['incremental']}/"
 base_filename = "riak-#{version_str}.#{node['riak']['package']['version']['incremental']}"
+platform_version = node['platform_version'].to_i
 
 case node['platform']
 when "fedora", "centos", "redhat"
   node.set['riak']['config']['riak_core']['platform_lib_dir'] = "/usr/lib64/riak".to_erl_string if node['kernel']['machine'] == 'x86_64'
   machines = {"x86_64" => "x86_64", "i386" => "i386", "i686" => "i686"}
-  base_uri = "#{base_uri}#{node['platform']}/#{node['platform_version'].to_i}/"
-  package_file = "#{base_filename}-#{node['riak']['package']['version']['build']}.fc#{node['platform_version'].to_i}.#{node['kernel']['machine']}.rpm"
+  base_uri = "#{base_uri}#{node['platform']}/#{platform_version}/"
+  package_file = "#{base_filename}-#{node['riak']['package']['version']['build']}.fc#{platform_version}.#{node['kernel']['machine']}.rpm"
   package_uri = base_uri + package_file
   package_name = package_file.split("[-_]\d+\.").first
 end
@@ -48,7 +49,7 @@ else
   case node['platform']
   when "ubuntu", "debian"
     include_recipe "apt"
-    
+
     apt_repository "basho" do
       uri "http://apt.basho.com"
       distribution node['lsb']['codename']
@@ -72,14 +73,14 @@ else
     yum_repository "basho" do
       repo_name "basho"
       description "Basho Stable Repo"
-      url "http://yum.basho.com/el/#{node['platform_version'].to_i}/products/x86_64/"
+      url "http://yum.basho.com/el/#{platform_version}/products/x86_64/"
       key "RPM-GPG-KEY-basho"
       action :add
     end
 
     package "riak" do
       action :install
-      version "#{package_version}.el#{node['platform_version'].to_i}"
+      version (platform_version < 6 ? package_version : "#{package_version}.el#{platform_version}")
     end
 
   when "fedora"
