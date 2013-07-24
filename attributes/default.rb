@@ -16,6 +16,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
+include_attribute "riak::package"
 
 default['riak']['bin_dir'] = "/usr/sbin"
 default['riak']['data_dir'] = "/var/lib/riak"
@@ -56,7 +57,12 @@ default['riak']['config']['kernel']['inet_dist_listen_max'] = 7999
 
 # riak_api
 #default['riak']['config']['riak_api']['pb_backlog'] = 64
-default['riak']['config']['riak_api']['pb'] = [[node['ipaddress'].to_erl_string, 8087].to_erl_tuple]
+if node['riak']['package']['version']['major'].to_i >= 1 && node['riak']['package']['version']['minor'].to_i >= 4
+  default['riak']['config']['riak_api']['pb'] = [[node['ipaddress'].to_erl_string, 8087].to_erl_tuple]
+else
+  default['riak']['config']['riak_api']['pb_ip'] = node['ipaddress'].to_erl_string
+  default['riak']['config']['riak_api']['pb_port'] = 8087
+end
 
 # riak_core
 default['riak']['config']['riak_core']['ring_state_dir'] = "#{node['riak']['data_dir']}/ring".to_erl_string
