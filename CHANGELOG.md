@@ -1,6 +1,9 @@
-## v2.2.1:
+## v2.3.0:
 
 * Fixed package installation so that it respects version numbers.
+* Added Test Kitchen support for CentOS 5.9.
+* Fixed Protocol Buffers interface configuration changes between Riak 1.3 and
+  1.4.
 
 ## v2.2.0:
 
