@@ -7,10 +7,6 @@ describe "riak::default" do
     package(node["riak"]["package"]["enterprise_key"].empty? ? "riak" : "riak-ee").must_be_installed
   end
 
-  it "runs a service named riak" do
-    service("riak").must_be_running
-  end
-
   it "responds to riak ping" do
     assert(`riak ping` =~ /pong/)
   end
