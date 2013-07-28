@@ -1,3 +1,8 @@
+## v2.3.1:
+
+* Fixed Debian support.
+* Added Debian Wheezy to Test Kitchen.
+
 ## v2.3.0:
 
 * Fixed package installation so that it respects version numbers.
