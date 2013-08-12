@@ -72,11 +72,9 @@ end
 package package_name do
   source "#{Chef::Config[:file_cache_path]}/#{package_file}"
   action :install
-  case node['platform'] when "ubuntu","debian"
-    options "--force-confdef --force-confold"
-  end
-  provider value_for_platform(
-    [ "ubuntu", "debian" ] => {"default" => Chef::Provider::Package::Dpkg},
-    [ "redhat", "centos", "fedora" ] => {"default" => Chef::Provider::Package::Yum}
+  options "--force-confdef --force-confold" if node['platform_family'] == "debian"
+  provider value_for_platform_family(
+    [ "debian" ] => Chef::Provider::Package::Dpkg,
+    [ "rhel", "fedora" ] => Chef::Provider::Package::Rpm
   )
 end

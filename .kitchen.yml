@@ -11,6 +11,15 @@ platforms:
       memory: 512
   run_list:
   - recipe[apt]
+- name: debian-7.1.0
+  driver_config:
+    box: opscode-debian-7.1.0
+    box_url: https://opscode-vm-bento.s3.amazonaws.com/vagrant/opscode_debian-7.1.0_provisionerless.box
+    require_chef_omnibus: true
+    customize:
+      memory: 512
+  run_list:
+  - recipe[apt]
 - name: centos-6.4
   driver_config:
     box: opscode-centos-6.4

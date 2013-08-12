@@ -50,6 +50,10 @@ else
   when "ubuntu", "debian"
     include_recipe "apt"
 
+    if node['platform'] == "ubuntu" && package_version == "1.3.2-1"
+      package_version = package_version.gsub(/-/, "~precise")
+    end
+
     apt_repository "basho" do
       uri "http://apt.basho.com"
       distribution node['lsb']['codename']
@@ -59,7 +63,7 @@ else
 
     package "riak" do
       action :install
-      version (package_version == "1.3.2-1" ? package_version.gsub(/-/, "~precise") : package_version)
+      version package_version
     end
 
   when "centos", "redhat"
@@ -78,13 +82,16 @@ else
       action :add
     end
 
+    if platform_version >= 6
+      package_version = "#{package_version}.el#{platform_version}"
+    end
+
     package "riak" do
       action :install
-      version (platform_version < 6 ? package_version : "#{package_version}.el#{platform_version}")
+      version package_version
     end
 
   when "fedora"
-
     remote_file "#{Chef::Config[:file_cache_path]}/#{package_file}" do
       source package_uri
       owner "root"
