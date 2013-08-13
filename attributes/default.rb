@@ -64,6 +64,7 @@ default['riak']['config']['riak_core']['http'] = [[node['ipaddress'].to_erl_stri
 #default['riak']['config']['riak_core']['ssl'] = [["certfile", "./etc/cert.pem".to_erl_string].to_erl_tuple, ["keyfile", "./etc/key.pem".to_erl_string].to_erl_tuple]
 default['riak']['config']['riak_core']['handoff_port'] = 8099
 #default['riak']['config']['riak_core']['handoff_ssl_options'] = [["certfile", "tmp/erlserver.pem".to_erl_string].to_erl_tuple]
+default['riak']['config']['riak_core']['cluster_mgr'] = [node['ipaddress'].to_erl_string, 9085].to_erl_tuple
 default['riak']['config']['riak_core']['dtrace_support'] = false
 default['riak']['config']['riak_core']['enable_health_checks'] = true
 default['riak']['config']['riak_core']['platform_bin_dir'] = platform_bin_dir.to_erl_string
