@@ -32,7 +32,7 @@ when "ubuntu"
 when "debian"
   machines = {"x86_64" => "amd64", "i386" => "i386", "i686" => "i386"}
   #checksum_val = node['riak']['package']['checksum']['debian'][node['platform_version']]
-  base_uri = "#{base_uri}#{node['platform']}/squeeze/"
+  base_uri = "#{base_uri}#{node['platform']}/#{node['platform_version'].to_i}/"
   package_file = "#{base_filename.gsub(/\-/, '_').sub(/_/,'-')}-#{node['riak']['package']['version']['build']}_#{machines[node['kernel']['machine']]}.deb"
 when "redhat","centos"
   machines = {"x86_64" => "x86_64", "i386" => "i386", "i686" => "i686"}
