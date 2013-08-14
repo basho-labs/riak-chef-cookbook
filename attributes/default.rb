@@ -129,6 +129,7 @@ case node['riak']['config']['riak_kv']['storage_backend']
     be_default = ["be_default", "riak_kv_eleveldb_backend", {"data_root" => "#{node['riak']['data_dir']}/leveldb".to_erl_string, "max_open_files" => 50}]
     be_blocks = ["be_blocks", "riak_kv_bitcask_backend", {"data_root" => "#{node['riak']['data_dir']}/bitcask".to_erl_string}]
     default['riak']['config']['riak_kv']['multi_backend'] = [be_default.to_erl_tuple, be_blocks.to_erl_tuple]
+    default['riak']['config']['riak_core']['default_bucket_props'] = [ ['allow_mult', true].to_erl_tuple ]
 end
 
 # riak_search
