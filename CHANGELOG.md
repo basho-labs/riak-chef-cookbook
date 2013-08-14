@@ -1,5 +1,10 @@
+## v2.3.2:
+
+* Add a default `cluster_mgr` attribute.
+
 ## v2.3.1:
 
+* Riak `1.4.1` is now the default.
 * Fixed Debian support.
 * Added Debian Wheezy to Test Kitchen.
 
