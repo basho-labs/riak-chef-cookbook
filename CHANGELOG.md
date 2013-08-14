@@ -1,6 +1,7 @@
 ## v2.3.2:
 
 * Add a default `cluster_mgr` attribute.
+* Add `allow_mult` override when the `riak_cs_kv_multi_backend` is chosen.
 
 ## v2.3.1:
 
