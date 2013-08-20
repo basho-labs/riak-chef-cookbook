@@ -1,6 +1,6 @@
 Riak Cookbook
 =============
-[![Build Status](https://recipe-tester.com/repo/basho/riak-chef-cookbook/badge.png)](https://recipe-tester.com/repo/basho/riak-chef-cookbook/)
+[![Build Status](http://recipe-tester.com/repo/basho/riak-chef-cookbook/badge.png)](https://recipe-tester.com/repo/basho/riak-chef-cookbook/)
 [![Build Status](https://travis-ci.org/basho/riak-chef-cookbook.png)](https://travis-ci.org/basho/riak-chef-cookbook)
 
 Overview
