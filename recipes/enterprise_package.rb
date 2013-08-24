@@ -21,28 +21,25 @@
 version_str = "#{node['riak']['package']['version']['major']}.#{node['riak']['package']['version']['minor']}.#{node['riak']['package']['version']['incremental']}"
 base_uri = "http://private.downloads.basho.com/riak_ee/#{node['riak']['package']['enterprise_key']}/#{version_str}/"
 base_filename = "riak-ee-#{version_str}"
+checksum_val = node['riak']['package']['checksum'][node['platform']][node['platform_version']]
 
 case node['platform']
 when "ubuntu"
   machines = {"x86_64" => "amd64", "i386" => "i386", "i686" => "i386"}
-  #checksum_val = node['riak']['package']['checksum']['ubuntu'][node['lsb']['codename']][node['kernel']['machine']]
   base_uri = "#{base_uri}#{node['platform']}/#{node['lsb']['codename']}/"
   package "libssl0.9.8" 
   package_file = "#{base_filename.gsub(/\-/, '_').sub(/_/,'-')}-#{node['riak']['package']['version']['build']}_#{machines[node['kernel']['machine']]}.deb" 
 when "debian"
   machines = {"x86_64" => "amd64", "i386" => "i386", "i686" => "i386"}
-  #checksum_val = node['riak']['package']['checksum']['debian'][node['platform_version']]
   base_uri = "#{base_uri}#{node['platform']}/#{node['platform_version'].to_i}/"
   package_file = "#{base_filename.gsub(/\-/, '_').sub(/_/,'-')}-#{node['riak']['package']['version']['build']}_#{machines[node['kernel']['machine']]}.deb"
 when "redhat","centos"
   machines = {"x86_64" => "x86_64", "i386" => "i386", "i686" => "i686"}
-  #checksum_val = node['riak']['package']['checksum']['rhel'][node['platform_version']]
   base_uri = "#{base_uri}rhel/#{node['platform_version'].to_i}/"
   package_file = "#{base_filename}-#{node['riak']['package']['version']['build']}.el#{node['platform_version'].to_i}.#{machines[node['kernel']['machine']]}.rpm"
   node.set['riak']['config']['riak_core']['platform_lib_dir'] = "/usr/lib64/riak".to_erl_string if node['kernel']['machine'] == 'x86_64'
 when "fedora"
   machines = {"x86_64" => "x86_64", "i386" => "i386", "i686" => "i686"}
-  #checksum_val = node['riak']['package']['checksum']['fedora'][node['platform_version']]
   base_uri = "#{base_uri}#{node['platform']}/#{node['platform_version'].to_i}/"
   package_file = "#{base_filename}-#{node['riak']['package']['version']['build']}.fc#{node['platform_version'].to_i}.#{node['kernel']['machine']}.rpm"
   node.set['riak']['config']['riak_core']['platform_lib_dir'] = "/usr/lib64/riak".to_erl_string if node['kernel']['machine'] == 'x86_64'
@@ -54,18 +51,18 @@ package_name = package_file.split("[-_]\d+\.").first
 if node['riak']['package']['local_package'] == false
   remote_file "#{Chef::Config[:file_cache_path]}/#{package_file}" do
     source package_uri
+    checksum checksum_val
     owner "root"
     mode 0644
-    not_if(File.exists?("#{Chef::Config[:file_cache_path]}/#{package_file}") && Digest::SHA256.file("#{Chef::Config[:file_cache_path]}/#{package_file}").hexdigest == node['riak']['package']['checksum']['local'])
   end
 else
   package_file = node['riak']['package']['local_package']
 
   cookbook_file "#{Chef::Config[:file_cache_path]}/#{package_file}" do
     source package_file
+    checksum checksum_val
     owner "root"
     mode 0644
-    not_if(File.exists?("#{Chef::Config[:file_cache_path]}/#{package_file}") && Digest::SHA256.file("#{Chef::Config[:file_cache_path]}/#{package_file}").hexdigest == checksum_val)
   end
 end
 

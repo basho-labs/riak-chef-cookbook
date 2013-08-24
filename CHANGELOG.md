@@ -2,6 +2,8 @@
 
 * Add a default `cluster_mgr` attribute.
 * Add `allow_mult` override when the `riak_cs_kv_multi_backend` is chosen.
+* Fixed the `remote_file` resource for Enterprise packages so that it utilizes
+  a checksum.
 
 ## v2.3.1:
 

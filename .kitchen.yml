@@ -11,6 +11,12 @@ platforms:
       memory: 512
   run_list:
   - recipe[apt]
+  attributes:
+    riak:
+      package:
+        checksum:
+          ubuntu:
+            precise: "3f29736ab0dc8b094272d9caefed4e795ae293f54f79bed8d0464ca821c865ef"
 - name: debian-7.1.0
   driver_config:
     box: opscode-debian-7.1.0
@@ -20,6 +26,12 @@ platforms:
       memory: 512
   run_list:
   - recipe[apt]
+  attributes:
+    riak:
+      package:
+        checksum:
+          debian:
+            "7": "7badc4cf084d3a84bbc3c25e206648216e5262d268ea647c438411822c7ae77a"
 - name: centos-6.4
   driver_config:
     box: opscode-centos-6.4
@@ -29,6 +41,12 @@ platforms:
       memory: 512
   run_list:
   - recipe[yum::epel]
+  attributes:
+    riak:
+      package:
+        checksum:
+          centos:
+            "6": "a2234d09bdbf08da8b9bf5627b4ea718772fc4964c4d59bd3d4c8ada83d5a9f1"
 - name: centos-5.9
   driver_config:
     box: opscode-centos-5.9
@@ -38,6 +56,12 @@ platforms:
       memory: 512
   run_list:
   - recipe[yum::epel]
+  attributes:
+    riak:
+      package:
+        checksum:
+          centos:
+            "5": "d75f0a548b586b327186aba93943aabec0fb51f5ea2acf48de8a5d0a26fea9d7"
 suites:
 - name: default
   run_list:
