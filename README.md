@@ -24,7 +24,7 @@ The package parameters available are version, type and, optionally for source in
 
 	node['riak']['package']['version']['major'] = "1"
 	node['riak']['package']['version']['minor'] = "4"
-	node['riak']['package']['version']['incremental'] = "1"
+	node['riak']['package']['version']['incremental'] = "2"
 
 
 Source Installation
