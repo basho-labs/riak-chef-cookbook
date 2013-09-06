@@ -1,3 +1,8 @@
+## v2.3.4:
+
+* Made Test Kitchen run faster by enabling the `vagrant-cachier` plugin
+  through the `kitchen-vagrant` driver.
+
 ## v2.3.3:
 
 * Riak `1.4.2` is now the default.
