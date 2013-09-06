@@ -6,7 +6,11 @@ platforms:
   driver_config:
     box: opscode-ubuntu-12.04
     box_url: https://opscode-vm.s3.amazonaws.com/vagrant/opscode_ubuntu-12.04_provisionerless.box
-    require_chef_omnibus: true
+    require_chef_omnibus: "11.6.0"
+    chef_omnibus_url: https://gist.github.com/hectcastro/6443633/raw/install.sh
+    # Requires a patched version of kitchen-vagrant:
+    # https://github.com/hectcastro/kitchen-vagrant/compare/hc-cachier
+    use_cachier_plugin: true
     customize:
       memory: 512
   run_list:
@@ -21,7 +25,11 @@ platforms:
   driver_config:
     box: opscode-debian-7.1.0
     box_url: https://opscode-vm-bento.s3.amazonaws.com/vagrant/opscode_debian-7.1.0_provisionerless.box
-    require_chef_omnibus: true
+    require_chef_omnibus: "11.6.0"
+    chef_omnibus_url: https://gist.github.com/hectcastro/6443633/raw/install.sh
+    # Requires a patched version of kitchen-vagrant:
+    # https://github.com/hectcastro/kitchen-vagrant/compare/hc-cachier
+    use_cachier_plugin: true
     customize:
       memory: 512
   run_list:
@@ -36,7 +44,11 @@ platforms:
   driver_config:
     box: opscode-centos-6.4
     box_url: https://opscode-vm.s3.amazonaws.com/vagrant/opscode_centos-6.4_provisionerless.box
-    require_chef_omnibus: true
+    require_chef_omnibus: "11.6.0"
+    chef_omnibus_url: https://gist.github.com/hectcastro/6443633/raw/install.sh
+    # Requires a patched version of kitchen-vagrant:
+    # https://github.com/hectcastro/kitchen-vagrant/compare/hc-cachier
+    use_cachier_plugin: true
     customize:
       memory: 512
   run_list:
@@ -51,7 +63,11 @@ platforms:
   driver_config:
     box: opscode-centos-5.9
     box_url: https://opscode-vm-bento.s3.amazonaws.com/vagrant/opscode_centos-5.9_provisionerless.box
-    require_chef_omnibus: true
+    require_chef_omnibus: "11.6.0"
+    chef_omnibus_url: https://gist.github.com/hectcastro/6443633/raw/install.sh
+    # Requires a patched version of kitchen-vagrant:
+    # https://github.com/hectcastro/kitchen-vagrant/compare/hc-cachier
+    use_cachier_plugin: true
     customize:
       memory: 512
   run_list:
