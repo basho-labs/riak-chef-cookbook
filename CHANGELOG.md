@@ -2,6 +2,7 @@
 
 * Made Test Kitchen run faster by enabling the `vagrant-cachier` plugin
   through the `kitchen-vagrant` driver.
+* Make default for `cs_version` be `1.4.1`
 
 ## v2.3.3:
 
