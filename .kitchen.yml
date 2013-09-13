@@ -134,6 +134,13 @@ suites:
           minor: 2
           incremental: 1
         enterprise_key: <%= (ENV["RIAK_ENTERPRISE_KEY"].nil? ? "" : ENV["RIAK_ENTERPRISE_KEY"]) %>
+- name: custom_repository
+  run_list:
+  - recipe[minitest-handler]
+  - recipe[riak]
+  attributes:
+    riak:
+      install_method: "custom_repository"
 - name: source
   run_list:
   - recipe[minitest-handler]

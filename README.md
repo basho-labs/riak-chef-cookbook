@@ -18,19 +18,24 @@ The Riak cookbook can be used just by adding "riak" to the runlist for a node.  
 Package Installation
 --------------------
 
-There are two options for package installation: binary and source.  If you are using a Red Hat, CentOS, Fedora, Debian or Ubuntu distributions, binary installation is recommended and is the default.  If you choose to do a source installation, be sure you are using Erlang/OTP R15B01 or later.
+There are two options for package installation: `package` and `custom_repository`.  If you are using a Red Hat, CentOS, Fedora, Debian or Ubuntu distributions, `package` installation is recommended and is the default.
 
 The package parameters available are version, type and, optionally for source installation, an install prefix:
 
-	node['riak']['package']['version']['major'] = "1"
-	node['riak']['package']['version']['minor'] = "4"
-	node['riak']['package']['version']['incremental'] = "2"
+```ruby
+# default.rb
+node['riak']['install_method'] = "package"
 
+# package.rb
+node['riak']['package']['version']['major'] = "1"
+node['riak']['package']['version']['minor'] = "4"
+node['riak']['package']['version']['incremental'] = "2"
+```
 
 Source Installation
 ------------------
 
-The riak::source recipe can be used to install Riak from source. The source installation requires the build-essential and erlang cookbooks. 
+The `riak::source` recipe can be used to install Riak from source. The source installation requires Erlang/OTP R15B01 or later and the `build-essential` and `erlang` cookbooks.
 
 Enterprise Installation
 -------------------
