@@ -66,7 +66,7 @@ else
       version package_version
     end
 
-  when "centos", "redhat", "amazon"
+  when "centos", "redhat"
     include_recipe "yum"
 
     yum_key "RPM-GPG-KEY-basho" do
@@ -84,6 +84,31 @@ else
 
     if platform_version >= 6
       package_version = "#{package_version}.el#{platform_version}"
+    end
+
+    package "riak" do
+      action :install
+      version package_version
+    end
+
+  when "amazon"
+    include_recipe "yum"
+
+    yum_key "RPM-GPG-KEY-basho" do
+      url "http://yum.basho.com/gpg/RPM-GPG-KEY-basho"
+      action :add
+    end
+
+    yum_repository "basho" do
+      repo_name "basho"
+      description "Basho Stable Repo"
+      url "http://yum.basho.com/el/#{platform_version == 2013 ? 6 : 5}/products/x86_64/"
+      key "RPM-GPG-KEY-basho"
+      action :add
+    end
+
+    if platform_version >= 2013
+      package_version = "#{package_version}.el6"
     end
 
     package "riak" do
