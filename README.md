@@ -32,6 +32,13 @@ node['riak']['package']['version']['minor'] = "4"
 node['riak']['package']['version']['incremental'] = "2"
 ```
 
+If you are installing Riak Enterprise with the `custom_repository` method,
+also populate the following attribute with a package name:
+
+```ruby
+node['riak']['package']['name']
+```
+
 Source Installation
 ------------------
 
@@ -40,10 +47,18 @@ The `riak::source` recipe can be used to install Riak from source. The source in
 Enterprise Installation
 -------------------
 
-To install Riak Enterprise populate the following attribute with a Basho provided key:  
+To install Riak Enterprise populate the following attribute with a Basho provided key:
 
-	node['riak']['package']['enterprise_key']
+```ruby
+node['riak']['package']['enterprise_key']
+```
 
+If you are installing Riak Enterprise with the `custom_repository` method,
+also populate the following attribute with a package name:
+
+```ruby
+node['riak']['package']['name']
+```
 
 Basic Configuration
 -------------------
