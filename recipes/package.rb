@@ -23,8 +23,8 @@ base_uri = "#{node['riak']['package']['url']}/#{version_str}/#{version_str}.#{no
 base_filename = "riak-#{version_str}.#{node['riak']['package']['version']['incremental']}"
 platform_version = node['platform_version'].to_i
 
-case node['platform']
-when "fedora", "centos", "redhat"
+case node['platform_family']
+when "rhel"
   node.set['riak']['config']['riak_core']['platform_lib_dir'] = "/usr/lib64/riak".to_erl_string if node['kernel']['machine'] == 'x86_64'
   machines = {"x86_64" => "x86_64", "i386" => "i386", "i686" => "i686"}
   base_uri = "#{base_uri}#{node['platform']}/#{platform_version}/"
@@ -66,7 +66,7 @@ else
       version package_version
     end
 
-  when "centos", "redhat"
+  when "centos", "redhat", "amazon"
     include_recipe "yum"
 
     yum_key "RPM-GPG-KEY-basho" do
