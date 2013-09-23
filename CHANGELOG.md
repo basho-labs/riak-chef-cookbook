@@ -1,6 +1,9 @@
 ## v2.4.0:
 
 * Added a recipe for installing Riak through a custom package repository.
+
+## v2.3.4:
+
 * Made Test Kitchen run faster by enabling the `vagrant-cachier` plugin
   through the `kitchen-vagrant` driver.
 * Make default for `cs_version` be `1.4.1`
