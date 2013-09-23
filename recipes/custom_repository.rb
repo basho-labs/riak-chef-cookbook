@@ -2,10 +2,6 @@ version_str = "#{node['riak']['package']['version']['major']}.#{node['riak']['pa
 package_version = "#{version_str}.#{node['riak']['package']['version']['incremental']}-#{node['riak']['package']['version']['build']}"
 platform_version = node['platform_version'].to_i
 
-if node['platform'] == "ubuntu" && package_version == "1.3.2-1"
-  package_version = package_version.gsub(/-/, "~precise")
-end
-
 if node['platform_family'] == "rhel"
   if node['kernel']['machine'] == "x86_64"
     lib_dir = "/usr/lib64/riak"
