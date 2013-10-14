@@ -46,7 +46,6 @@ when "fedora"
 end
 
 package_uri = base_uri + package_file
-package_name = package_file.split("[-_]\d+\.").first
 
 if node['riak']['package']['local_package'] == false
   remote_file "#{Chef::Config[:file_cache_path]}/#{package_file}" do
@@ -66,7 +65,7 @@ else
   end
 end
 
-package package_name do
+package "riak-ee" do
   source "#{Chef::Config[:file_cache_path]}/#{package_file}"
   action :install
   options "--force-confdef --force-confold" if node['platform_family'] == "debian"

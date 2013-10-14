@@ -18,6 +18,10 @@
 #
 include_attribute "riak::package"
 
+# install method
+default['riak']['install_method'] = "package"
+
+# directories
 default['riak']['bin_dir'] = "/usr/sbin"
 default['riak']['data_dir'] = "/var/lib/riak"
 default['riak']['etc_dir'] = "/etc/riak"

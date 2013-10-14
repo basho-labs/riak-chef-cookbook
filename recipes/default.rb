@@ -20,7 +20,7 @@
 include_recipe "ulimit" unless node['platform_family'] == "debian"
 
 if node['riak']['package']['enterprise_key'].empty?
-  include_recipe "riak::package"
+  include_recipe "riak::#{node['riak']['install_method']}"
 else
   include_recipe "riak::enterprise_package"
 end
