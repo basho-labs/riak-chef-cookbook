@@ -83,7 +83,12 @@ suites:
   run_list:
   - recipe[minitest-handler]
   - recipe[riak]
-  attributes: {}
+  attributes:
+    riak:
+      package:
+        version:
+          minor: 4
+          incremental: 2
 - name: default13
   run_list:
   - recipe[minitest-handler]
@@ -111,6 +116,9 @@ suites:
   attributes:
     riak:
       package:
+        version:
+          minor: 4
+          incremental: 3
         enterprise_key: <%= (ENV["RIAK_ENTERPRISE_KEY"].nil? ? "" : ENV["RIAK_ENTERPRISE_KEY"]) %>
 - name: enterprise13
   run_list:
