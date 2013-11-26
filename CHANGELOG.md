@@ -1,3 +1,9 @@
+## v2.4.1:
+
+* Removed Recipe Tester.
+* Bumped Chef to version `11.8.0` for Test Kitchen.
+* Make default for `cs_version` be `1.4.3`
+
 ## v2.4.0:
 
 * Added a recipe for installing Riak through a custom package repository.
