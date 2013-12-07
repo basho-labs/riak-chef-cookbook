@@ -1,3 +1,7 @@
+## v2.4.2:
+
+* Make use of `vagrantfile_erb` setting of kitchen-vagrant.
+
 ## v2.4.1:
 
 * Removed Recipe Tester.
