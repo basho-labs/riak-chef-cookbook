@@ -5,7 +5,7 @@ platforms:
 - name: ubuntu-12.04
   driver_config:
     box: opscode-ubuntu-12.04
-    box_url: https://opscode-vm.s3.amazonaws.com/vagrant/opscode_ubuntu-12.04_provisionerless.box
+    box_url: http://opscode-vm-bento.s3.amazonaws.com/vagrant/virtualbox/opscode_ubuntu-12.04_chef-provisionerless.box
     vagrantfile_erb: Vagrantfile.erb
     customize:
       memory: 512
@@ -17,10 +17,10 @@ platforms:
         checksum:
           ubuntu:
             precise: "b4e4e31b8e1cd25ea4d3bcd9af94e7322ce1c08645425891574f57ba58f8c516"
-- name: debian-7.1.0
+- name: debian-7.2.0
   driver_config:
-    box: opscode-debian-7.1.0
-    box_url: https://opscode-vm-bento.s3.amazonaws.com/vagrant/opscode_debian-7.1.0_provisionerless.box
+    box: opscode-debian-7.2.0
+    box_url: http://opscode-vm-bento.s3.amazonaws.com/vagrant/virtualbox/opscode_debian-7.2.0_chef-provisionerless.box
     vagrantfile_erb: Vagrantfile.erb
     customize:
       memory: 512
@@ -32,10 +32,10 @@ platforms:
         checksum:
           debian:
             "7": "ab5b07c9430aed4874020aa8c4688f1efa14f2a8fba5659fbcbf2004183b51fc"
-- name: centos-6.4
+- name: centos-6.5
   driver_config:
-    box: opscode-centos-6.4
-    box_url: https://opscode-vm.s3.amazonaws.com/vagrant/opscode_centos-6.4_provisionerless.box
+    box: opscode-centos-6.5
+    box_url: http://opscode-vm-bento.s3.amazonaws.com/vagrant/virtualbox/opscode_centos-6.5_chef-provisionerless.box
     vagrantfile_erb: Vagrantfile.erb
     customize:
       memory: 512
@@ -47,10 +47,10 @@ platforms:
         checksum:
           centos:
             "6": "5bfed85a02df7f297cf20402f147997b06c8ea59dbe860186a54e9dec2dc26e2"
-- name: centos-5.9
+- name: centos-5.10
   driver_config:
-    box: opscode-centos-5.9
-    box_url: https://opscode-vm-bento.s3.amazonaws.com/vagrant/opscode_centos-5.9_provisionerless.box
+    box: opscode-centos-5.10
+    box_url: http://opscode-vm-bento.s3.amazonaws.com/vagrant/virtualbox/opscode_centos-5.10_chef-provisionerless.box
     vagrantfile_erb: Vagrantfile.erb
     customize:
       memory: 512
