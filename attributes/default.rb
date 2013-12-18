@@ -188,5 +188,21 @@ default['riak']['config']['snmp']['agent']['db_dir'] = "#{node['riak']['data_dir
 # limits
 default['riak']['limits']['nofile'] = 4096
 
+# sysctl
+default['riak']['sysctl']['vm']['swappiness'] = 0
+default['riak']['sysctl']['net']['core']['wmem_default'] = 8388608
+default['riak']['sysctl']['net']['core']['rmem_default'] = 8388608
+default['riak']['sysctl']['net']['core']['wmem_max'] = 8388608
+default['riak']['sysctl']['net']['core']['rmem_max'] = 8388608
+default['riak']['sysctl']['net']['core']['netdev_max_backlog'] = 10000
+default['riak']['sysctl']['net']['core']['somaxconn'] = 4000
+default['riak']['sysctl']['net']['ipv4']['tcp_max_syn_backlog'] = 40000
+default['riak']['sysctl']['net']['ipv4']['tcp_timestamps'] = 0
+default['riak']['sysctl']['net']['ipv4']['tcp_sack'] = 1
+default['riak']['sysctl']['net']['ipv4']['tcp_window_scaling'] = 1
+default['riak']['sysctl']['net']['ipv4']['tcp_fin_timeout'] = 15
+default['riak']['sysctl']['net']['ipv4']['tcp_keepalive_intvl'] = 30
+default['riak']['sysctl']['net']['ipv4']['tcp_tw_reuse'] = 1
+
 #patches
 default['riak']['patches'] = []

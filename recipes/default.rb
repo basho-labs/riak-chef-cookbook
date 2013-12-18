@@ -18,6 +18,7 @@
 # limitations under the License.
 #
 include_recipe "ulimit" unless node['platform_family'] == "debian"
+include_recipe "sysctl"
 
 if node['riak']['package']['enterprise_key'].empty?
   include_recipe "riak::#{node['riak']['install_method']}"
@@ -52,6 +53,21 @@ else
     filehandle_limit node['riak']['limits']['nofile']
   end
 end
+
+node.default["sysctl"]["params"]["vm"]["swappiness"] = node['riak']['sysctl']['vm']['swappiness']
+node.default["sysctl"]["params"]["net"]["core"]["wmem_default"] = node['riak']['sysctl']['net']['core']['wmem_default']
+node.default["sysctl"]["params"]["net"]["core"]["rmem_default"] = node['riak']['sysctl']['net']['core']['rmem_default']
+node.default["sysctl"]["params"]["net"]["core"]["wmem_max"] = node['riak']['sysctl']['net']['core']['wmem_max']
+node.default["sysctl"]["params"]["net"]["core"]["rmem_max"] = node['riak']['sysctl']['net']['core']['rmem_max']
+node.default["sysctl"]["params"]["net"]["core"]["netdev_max_backlog"] = node['riak']['sysctl']['net']['core']['netdev_max_backlog']
+node.default["sysctl"]["params"]["net"]["core"]["somaxconn"] = node['riak']['sysctl']['net']['core']['somaxconn']
+node.default["sysctl"]["params"]["net"]["ipv4"]["tcp_max_syn_backlog"] = node['riak']['sysctl']['net']['ipv4']['tcp_max_syn_backlog']
+node.default["sysctl"]["params"]["net"]["ipv4"]["tcp_timestamps"] = node['riak']['sysctl']['net']['ipv4']['tcp_timestamps']
+node.default["sysctl"]["params"]["net"]["ipv4"]["tcp_sack"] = node['riak']['sysctl']['net']['ipv4']['tcp_sack']
+node.default["sysctl"]["params"]["net"]["ipv4"]["tcp_window_scaling"] = node['riak']['sysctl']['net']['ipv4']['tcp_window_scaling']
+node.default["sysctl"]["params"]["net"]["ipv4"]["tcp_fin_timeout"] = node['riak']['sysctl']['net']['ipv4']['tcp_fin_timeout']
+node.default["sysctl"]["params"]["net"]["ipv4"]["tcp_keepalive_intvl"] = node['riak']['sysctl']['net']['ipv4']['tcp_keepalive_intvl']
+node.default["sysctl"]["params"]["net"]["ipv4"]["tcp_tw_reuse"] = node['riak']['sysctl']['net']['ipv4']['tcp_tw_reuse']
 
 node['riak']['patches'].each do |patch|
   cookbook_file "#{node['riak']['config']['riak_core']['platform_lib_dir'].gsub(/__string_/,'')}/lib/basho-patches/#{patch}" do
