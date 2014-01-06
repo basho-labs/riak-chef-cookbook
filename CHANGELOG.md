@@ -1,5 +1,6 @@
 ## v2.4.2:
 
+* Riak `1.4.6` is now the default.
 * Make use of `vagrantfile_erb` setting of kitchen-vagrant.
 * Added kernel and network tuning via sysctl.
 
