@@ -1,3 +1,9 @@
+## v2.4.3:
+
+* Add a constraint to `yum` cookbook dependency so that breaking changes in
+  v3.0 are mitigated.
+* Updated Gemfile to include integration test dependencies.
+
 ## v2.4.2:
 
 * Riak `1.4.6` is now the default.
