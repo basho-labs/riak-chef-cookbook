@@ -105,6 +105,7 @@ default['riak']['config']['riak_kv']['http_url_encoding'] = "on"
 default['riak']['config']['riak_kv']['vnode_vclocks'] = true
 default['riak']['config']['riak_kv']['listkeys_backpressure'] = true
 default['riak']['config']['riak_kv']['fsm_limit'] = 50000
+#default['riak']['config']['riak_kv']['secondary_index_sort_default'] = true
 default['riak']['config']['riak_kv']['object_format'] = "v1"
 
 # riak_kv storage_backend
