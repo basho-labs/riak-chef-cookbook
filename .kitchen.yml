@@ -16,7 +16,7 @@ platforms:
       package:
         checksum:
           ubuntu:
-            precise: "13b4649bf3b62782138ed0dc05ad70436a1045c795bf3c2f77a380904dedce85"
+            precise: "76593ae414cea84d42192a792b719b89d510ac917dfecacbbca2662ccabe5586"
 - name: debian-7.2.0
   driver_config:
     box: opscode-debian-7.2.0
@@ -31,7 +31,7 @@ platforms:
       package:
         checksum:
           debian:
-            "7": "304955506014be1a88c9825936a2a7b9649ae04ca3c352787a4d70a4cb501c62"
+            "7": "7776338341cb8ddf4b8f4516b579d06ac47d224c5f0451e4ceb4172897a45c66"
 - name: centos-6.5
   driver_config:
     box: opscode-centos-6.5
@@ -46,7 +46,7 @@ platforms:
       package:
         checksum:
           centos:
-            "6": "62a17575fc0d560183a05cfde202085b9d87e0c8a0e892b5ad471139f18c6332"
+            "6": "a7a31a69e450b6fa259dbbb167a44b1ca30af775107345040226cc54b7f88dcb"
 - name: centos-5.10
   driver_config:
     box: opscode-centos-5.10
@@ -61,7 +61,7 @@ platforms:
       package:
         checksum:
           centos:
-            "5": "9381a2fcc8ba5a8673c7d56f33635fe41f3735df455c02d3f6e66b28c3f9ad4d"
+            "5": "72541e1a52a6ce78a5fffce80f7a65ef6e339c99b2c81e350e203e128c36ae38"
 suites:
 - name: default
   run_list:
@@ -72,7 +72,7 @@ suites:
       package:
         version:
           minor: 4
-          incremental: 6
+          incremental: 7
 - name: default13
   run_list:
   - recipe[minitest-handler]
@@ -102,7 +102,7 @@ suites:
       package:
         version:
           minor: 4
-          incremental: 6
+          incremental: 7
         enterprise_key: <%= (ENV["RIAK_ENTERPRISE_KEY"].nil? ? "" : ENV["RIAK_ENTERPRISE_KEY"]) %>
 - name: enterprise13
   run_list:

@@ -1,3 +1,7 @@
+## v2.4.4:
+
+* Riak `1.4.7` is now the default.
+
 ## v2.4.3:
 
 * Add a constraint to `yum` cookbook dependency so that breaking changes in
