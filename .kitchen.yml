@@ -151,27 +151,19 @@ suites:
 - name: source
   run_list:
   - recipe[minitest-handler]
-  - recipe[riak::source]
-  attributes: {}
+  - recipe[riak]
+  attributes:
+    riak:
+      install_method: "source"
 - name: source13
   run_list:
   - recipe[minitest-handler]
-  - recipe[riak::source]
+  - recipe[riak]
   attributes:
     riak:
+      install_method: "source"
       source:
         version:
           major: 1
           minor: 3
           incremental: 2
-- name: source12
-  run_list:
-  - recipe[minitest-handler]
-  - recipe[riak::source]
-  attributes:
-    riak:
-      source:
-        version:
-          major: 1
-          minor: 2
-          incremental: 1

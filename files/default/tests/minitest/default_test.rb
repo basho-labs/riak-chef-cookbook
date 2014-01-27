@@ -4,19 +4,23 @@ describe "riak::default" do
   include Helpers::Riak
 
   it "installs riak" do
-    package(node["riak"]["package"]["enterprise_key"].empty? ? "riak" : "riak-ee").must_be_installed
+    if node["riak"]["install_method"] == "source"
+      file("#{node["riak"]["source"]["prefix"]}/riak").must_exist
+    else
+      package(node["riak"]["package"]["enterprise_key"].empty? ? "riak" : "riak-ee").must_be_installed
+    end
   end
 
   it "responds to riak ping" do
-    assert(`riak ping` =~ /pong/)
+    assert(`riak ping` =~ /pong/) unless node["riak"]["install_method"] == "source"
   end
 
   it "emits riak stats" do
-    if node['riak']['config']['riak_kv']['riak_kv_stat']
-      response = Net::HTTP.get_response(URI.parse("http://#{node['ipaddress']}:8098/stats"))
+    unless node["riak"]["install_method"] == "source"
+      ip, port = node["riak"]["config"]["listener"]["http"]["internal"].split(":")
+
+      response = Net::HTTP.get_response(URI.parse("http://#{ip}:#{port}/stats"))
       assert(response.body =~ /sys_system_version/)
-    else
-      assert(true)
     end
   end
 end

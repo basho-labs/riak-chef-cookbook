@@ -2,7 +2,7 @@
 # Author:: Benjamin Black (<b@b3k.us>) and Sean Cribbs (<sean@basho.com>)
 # Cookbook Name:: riak
 #
-# Copyright (c) 2013 Basho Technologies, Inc.
+# Copyright (c) 2014 Basho Technologies, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -16,12 +16,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-default['riak']['source']['url'] = "http://s3.amazonaws.com/downloads.basho.com/riak"
-default['riak']['source']['version']['major'] = "1"
-default['riak']['source']['version']['minor'] = "4"
-default['riak']['source']['version']['incremental'] = "8"
-default['riak']['source']['prefix'] = "/usr/local"
-default['riak']['source']['config_dir'] = node['riak']['source']['prefix'] + "/riak/etc"
+default["riak"]["source"]["url"] = "http://s3.amazonaws.com/downloads.basho.com/riak"
+default["riak"]["source"]["version"]["major"] = "2"
+default["riak"]["source"]["version"]["minor"] = "0"
+default["riak"]["source"]["version"]["incremental"] = "0pre11"
+default["riak"]["source"]["prefix"] = "/opt"
 
-default['riak']['source']['checksum'] = '0c712cb9657b1ae405e1585823d743c898f6de4bec9ee0398be894a6de2e6969'
+default["riak"]["source"]["checksum"] = "261c8fb10b62c91ca767d4a64516fa1785a2f2edc501e58bc89f24759190d69f"
 
