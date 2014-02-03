@@ -61,7 +61,21 @@ platforms:
       package:
         checksum:
           centos:
-            "5": "3e6ea55c08c0e0c5d92195955275faed082d0b42fa8bde36e485bbf10b98cae7"
+            "5": "72541e1a52a6ce78a5fffce80f7a65ef6e339c99b2c81e350e203e128c36ae38"
+- name: fedora-18
+  driver_config:
+    box: opscode-fedora-19
+    box_url: http://opscode-vm-bento.s3.amazonaws.com/vagrant/virtualbox/opscode_fedora-19_chef-provisionerless.box
+    vagrantfile_erb: Vagrantfile.erb
+    customize:
+      memory: 512
+  attributes:
+    riak:
+      package:
+        local:
+          checksum: "1672703f40e1d98954f40895c05435385651093e1268905ab46f79f4417b04b4"
+        enterprise:
+          checksum: ""
 suites:
 - name: default
   run_list:
@@ -70,10 +84,12 @@ suites:
   attributes:
     riak:
       package:
+        local:
+          filename: ""
         version:
-          major: 1
-          minor: 4
-          incremental: 8
+          major: "2"
+          minor: "0"
+          incremental: "0pre11"
 - name: default13
   run_list:
   - recipe[minitest-handler]
@@ -85,17 +101,6 @@ suites:
           major: 1
           minor: 3
           incremental: 2
-- name: default12
-  run_list:
-  - recipe[minitest-handler]
-  - recipe[riak]
-  attributes:
-    riak:
-      package:
-        version:
-          major: 1
-          minor: 2
-          incremental: 1
 - name: enterprise
   run_list:
   - recipe[minitest-handler]

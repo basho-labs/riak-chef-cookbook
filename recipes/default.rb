@@ -20,7 +20,17 @@
 node.default["java"]["jdk_version"] = 7
 node.default["java"]["oracle"]["accept_oracle_download_terms"] = true
 
-include_recipe "ulimit" unless node['platform_family'] == "debian"
+node.default["sysctl"]["params"]["vm"]["swappiness"] = node["riak"]["sysctl"]["vm"]["swappiness"]
+node.default["sysctl"]["params"]["net"]["core"]["somaxconn"] = node["riak"]["sysctl"]["net"]["core"]["somaxconn"]
+node.default["sysctl"]["params"]["net"]["ipv4"]["tcp_max_syn_backlog"] = node["riak"]["sysctl"]["net"]["ipv4"]["tcp_max_syn_backlog"]
+node.default["sysctl"]["params"]["net"]["ipv4"]["tcp_sack"] = node["riak"]["sysctl"]["net"]["ipv4"]["tcp_sack"]
+node.default["sysctl"]["params"]["net"]["ipv4"]["tcp_window_scaling"] = node["riak"]["sysctl"]["net"]["ipv4"]["tcp_window_scaling"]
+node.default["sysctl"]["params"]["net"]["ipv4"]["tcp_fin_timeout"] = node["riak"]["sysctl"]["net"]["ipv4"]["tcp_fin_timeout"]
+node.default["sysctl"]["params"]["net"]["ipv4"]["tcp_keepalive_intvl"] = node["riak"]["sysctl"]["net"]["ipv4"]["tcp_keepalive_intvl"]
+node.default["sysctl"]["params"]["net"]["ipv4"]["tcp_tw_reuse"] = node["riak"]["sysctl"]["net"]["ipv4"]["tcp_tw_reuse"]
+node.default["sysctl"]["params"]["net"]["ipv4"]["tcp_moderate_rcvbuf"] = node["riak"]["sysctl"]["net"]["ipv4"]["tcp_moderate_rcvbuf"]
+
+include_recipe "ulimit" unless node["platform_family"] == "debian"
 include_recipe "sysctl"
 include_recipe "java"
 
@@ -51,16 +61,6 @@ else
   end
 end
 
-node.default["sysctl"]["params"]["vm"]["swappiness"] = node["riak"]["sysctl"]["vm"]["swappiness"]
-node.default["sysctl"]["params"]["net"]["core"]["somaxconn"] = node["riak"]["sysctl"]["net"]["core"]["somaxconn"]
-node.default["sysctl"]["params"]["net"]["ipv4"]["tcp_max_syn_backlog"] = node["riak"]["sysctl"]["net"]["ipv4"]["tcp_max_syn_backlog"]
-node.default["sysctl"]["params"]["net"]["ipv4"]["tcp_sack"] = node["riak"]["sysctl"]["net"]["ipv4"]["tcp_sack"]
-node.default["sysctl"]["params"]["net"]["ipv4"]["tcp_window_scaling"] = node["riak"]["sysctl"]["net"]["ipv4"]["tcp_window_scaling"]
-node.default["sysctl"]["params"]["net"]["ipv4"]["tcp_fin_timeout"] = node["riak"]["sysctl"]["net"]["ipv4"]["tcp_fin_timeout"]
-node.default["sysctl"]["params"]["net"]["ipv4"]["tcp_keepalive_intvl"] = node["riak"]["sysctl"]["net"]["ipv4"]["tcp_keepalive_intvl"]
-node.default["sysctl"]["params"]["net"]["ipv4"]["tcp_tw_reuse"] = node["riak"]["sysctl"]["net"]["ipv4"]["tcp_tw_reuse"]
-node.default["sysctl"]["params"]["net"]["ipv4"]["tcp_moderate_rcvbuf"] = node["riak"]["sysctl"]["net"]["ipv4"]["tcp_moderate_rcvbuf"]
-
 node["riak"]["patches"].each do |patch|
   cookbook_file "#{node["riak"]["platform_data_dir"]}/lib/basho-patches/#{patch}" do
     source patch
@@ -78,6 +78,7 @@ directory node['riak']['data_dir'] do
 end
 
 service "riak" do
+  supports :restart => true, :status => true
   action [ :enable, :start ]
-  not_if { node["riak"]["install_method"] == "source" }
+  not_if { node["riak"]["install_method"] == "source" || node["platform"] == "fedora" }
 end
