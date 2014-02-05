@@ -78,7 +78,7 @@ directory node['riak']['data_dir'] do
 end
 
 service "riak" do
-  supports :restart => true, :status => true
+  supports :start => true, :stop => true, :restart => true, :status => true
   action [ :enable, :start ]
   not_if { node["riak"]["install_method"] == "source" || node["platform"] == "fedora" }
 end

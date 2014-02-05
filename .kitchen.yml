@@ -144,15 +144,6 @@ suites:
   attributes:
     riak:
       install_method: "custom_repository"
-- name: custom_repository_enterprise
-  run_list:
-  - recipe[minitest-handler]
-  - recipe[riak]
-  attributes:
-    riak:
-      package:
-        name: "riak-ee"
-      install_method: "custom_repository"
 - name: source
   run_list:
   - recipe[minitest-handler]
