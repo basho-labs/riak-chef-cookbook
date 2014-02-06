@@ -1,188 +1,277 @@
-Riak Cookbook
-=============
-[![Build Status](https://travis-ci.org/basho/riak-chef-cookbook.png)](https://travis-ci.org/basho/riak-chef-cookbook)
+# riak [![Build Status](https://travis-ci.org/basho/riak-chef-cookbook.png)](https://travis-ci.org/basho/riak-chef-cookbook)
 
-Overview
-========
+## Description
 
-Riak is a Dynamo-inspired key/value store that scales predictably and easily.  Riak combines a decentralized key/value store, a flexible map/reduce engine, and a friendly HTTP/JSON query interface to provide a database ideally suited for Web applications. And, without any object-relational mappers and other heavy middleware, applications built on Riak can be both simpler and more powerful.  For complete documentation and source code, see the Riak home page at [Basho][1].
+[Riak](http://basho.com/riak/) is an open source, distributed database that
+focuses on high availability, horizontal scalability, and *predictable*
+latency.
 
+## Requirements
 
-Getting Started
-===============
+### Platforms
 
-The Riak cookbook can be used just by adding "riak" to the runlist for a node.  The default settings will cause Riak to be installed and configured. All the config options exist in the `node['riak']['config']` namespace and can be set to the appropriate Erlang data type with the methods : to_erl_string and to_erl_tuple . For more information see the [erlang_template_helper repository][6]
+* Ubuntu 12.04
+* Debian 7.2.0
+* CentOS 6.5
+* CentOS 5.10
+* Fedora 19
 
+### Cookbooks
 
-Package Installation
---------------------
+* apt
+* build-essential
+* erlang
+* git
+* java
+* sysctl
+* ulimit
+* yum
+* yum-epel
 
-There are two options for package installation: `package` and `custom_repository`.  If you are using a Red Hat, CentOS, Fedora, Debian or Ubuntu distributions, `package` installation is recommended and is the default.
+## Attributes
 
-The package parameters available are version, type and, optionally for source installation, an install prefix:
+* `node["riak"]["install_method"]` - Method to install Riak (`package`,
+  `enterprise_package`, `source`, `source`, `custom_repository`)
+* `node["riak"]["platform_bin_dir"]` - Base directory for binaries.
+* `node["riak"]["platform_data_dir"]` - Base directory for data files.
+* `node["riak"]["platform_etc_dir"]` - Base directory for configuration files.
+* `node["riak"]["platform_log_dir"]` - Base directory for log files.
+* `node["riak"]["platform_lib_dir"]` - Base directory for libraries.
+* `node["riak"]["patches"]` - List of patches to apply by placing in the
+  `basho-patches` directory.
+* `node["riak"]["config"]["log.console"]` - Where to emit the default log
+  messages (`off`, `file`, `console`, `both`).
+* `node["riak"]["config"]["log"]["console"]["level"]` - Severity level of the
+  console log (`ebug`, `info`, `warning`, `error`).
+* `node["riak"]["config"]["log"]["console"]["file"]` - When
+  `node["riak"]["config"]["log.console"]` is set to `file` or `both`, the file
+  where console messages will be logged.
+* `node["riak"]["config"]["log"]["error"]["file"]` - The file where error
+  messages will be logged.
+* `node["riak"]["config"]["log"]["syslog"]` - Enables log output to syslog
+  (`on`, `off`).
+* `node["riak"]["config"]["log.crash"]` - Whether to enable the crash log (`on`, `off`).
+* `node["riak"]["config"]["log"]["crash"]["file"]` - The file where its
+  messages will be written.
+* `node["riak"]["config"]["log"]["crash"]["maximum_message_size"]` - Maximum
+  size (in bytes) of individual messages in the crash log.
+* `node["riak"]["config"]["log"]["crash"]["size"]` - Maximum size of the crash
+  log (in bytes), before it is rotated.
+* `node["riak"]["config"]["log"]["crash.rotation"]` - The schedule on which to
+  rotate the crash log. See
+  [here](https://github.com/basho/lager/blob/master/README.md#internal-log-rotation)
+  for details.
+* `node["riak"]["config"]["log"]["crash"]["rotation"]["keep"]` - The number of
+  rotated crash logs to keep.
+* `node["riak"]["config"]["nodename"]` - Name of the Erlang node.
+* `node["riak"]["config"]["distributed_cookie"]` - Cookie for distributed node
+  communication.
+* `node["riak"]["config"]["erlang"]["async_threads"]` - Number of threads in
+  async thread pool (`0`-`1024`).
+* `node["riak"]["config"]["erlang"]["max_ports"]` - Number of concurrent
+  ports/sockets (`1024`-`134217727`).
+* `node["riak"]["config"]["ring_size"]` - Number of partitions in the cluster
+  (must be a power of 2).
+* `node["riak"]["config"]["transfer_limit"]` - Number of concurrent node-to-
+  node transfers allowed.
+* `node["riak"]["config"]["ring"]["state_dir"]` - Location of ring state.
+* `node["riak"]["config"]["ssl"]["certfile"]` - Default certificate location
+  for HTTPS.
+* `node["riak"]["config"]["ssl"]["keyfile"]` - Default key location for HTTPS.
+* `node["riak"]["config"]["ssl"]["cacertfile"]` - Default signing authority
+  for HTTPS.
+* `node["riak"]["config"]["dtrace"]` - Enable DTrace (`on`, `off`).
+* `node["riak"]["config"]["strong_consistency"]` - Enable consensus subsystem (`on`, `off`).
+* `node["riak"]["config"]["listener"]["http"]["internal"]` - IP address and
+  TCP port that the Riak HTTP interface will bind to.
+* `node["riak"]["config"]["listener"]["protobuf"]["internal"]` - IP address
+  and TCP port that the Riak Protocol Buffers interface will bind to.
+* `node["riak"]["config"]["protobuf"]["backlog"]` - Maximum length of pending
+  connections queue.
+* `node["riak"]["config"]["listener"]["https"]["internal"]` - IP address and
+  TCP port that the Riak HTTPS interface will bind to.
+* `node["riak"]["config"]["anti_entropy"]` - Strategy of repairing out-of-sync
+  keys (`active`, `passive`, `active-debug`).
+* `node["riak"]["config"]["storage_backend"]` - Storage backend for Riak's
+  key-value and secondary index data (`bitcask`, `leveldb`, `memory`,
+  `multi`).
+* `node["riak"]["config"]["object"]["format"]` - Binary representation of a
+  Riak value stored on disk (`0`, `1`).
+* `node["riak"]["config"]["metadata_cache_size"]` - Size of the metadata cache
+  for each vnode.
+* `node["riak"]["config"]["object"]["size"]["warning_threshold"]` - Reading or
+  writing objects larger than this size will write a warning in the logs.
+* `node["riak"]["config"]["object"]["size"]["maximum"]` - Writing an object
+  larger than this will send a failure to the client.
+* `node["riak"]["config"]["object"]["siblings"]["warning_threshold"]` -
+  Writing an object with more than this number of siblings will generate a
+  warning in the logs.
+* `node["riak"]["config"]["object"]["siblings"]["maximum"]` - Writing an
+  object with more than this number of siblings will send a failure to the
+  client.
+* `node["riak"]["config"]["bitcask"]["data_root"]` - A path under which
+  Bitcask data files will be stored.
+* `node["riak"]["config"]["bitcask"]["io_mode"]` - How Bitcask writes to disk
+  (`erlang`, `nif`).
+* `node["riak"]["config"]["riak_control.top_level"]` - Enable administrative
+  UI (`on`, `off`).
+* `node["riak"]["config"]["riak_control"]["auth"]["mode"]` - Authentication
+  mode used for access to the administrative panel.
+* `node["riak"]["config"]["riak_control"]["auth"]["user"]["user"]["password"]`
+  - List of usernames and passwords for access to Riak Control.
+* `node["riak"]["config"]["leveldb"]["data_root"]` - A path under which
+  LevelDB data files will be stored.
+* `node["riak"]["config"]["leveldb"]["maximum_memory"]["percent"]` -
+  Percentage of total server memory to assign to LevelDB.
+* `node["riak"]["config"]["leveldb"]["compaction"]["trigger"]["tombstone_count"]`
+  - Controls when background LevelDB compaction initiates.
+* `node["riak"]["config"]["jmx"]` - Enable JMX monitoring output (`on`,
+  `off`).
+* `node["riak"]["config"]["search.top_level"]` - Enable Riak Search (`on`,
+  `off`).
+* `node["riak"]["config"]["search"]["solr"]["start_timeout"]` - How long Riak
+  will wait for Solr to start.
+* `node["riak"]["config"]["search"]["solr"]["port"]` - Port number Solr will
+  bind to.
+* `node["riak"]["config"]["search"]["solr"]["jmx_port"]` - Port number which
+  Solr JMX binds to.
+* `node["riak"]["config"]["search"]["solr"]["jvm_options"]` - Options to pass
+  to the Solr JVM.
+* `node["riak"]["config"]["search"]["anti_entropy"]["data_dir"]` - Path where
+  Riak Search's Active Anti-Entropy data files will reside.
+* `node["riak"]["config"]["search"]["root_dir"]` - Path for Riak Search index
+  data.
+
+### Package
+
+* `node["riak"]["package"]["enterprise_key"]` - Riak Enterprise key.
+* `node["riak"]["package"]["name"]` - Name of the Riak package to install.
+* `node["riak"]["package"]["url"]` - Base path for downloading Riak packages.
+* `node["riak"]["package"]["version"]["major"]` - Major version number.
+* `node["riak"]["package"]["version"]["minor"]` - Minor version number.
+* `node["riak"]["package"]["version"]["incremental"]` - Incremental version number.
+* `node["riak"]["package"]["version"]["build"]` - Build version number.
+* `node["riak"]["package"]["local"]["filename"]` - File name for local Riak
+* `node["riak"]["package"]["local"]["checksum"]` - Checksum for local Riak
+  package.
+
+### Source
+
+* `node["riak"]["source"]["url"]` - Base path for downloading Riak source
+  tarballs.
+* `node["riak"]["source"]["version"]["major"]`- Major version number.
+* `node["riak"]["source"]["version"]["minor"]` - Minor version number.
+* `node["riak"]["source"]["version"]["incremental"]` - Incremental version
+  number.
+* `node["riak"]["source"]["prefix"]` - Installation prefix for source install.
+* `node["riak"]["source"]["checksum"]` - Checksum for source tarball.
+
+### ulimit
+
+* `node["riak"]["limits"]["nofile"]` - File descriptor limit for user running the Riak service
+
+### sysctl
+
+* `node["riak"]["sysctl"]["vm"]["swappiness"]`
+* `node["riak"]["sysctl"]["net"]["core"]["somaxconn"]`
+* `node["riak"]["sysctl"]["net"]["ipv4"]["tcp_max_syn_backlog"]`
+* `node["riak"]["sysctl"]["net"]["ipv4"]["tcp_sack"]`
+* `node["riak"]["sysctl"]["net"]["ipv4"]["tcp_window_scaling"]`
+* `node["riak"]["sysctl"]["net"]["ipv4"]["tcp_fin_timeout"]`
+* `node["riak"]["sysctl"]["net"]["ipv4"]["tcp_keepalive_intvl"]`
+* `node["riak"]["sysctl"]["net"]["ipv4"]["tcp_tw_reuse"]`
+* `node["riak"]["sysctl"]["net"]["ipv4"]["tcp_moderate_rcvbuf"]`
+
+## Usage
+
+### Attributes
+
+You may notice that some attribute names contain `.top_level`. This is to aid
+rendering special configuration settings that have other settings nested
+beneath them.
+
+A quick example:
+
+`search` is a setting, but it also has `search.solr.start_timeout` and
+`search.solr.port` beneath it:
 
 ```ruby
-# default.rb
-node['riak']['install_method'] = "package"
-
-# package.rb
-node['riak']['package']['version']['major'] = "1"
-node['riak']['package']['version']['minor'] = "4"
-node['riak']['package']['version']['incremental'] = "8"
+default["riak"]["config"]["search.top_level"] = "off"
+default["riak"]["config"]["search"]["solr"]["start_timeout"] = "30s"
+default["riak"]["config"]["search"]["solr"]["port"] = 8093
 ```
 
-If you are installing Riak Enterprise with the `custom_repository` method,
-also populate the following attribute with a package name:
+These attributes render as:
+
+```
+search = off
+search.solr.start_timeout = 30s
+search.solr.port = 8093
+```
+
+### Installation Methods
+
+There are several installation methods for Riak supported by this cookbook.
+All require that the node's `run_list` contain the default `riak` recipe.
+
+For more precise examples, please see the `.kitchen.yml` file.
+
+#### Package
+
+This is the default method of installation. Ensure that
+`node["riak"]["install_method"]` is set to `package`.
+
+#### Enterprise Package
+
+For Riak Enterprise users, installing the Enterprise package requires setting
+two attributes:
 
 ```ruby
-node['riak']['package']['name']
+default["riak"]["package"]["enterprise_key"] = "*******"
+default["riak"]["install_method"] = "enterprise_package"
 ```
 
-Source Installation
-------------------
+#### Custom Package
 
-The `riak::source` recipe can be used to install Riak from source. The source installation requires Erlang/OTP R15B01 or later and the `build-essential` and `erlang` cookbooks.
-
-Enterprise Installation
--------------------
-
-To install Riak Enterprise populate the following attribute with a Basho provided key:
+If you want to install a custom package of Riak (that isn't available in your
+operating system's package repository), ensure that the following attributes
+are set appropriately:
 
 ```ruby
-node['riak']['package']['enterprise_key']
+default["riak"]["install_method"] = "package"
+default["riak"]["package"]["local"]["filename"] = "riak-2.0.0pre11-1.el6.x86_64.rpm"
+default["riak"]["package"]["local"]["checksum"] = "24cbd215a123294ac7bbf65e9e76a513e0dca704e7362b86149ce9deebcae9f4"
 ```
 
-If you are installing Riak Enterprise with the `custom_repository` method,
-also populate the following attribute with a package name:
+#### Custom Repository
 
-```ruby
-node['riak']['package']['name']
-```
+If you have a package repository setup on your operating system (that isn't
+Basho's) and want to install Riak from there, ensure that
+`node["riak"]["install_method"]` is set to `custom_repository`.
 
-Basic Configuration
--------------------
+#### Source
 
-Most Riak configuration is for networking, Erlang, and storage backends.  The only interesting configuration options outside of those is the filesystem path where ring state files should be stored.
+If you want to install Riak (and Erlang) from source, ensure that
+`node["riak"]["install_method"]` is set to `source`.
 
-```ruby
-node['riak']['config']['riak_core']['ring_state_dir'] = "/var/lib/riak/ring".to_erl_string
-```
+## License and Author
 
-Networking
-----------
+* Author: Benjamin Black (<b@b3k.us>)
+* Author: Sean Carey (<sean@densone.com>)
+* Author: Hector Castro (<hector@basho.com>)
+* Author: Sean Cribbs (<sean@basho.com>)
+* Author: Seth Thomas (<sthomas@basho.com>
 
-Riak clients communicate with the nodes in the cluster through either the HTTP or Protobufs interfaces, both of which may be used simultaneously.  Configuration for each interface includes the IP address and TCP port on which to listen for client connections.  The default for the HTTP interface is `localhost:8098` and for Protobufs `0.0.0.0:8087`, meaning client connections to any address on the server, TCP port `8087`, are accepted.  As the default HTTP configuration is inaccessible to other nodes, it must be changed if you want clients to use the HTTP interface.
+Copyright (c) 2014 Basho Technologies, Inc.
 
-```ruby
-node['riak']['config']['riak_core']['http'] = [[node['ipaddress'].to_erl_string, 8098].to_erl_tuple]
-node['riak']['config']['riak_api']['pb'] = [[node['ipaddress'].to_erl_string, 8087].to_erl_tuple]
-```
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
 
-Intra-cluster handoff occurs over a dedicated port, which defaults to `8099`.
+[http://www.apache.org/licenses/LICENSE-2.0](http://www.apache.org/licenses/LICENSE-2.0)
 
-```ruby
-node['riak']['config']['riak_core']['handoff_port'] = 8099
-```
-
-Finally, by default, options are included in the configuration to define the set of ports used for Erlang inter-node communication.
-
-```ruby
-node['riak']['config']['kernel']['inet_dist_listen_min'] = 6000
-node['riak']['config']['kernel']['inet_dist_listen_max'] = 7999
-```
-
-Erlang
-------
-
-A number of Erlang parameters may be configured through the cookbook.  The node name and cookie are most important for creating multi-node clusters.  The rest of the parameters are primarily for performance tuning, with kernel polling and smp enabled by default.  Any available Erlang environment variable may be set with the env vars hash.
-
-```ruby
-node['riak']['args']['-name'] = "riak@#{node['ipaddress']}"
-node['riak']['args']['-setcookie'] = "riak"
-node['riak']['args']['+K'] = (true | false)
-node['riak']['args']['+A'] = 64
-node['riak']['args']['+W'] = "w"
-node['riak']['args']['-env']['ERL_MAX_PORTS'] = 4096
-node['riak']['args']['-env']['ERL_FULLSWEEP_AFTER'] = 0
-node['riak']['args']['-env']['ERL_CRASH_DUMP'] = "/var/log/riak/erl_crash.dump"
-```
-
-Storage Backends
-================
-
-Riak requires specification of a storage backend along with various backend storage options, specific to each backend.  While Riak supports specification of different backends for different buckets, the Chef cookbook does not yet allow such configurations. The backend options are Bitcask (the default) or LevelDB.  The typical configuration options and their defaults are given below.
-
-Bitcask
--------
-
-[Bitcask][2] is an Erlang application that provides an API for storing and retrieving key/value data into a log-structured hash table that provides very fast access.
-
-```ruby
-node['riak']['config']['bitcask']['data_root'] = "/var/lib/riak/bitcask".to_erl_string
-node['riak']['config']['bitcask']['max_file_size'] = 2147483648
-node['riak']['config']['bitcask']['open_timeout'] = 4
-node['riak']['config']['bitcask']['sync_strategy'] = "none"
-node['riak']['config']['bitcask']['frag_merge_trigger'] = 60
-node['riak']['config']['bitcask']['dead_bytes_merge_trigger'] = 536870912
-node['riak']['config']['bitcask']['frag_threshold'] = 40
-node['riak']['config']['bitcask']['dead_bytes_threshold'] = 134217728
-node['riak']['config']['bitcask']['small_file_threshold'] = 10485760
-node['riak']['config']['bitcask']['expiry_secs'] = -1
-```
-
-eLevelDB
---------
-
-[eLevelDB][3] is an Erlang application that encapsulates LevelDB, an open source on-disk key-value store written by Google Fellows Jeffrey Dean and Sanjay Ghemawat. LevelDB's storage architecture is more like BigTable's memtable/sstable model than it is like Bitcask.
-
-```ruby
-node['riak']['config']['eleveldb']['data_root'] = "/var/lib/riak/leveldb".to_erl_string
-```
-
-Lager
------
-
-[Lager][4] is the logging framework used within Riak. It can also be used with erlang/OTP.
-
-```ruby
-node['riak']['config']['lager']['crash_log'] = "/var/log/riak/crash.log".to_erl_string
-node['riak']['config']['lager']['crash_log_date'] = "$D0".to_erl_string
-node['riak']['config']['lager']['crash_log_msg_size']  = 65536
-node['riak']['config']['lager']['crash_log_size'] = 10485760
-node['riak']['config']['lager']['error_logger_redirect'] = true
-node['riak']['config']['lager']['handlers']['lager_file_backend']['lager_error_log'] =  ["/var/log/riak/error.log".to_erl_string, "error", 10485760, "$D0".to_erl_string, 5].to_erl_tuple
-node['riak']['config']['lager']['handlers']['lager_file_backend']['lager_console_log'] = ["/var/log/riak/console.log".to_erl_string, "info", 10485760, "$D0".to_erl_string, 5].to_erl_tuple
-```
-
-Sysmon
-------
-
-Sysmon monitors riaks gc process and logs relevant information to the status of garbage collection.
-
-```ruby
-node['riak']['config']['sysmon']['process_limit'] = 30
-node['riak']['config']['sysmon']['port_limit'] = 30
-node['riak']['config']['sysmon']['gc_ms_limit'] = 50 #if gc takes longer than 50ms. Spam the log.
-node['riak']['config']['sysmon']['heap_word_limit'] = 10485760
-```
-
-Index Merge
------------
-
-```ruby
-node['riak']['config']['merge_index']['data_root'] = "/var/lib/riak/merge_index".to_erl_string
-node['riak']['config']['merge_index']['buffer_rollover_size'] = 1048576
-node['riak']['config']['merge_index']['max_compact_segments'] = 20
-```
-
-Notes
------
-The Chef 10.10 release has a [bug][5] where changes to a file resource does not properly notify restart. This is fixed in Chef 10.12.
-
-
-[1]: http://basho.com/
-[2]: http://wiki.basho.com/Bitcask
-[3]: http://wiki.basho.com/LevelDB.html
-[4]: https://github.com/basho/lager
-[5]: http://tickets.opscode.com/browse/CHEF-3125
-[6]: https://github.com/basho/erlang_template_helper
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
