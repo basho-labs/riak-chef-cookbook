@@ -1,3 +1,7 @@
+## v2.4.5:
+
+* Riak `1.4.8` is now the default.
+
 ## v2.4.4:
 
 * Riak `1.4.7` is now the default.
