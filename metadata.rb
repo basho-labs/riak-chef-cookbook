@@ -27,10 +27,14 @@ version           "2.4.5"
 recipe            "riak", "Installs Riak from a package"
 recipe            "riak::source", "Installs Erlang and Riak from source"
 
-%w{apt build-essential erlang git sysctl ulimit}.each do |d|
+%w{sysctl ulimit}.each do |d|
   depends d
 end
 
+depends "apt", "~> 2.3.8"
+depends "build-essential", "~> 1.4.2"
+depends "git", "<= 2.8.4"
+depends "erlang", "<= 1.3.6"
 depends "yum", "< 3.0"
 
 %w{ubuntu debian centos redhat fedora}.each do |os|
