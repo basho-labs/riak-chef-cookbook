@@ -22,7 +22,7 @@ maintainer        "Basho Technologies, Inc."
 maintainer_email  "riak@basho.com"
 license           "Apache 2.0"
 description       "Installs and configures Riak distributed data store"
-version           "2.4.5"
+version           "2.4.6"
 
 recipe            "riak", "Installs Riak from a package"
 recipe            "riak::source", "Installs Erlang and Riak from source"
@@ -31,7 +31,7 @@ recipe            "riak::source", "Installs Erlang and Riak from source"
   depends d
 end
 
-depends "yum", "< 3.0"
+depends "yum", ">= 3.0"
 
 %w{ubuntu debian centos redhat fedora}.each do |os|
   supports os
