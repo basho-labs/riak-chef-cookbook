@@ -1,3 +1,7 @@
+## v2.4.6:
+
+* Support for yum v3
+
 ## v2.4.5:
 
 * Riak `1.4.8` is now the default.
