@@ -40,7 +40,7 @@ platforms:
     customize:
       memory: 512
   run_list:
-  - recipe[yum::epel]
+  - recipe[yum-epel]
   attributes:
     riak:
       package:
@@ -55,7 +55,7 @@ platforms:
     customize:
       memory: 512
   run_list:
-  - recipe[yum::epel]
+  - recipe[yum-epel]
   attributes:
     riak:
       package:
