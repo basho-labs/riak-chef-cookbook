@@ -17,6 +17,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
+node.default["java"]["install_flavor"] = "oracle"
 node.default["java"]["jdk_version"] = 7
 node.default["java"]["oracle"]["accept_oracle_download_terms"] = true
 
