@@ -1,4 +1,10 @@
- ## v2.4.6:
+## v2.4.7:
+
+* Ensure /etc/default/riak is regenerated when open file limits change.
+* Ensure Riak data directory exists and is owned by the Riak user.
+* Make all cookbook dependency versions explicit.
+
+## v2.4.6:
 
 * Updated yum dependency constraint.
 
