@@ -20,6 +20,7 @@
 node.default["erlang"]["source"]["version"] = "R16B02"
 node.default["erlang"]["source"]["url"] = "http://erlang.org/download/otp_src_#{node["erlang"]["source"]["version"]}.tar.gz"
 node.default["erlang"]["source"]["checksum"] = "6ab8ad1df8185345554a4b80e10fd8be06c4f2b71b69dcfb8528352787b32f85"
+node.default["erlang"]["source"]["build_flags"] = "--disable-hipe --enable-smp-support --without-odbc --enable-m64-build"
 
 node.default["riak"]["platform_bin_dir"] = "#{node["riak"]["source"]["prefix"]}/riak/bin"
 node.default["riak"]["platform_etc_dir"] = "#{node["riak"]["source"]["prefix"]}/riak/etc"
