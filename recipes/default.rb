@@ -74,6 +74,13 @@ node['riak']['patches'].each do |patch|
   end
 end
 
+directory node['riak']['data_dir'] do
+  owner 'riak'
+  group 'riak'
+  mode 0755
+  action :create
+end
+
 service "riak" do
   supports :start => true, :stop => true, :restart => true
   action [ :enable, :start ]
