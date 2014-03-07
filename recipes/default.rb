@@ -71,9 +71,9 @@ node["riak"]["patches"].each do |patch|
   end
 end
 
-directory node['riak']['data_dir'] do
-  owner 'riak'
-  group 'riak'
+directory node["riak"]["platform_data_dir"] do
+  owner "riak"
+  group "riak"
   mode 0755
   action :create
 end
