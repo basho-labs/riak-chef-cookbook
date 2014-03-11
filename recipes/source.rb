@@ -22,6 +22,10 @@ node.default["erlang"]["source"]["url"] = "http://s3.amazonaws.com/downloads.bas
 node.default["erlang"]["source"]["checksum"] = "539263be01b584cac2f26f422cce576e12e1d8fd0aff2bc9ad876a33f1803d31"
 node.default["erlang"]["source"]["build_flags"] = "--disable-hipe --enable-smp-support --without-odbc --enable-m64-build"
 
+if node["platform_family"] == "rhel" && node["platform_version"] == "6.5"
+  node.default["erlang"]["source"]["cflags"] = "-DOPENSSL_NO_EC=1"
+end
+
 node.default["riak"]["platform_bin_dir"] = "#{node["riak"]["source"]["prefix"]}/riak/bin"
 node.default["riak"]["platform_etc_dir"] = "#{node["riak"]["source"]["prefix"]}/riak/etc"
 node.default["riak"]["platform_data_dir"] = "#{node["riak"]["source"]["prefix"]}/riak/data"
