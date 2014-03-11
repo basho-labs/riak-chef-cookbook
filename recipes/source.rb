@@ -17,9 +17,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-node.default["erlang"]["source"]["version"] = "R16B02"
-node.default["erlang"]["source"]["url"] = "http://erlang.org/download/otp_src_#{node["erlang"]["source"]["version"]}.tar.gz"
-node.default["erlang"]["source"]["checksum"] = "6ab8ad1df8185345554a4b80e10fd8be06c4f2b71b69dcfb8528352787b32f85"
+node.default["erlang"]["source"]["version"] = "R16B02-basho4"
+node.default["erlang"]["source"]["url"] = "http://s3.amazonaws.com/downloads.basho.com/erlang/otp_src_#{node["erlang"]["source"]["version"]}.tar.gz"
+node.default["erlang"]["source"]["checksum"] = "539263be01b584cac2f26f422cce576e12e1d8fd0aff2bc9ad876a33f1803d31"
 node.default["erlang"]["source"]["build_flags"] = "--disable-hipe --enable-smp-support --without-odbc --enable-m64-build"
 
 node.default["riak"]["platform_bin_dir"] = "#{node["riak"]["source"]["prefix"]}/riak/bin"
