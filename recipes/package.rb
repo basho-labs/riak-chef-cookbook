@@ -31,6 +31,11 @@ when "fedora", "centos", "redhat"
   package_file = "#{base_filename}-#{node['riak']['package']['version']['build']}.fc#{platform_version}.#{node['kernel']['machine']}.rpm"
   package_uri = base_uri + package_file
   package_name = package_file.split("[-_]\d+\.").first
+when "freebsd"
+  base_uri = "#{base_uri}#{node['platform']}/#{platform_version}/"
+  package_file = "#{base_filename}-FreeBSD-amd64.tbz"
+  package_uri = base_uri + package_file
+  package_name = package_file.split(".tbz").first
 end
 
 if node['riak']['package']['local_package'] == nil
@@ -97,5 +102,24 @@ else
       source "#{Chef::Config[:file_cache_path]}/#{package_file}"
       action :install
     end
-  end
+  when "freebsd"
+    template "/usr/local/etc/rc.d/riak" do
+      source "rcd.erb"
+      action :create_if_missing
+      mode  0755
+    end
+
+    remote_file "#{Chef::Config[:file_cache_path]}/#{package_file}" do
+      source package_uri
+      owner "root"
+      mode 0644
+      not_if(File.exists?("#{Chef::Config[:file_cache_path]}/#{package_file}") && Digest::SHA256.file("#{Chef::Config[:file_cache_path]}/#{package_file}").hexdigest == node['riak']['package']['checksum']['local'])
+    end
+
+   package package_name do
+     source Chef::Config[:file_cache_path]
+     action :install
+     not_if("pkg_info #{base_filename}")
+   end
+ end
 end

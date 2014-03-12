@@ -17,8 +17,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
+
 include_recipe "ulimit" unless node['platform_family'] == "debian"
-include_recipe "sysctl"
+include_recipe "sysctl" unless node['platform_family'] == "freebsd"
+
 
 if node['riak']['package']['enterprise_key'].empty?
   include_recipe "riak::#{node['riak']['install_method']}"
@@ -40,7 +42,8 @@ file "#{node['riak']['package']['config_dir']}/vm.args" do
   notifies :restart, "service[riak]"
 end
 
-if node['platform_family'] == "debian"
+case node['platform_family']
+when "debian"
   file "/etc/default/riak" do
     content "ulimit -n #{node['riak']['limits']['nofile']}"
     owner "root"
@@ -48,12 +51,14 @@ if node['platform_family'] == "debian"
     action :create
     notifies :restart, "service[riak]"
   end
-else
+when "rhel"
   user_ulimit "riak" do
     filehandle_limit node['riak']['limits']['nofile']
   end
 end
 
+case node['platform_family']
+when "debian","rhel","fedora"
 node.default['sysctl']['params']['vm']['swappiness'] = node['riak']['sysctl']['vm']['swappiness']
 node.default['sysctl']['params']['net']['core']['somaxconn'] = node['riak']['sysctl']['net']['core']['somaxconn']
 node.default['sysctl']['params']['net']['ipv4']['tcp_max_syn_backlog'] = node['riak']['sysctl']['net']['ipv4']['tcp_max_syn_backlog']
@@ -63,6 +68,7 @@ node.default['sysctl']['params']['net']['ipv4']['tcp_fin_timeout'] = node['riak'
 node.default['sysctl']['params']['net']['ipv4']['tcp_keepalive_intvl'] = node['riak']['sysctl']['net']['ipv4']['tcp_keepalive_intvl']
 node.default['sysctl']['params']['net']['ipv4']['tcp_tw_reuse'] = node['riak']['sysctl']['net']['ipv4']['tcp_tw_reuse']
 node.default['sysctl']['params']['net']['ipv4']['tcp_moderate_rcvbuf'] = node['riak']['sysctl']['net']['ipv4']['tcp_moderate_rcvbuf']
+end
 
 node['riak']['patches'].each do |patch|
   cookbook_file "#{node['riak']['config']['riak_core']['platform_lib_dir'].gsub(/__string_/,'')}/lib/basho-patches/#{patch}" do

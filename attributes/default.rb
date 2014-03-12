@@ -22,11 +22,20 @@ include_attribute "riak::package"
 default['riak']['install_method'] = "package"
 
 # directories
-default['riak']['bin_dir'] = "/usr/sbin"
-default['riak']['data_dir'] = "/var/lib/riak"
-default['riak']['etc_dir'] = "/etc/riak"
-default['riak']['lib_dir'] = "/usr/lib/riak"
-default['riak']['log_dir'] = "/var/log/riak"
+case node['platform']
+when "freebsd"
+  default['riak']['bin_dir'] = "/usr/local/sbin"
+  default['riak']['data_dir'] = "/var/db/riak"
+  default['riak']['etc_dir'] = "/usr/local/etc/riak"
+  default['riak']['lib_dir'] = "/usr/local/lib/riak"
+  default['riak']['log_dir'] = "/var/log/riak"
+else
+  default['riak']['bin_dir'] = "/usr/sbin"
+  default['riak']['data_dir'] = "/var/lib/riak"
+  default['riak']['etc_dir'] = "/etc/riak"
+  default['riak']['lib_dir'] = "/usr/lib/riak"
+  default['riak']['log_dir'] = "/var/log/riak"
+end
 
 # vm.args
 default['riak']['args']['-name'] = "riak@#{node['fqdn']}"
