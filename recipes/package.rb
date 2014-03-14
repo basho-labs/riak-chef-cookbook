@@ -102,19 +102,36 @@ else
       source "#{Chef::Config[:file_cache_path]}/#{package_file}"
       action :install
     end
-  when "freebsd"
-    template "/usr/local/etc/rc.d/riak" do
-      source "rcd.erb"
-      action :create_if_missing
-      mode  0755
-    end
 
-    remote_file "#{Chef::Config[:file_cache_path]}/#{package_file}" do
-      source package_uri
-      owner "root"
-      mode 0644
-      not_if(File.exists?("#{Chef::Config[:file_cache_path]}/#{package_file}") && Digest::SHA256.file("#{Chef::Config[:file_cache_path]}/#{package_file}").hexdigest == node['riak']['package']['checksum']['local'])
-    end
+  when "freebsd"
+   directory "/usr/local/etc/libmap.d" do
+     owner 'root'
+     group 'wheel'
+     action :create
+   end
+
+   template "/usr/local/etc/libmap.d/riak.conf" do
+     source "libmap.erb"
+     action :create
+   end
+
+   template "/usr/local/etc/rc.d/riak" do
+     source "rcd.erb"
+     mode  0755
+     action :create
+   end
+
+   package "openssl" do
+     source "ftp://ftp.freebsd.org/pub/FreeBSD/ports/amd64/packages-9.2-release/Latest/"
+     action :install
+   end
+
+   remote_file "#{Chef::Config[:file_cache_path]}/#{package_file}" do
+     source package_uri
+     owner "root"
+     mode 0644
+     not_if(File.exists?("#{Chef::Config[:file_cache_path]}/#{package_file}") && Digest::SHA256.file("#{Chef::Config[:file_cache_path]}/#{package_file}").hexdigest == node['riak']['package']['checksum']['local'])
+   end
 
    package package_name do
      source Chef::Config[:file_cache_path]
