@@ -35,6 +35,7 @@ depends "sysctl", "~> 0.3.5"
 depends "ulimit", "~> 0.3.2"
 depends "yum", "~> 3.0"
 depends "yum-epel", "~> 0.3"
+depends "freebsd", "~> 0.1.2"
 
 %w{freebsd ubuntu debian centos redhat fedora}.each do |os|
   supports os

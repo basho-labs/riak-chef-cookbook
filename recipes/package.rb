@@ -35,7 +35,6 @@ when "freebsd"
   base_uri = "#{base_uri}#{node['platform']}/#{platform_version}/"
   package_file = "#{base_filename}-FreeBSD-amd64.tbz"
   package_uri = base_uri + package_file
-  package_name = package_file.split(".tbz").first
 end
 
 if node['riak']['package']['local_package'] == nil
@@ -104,6 +103,8 @@ else
     end
 
   when "freebsd"
+   include_recipe "freebsd::portsnap"
+
    directory "/usr/local/etc/libmap.d" do
      owner 'root'
      group 'wheel'
@@ -121,10 +122,7 @@ else
      action :create
    end
 
-   package "openssl" do
-     source "ftp://ftp.freebsd.org/pub/FreeBSD/ports/amd64/packages-9.2-release/Latest/"
-     action :install
-   end
+   package "openssl"
 
    remote_file "#{Chef::Config[:file_cache_path]}/#{package_file}" do
      source package_uri
@@ -133,10 +131,10 @@ else
      not_if(File.exists?("#{Chef::Config[:file_cache_path]}/#{package_file}") && Digest::SHA256.file("#{Chef::Config[:file_cache_path]}/#{package_file}").hexdigest == node['riak']['package']['checksum']['local'])
    end
 
-   package package_name do
-     source Chef::Config[:file_cache_path]
-     action :install
-     not_if("pkg_info #{base_filename}")
+   execute "Install #{package_file}" do
+     cwd Chef::Config[:file_cache_path]
+     command "pkg_add #{package_file}"
+     not_if "pkg_info -E #{base_filename}"
    end
  end
 end
