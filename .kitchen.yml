@@ -1,17 +1,18 @@
 ---
-driver_plugin: vagrant
+driver:
+  name: vagrant
+  vagrantfile_erb: Vagrantfile.erb
+  customize:
+    memory: 512
 
 provisioner:
   name: chef_solo
 
 platforms:
 - name: ubuntu-12.04
-  driver_config:
+  driver:
     box: opscode-ubuntu-12.04
     box_url: http://opscode-vm-bento.s3.amazonaws.com/vagrant/virtualbox/opscode_ubuntu-12.04_chef-provisionerless.box
-    vagrantfile_erb: Vagrantfile.erb
-    customize:
-      memory: 512
   run_list:
   - recipe[apt]
   attributes:
@@ -23,12 +24,9 @@ platforms:
         enterprise:
           checksum: ""
 - name: debian-7.2.0
-  driver_config:
+  driver:
     box: opscode-debian-7.2.0
     box_url: http://opscode-vm-bento.s3.amazonaws.com/vagrant/virtualbox/opscode_debian-7.2.0_chef-provisionerless.box
-    vagrantfile_erb: Vagrantfile.erb
-    customize:
-      memory: 512
   run_list:
   - recipe[apt]
   attributes:
@@ -40,12 +38,9 @@ platforms:
         enterprise:
           checksum: ""
 - name: centos-6.5
-  driver_config:
+  driver:
     box: opscode-centos-6.5
     box_url: http://opscode-vm-bento.s3.amazonaws.com/vagrant/virtualbox/opscode_centos-6.5_chef-provisionerless.box
-    vagrantfile_erb: Vagrantfile.erb
-    customize:
-      memory: 512
   run_list:
   - recipe[yum-epel]
   attributes:
@@ -57,12 +52,9 @@ platforms:
         enterprise:
           checksum: ""
 - name: centos-5.10
-  driver_config:
+  driver:
     box: opscode-centos-5.10
     box_url: http://opscode-vm-bento.s3.amazonaws.com/vagrant/virtualbox/opscode_centos-5.10_chef-provisionerless.box
-    vagrantfile_erb: Vagrantfile.erb
-    customize:
-      memory: 512
   run_list:
   - recipe[yum-epel]
   attributes:
@@ -74,12 +66,9 @@ platforms:
         enterprise:
           checksum: ""
 - name: fedora-19
-  driver_config:
+  driver:
     box: opscode-fedora-19
     box_url: http://opscode-vm-bento.s3.amazonaws.com/vagrant/virtualbox/opscode_fedora-19_chef-provisionerless.box
-    vagrantfile_erb: Vagrantfile.erb
-    customize:
-      memory: 512
   attributes:
     riak:
       package:
@@ -87,6 +76,7 @@ platforms:
           checksum: "1672703f40e1d98954f40895c05435385651093e1268905ab46f79f4417b04b4"
         enterprise:
           checksum: ""
+
 suites:
 - name: default
   run_list:
