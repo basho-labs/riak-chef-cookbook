@@ -1,10 +1,6 @@
 Vagrant.configure("2") do |c|
   c.vm.box = "<%= config[:box] %>"
   c.vm.box_url = "<%= config[:box_url] %>"
-  c.vm.hostname = "<%= instance.name %>.vagrantup.com"
-
-  # Override Omnibus install URL (so that vagrant-cachier can cache it).
-  ENV["OMNIBUS_INSTALL_URL"] = "https://gist.github.com/hectcastro/6443633/raw/install.sh"
 
   # Enable vagrant-omnibus plugin.
   c.omnibus.chef_version = :latest
@@ -12,6 +8,9 @@ Vagrant.configure("2") do |c|
   # Enable vagrant-cachier plugin.
   c.cache.auto_detect = true
 
+<% if config[:vm_hostname] %>
+  c.vm.hostname = "<%= config[:vm_hostname] %>"
+<% end %>
 <% if config[:guest] %>
   c.vm.guest = <%= config[:guest] %>
 <% end %>
@@ -27,12 +26,8 @@ Vagrant.configure("2") do |c|
 <% end %>
 
   c.vm.synced_folder ".", "/vagrant", disabled: true
-<% config[:synced_folders].each do |source, destination, options|
-     l_source = source.gsub("%{instance_name}", instance.name)
-     l_destination = destination.gsub("%{instance_name}", instance.name)
-     opt = (options.nil? ? '' : ", #{options}")
-%>
-  c.vm.synced_folder "<%= l_source %>", "<%= l_destination %>"<%= opt %>
+<% config[:synced_folders].each do |source, destination, options| %>
+  c.vm.synced_folder "<%= source %>", "<%= destination %>", <%= options %>
 <% end %>
 
   c.vm.provider :<%= config[:provider] %> do |p|
@@ -40,7 +35,7 @@ Vagrant.configure("2") do |c|
   <% case config[:provider]
      when "virtualbox" %>
     p.customize ["modifyvm", :id, "--<%= key %>", "<%= value %>"]
-  <% when "rackspace" %>
+  <% when "rackspace", "softlayer" %>
     p.<%= key %> = "<%= value%>"
   <% when /^vmware_/ %>
     <% if key == :memory %>
