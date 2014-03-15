@@ -24,7 +24,7 @@ default['riak']['package']['version']['major'] = "1"
 default['riak']['package']['version']['minor'] = "4"
 default['riak']['package']['version']['incremental'] = "8"
 default['riak']['package']['version']['build'] = "1"
-default['riak']['package']['config_dir'] = "/etc/riak"
+default['riak']['package']['config_dir'] = node['riak']['etc_dir']
 default['riak']['package']['local_package'] = false
 
 default['riak']['package']['checksum']['local'] = nil

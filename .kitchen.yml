@@ -62,6 +62,16 @@ platforms:
         checksum:
           centos:
             "5": "3e6ea55c08c0e0c5d92195955275faed082d0b42fa8bde36e485bbf10b98cae7"
+- name: freebsd-9.2
+  driver_config:
+    guest: :freebsd
+    box: opscode-freebsd-9.2
+    box_url: http://opscode-vm-bento.s3.amazonaws.com/vagrant/virtualbox/opscode_freebsd-9.2_chef-provisionerless.box
+    customize:
+      memory: 512
+  attributes:
+    lsb:
+      codename: "freebsd"
 suites:
 - name: default
   run_list:

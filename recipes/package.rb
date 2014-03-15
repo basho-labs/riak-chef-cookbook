@@ -31,6 +31,10 @@ when "fedora", "centos", "redhat"
   package_file = "#{base_filename}-#{node['riak']['package']['version']['build']}.fc#{platform_version}.#{node['kernel']['machine']}.rpm"
   package_uri = base_uri + package_file
   package_name = package_file.split("[-_]\d+\.").first
+when "freebsd"
+  base_uri = "#{base_uri}#{node['platform']}/#{platform_version}/"
+  package_file = "#{base_filename}-FreeBSD-amd64.tbz"
+  package_uri = base_uri + package_file
 end
 
 if node['riak']['package']['local_package'] == nil
@@ -97,5 +101,40 @@ else
       source "#{Chef::Config[:file_cache_path]}/#{package_file}"
       action :install
     end
-  end
+
+  when "freebsd"
+   include_recipe "freebsd::portsnap"
+
+   directory "/usr/local/etc/libmap.d" do
+     owner 'root'
+     group 'wheel'
+     action :create
+   end
+
+   template "/usr/local/etc/libmap.d/riak.conf" do
+     source "libmap.erb"
+     action :create
+   end
+
+   template "/usr/local/etc/rc.d/riak" do
+     source "rcd.erb"
+     mode  0755
+     action :create
+   end
+
+   package "openssl"
+
+   remote_file "#{Chef::Config[:file_cache_path]}/#{package_file}" do
+     source package_uri
+     owner "root"
+     mode 0644
+     not_if(File.exists?("#{Chef::Config[:file_cache_path]}/#{package_file}") && Digest::SHA256.file("#{Chef::Config[:file_cache_path]}/#{package_file}").hexdigest == node['riak']['package']['checksum']['local'])
+   end
+
+   execute "Install #{package_file}" do
+     cwd Chef::Config[:file_cache_path]
+     command "pkg_add #{package_file}"
+     not_if "pkg_info -E #{base_filename}"
+   end
+ end
 end
