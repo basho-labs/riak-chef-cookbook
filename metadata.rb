@@ -29,7 +29,7 @@ recipe            "riak::source", "Installs Erlang and Riak from source"
 
 depends "apt", "~> 2.3.8"
 depends "build-essential", "~> 1.4.2"
-depends "erlang", "~> 1.5.0"
+depends "erlang", "~> 1.5.2"
 depends "git", "~> 3.0"
 depends "java", "~> 1.20.0"
 depends "sysctl", "~> 0.3.5"
