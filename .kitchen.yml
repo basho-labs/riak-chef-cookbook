@@ -1,7 +1,7 @@
 ---
 driver:
   name: vagrant
-  vagrantfile_erb: Vagrantfile.erb
+  require_chef_omnibus: true
   customize:
     memory: 512
 
@@ -11,77 +11,61 @@ provisioner:
 
 platforms:
 - name: ubuntu-12.04
-  driver:
-    box: opscode-ubuntu-12.04
-    box_url: http://opscode-vm-bento.s3.amazonaws.com/vagrant/virtualbox/opscode_ubuntu-12.04_chef-provisionerless.box
   run_list:
   - recipe[apt]
   attributes:
     riak:
       package:
         local:
-          filename: "riak_2.0.0pre11-1_amd64.deb"
-          checksum: "ca0c78cdb0a42a07db36a95fcc802e95cb459b2eb51a83b18f8690d619c3e27a"
+          filename: "riak_2.0.0beta1-1_amd64.deb"
+          checksum: "fbbd08bcfcef012a7ed9ce6c4744862fdf4642ba7a8eeed7d00beb465466d863"
         enterprise:
-          checksum: ""
+          checksum: "a700c3284a687bb4a8298da99d6c1886ba41e931662bf10075566125544d162d"
 - name: debian-7.2.0
-  driver:
-    box: opscode-debian-7.2.0
-    box_url: http://opscode-vm-bento.s3.amazonaws.com/vagrant/virtualbox/opscode_debian-7.2.0_chef-provisionerless.box
   run_list:
   - recipe[apt]
   attributes:
     riak:
       package:
         local:
-          filename: "riak_2.0.0pre11-1_amd64.deb"
-          checksum: "e14a2a576e85dcb68d01713721b08d31b2dcb64be6a9777562e120564b6e5976"
+          filename: "riak_2.0.0beta1-1_amd64.deb"
+          checksum: "076b7bd58f179bed13da8cbb9b6cdaba7b123da8ada14e80b84b4e214bf24781"
         enterprise:
-          checksum: ""
+          checksum: "554e48bc39424c3bf08b357add663ad86bcc618d63755a601efdc608aa016a79"
 - name: centos-6.5
-  driver:
-    box: opscode-centos-6.5
-    box_url: http://opscode-vm-bento.s3.amazonaws.com/vagrant/virtualbox/opscode_centos-6.5_chef-provisionerless.box
   run_list:
   - recipe[yum-epel]
   attributes:
     riak:
       package:
         local:
-          filename: "riak-2.0.0pre11-1.el6.x86_64.rpm"
-          checksum: "24cbd215a123294ac7bbf65e9e76a513e0dca704e7362b86149ce9deebcae9f4"
+          filename: "riak-2.0.0beta1-1.el6.x86_64.rpm"
+          checksum: "2789de9a0d5eb536acb6eb5766393239e824b59e7da9055a765dca3c0596e110"
         enterprise:
-          checksum: ""
+          checksum: "7fdd3bca7d4d8961a601dc70925398ddb31c0f56d8f823596e6920d27f26f5db"
 - name: centos-5.10
-  driver:
-    box: opscode-centos-5.10
-    box_url: http://opscode-vm-bento.s3.amazonaws.com/vagrant/virtualbox/opscode_centos-5.10_chef-provisionerless.box
   run_list:
   - recipe[yum-epel]
   attributes:
     riak:
       package:
         local:
-          filename: "riak-2.0.0pre11-1.el5.x86_64.rpm"
-          checksum: "bca839267482db6d290ae6747074a414958dedc3333cc573259d9de511156432"
+          filename: "riak-2.0.0beta1-1.el5.x86_64.rpm"
+          checksum: "156401435bd2d0e30d5eec0f39c4e12b29b0bc4d0dc0d9e3c6f3672bcf2956b6"
         enterprise:
-          checksum: ""
+          checksum: "77b1e6c05040f4d47051208a23d85234c4532875a3afdbe451c63e81d175c021"
 - name: fedora-19
-  driver:
-    box: opscode-fedora-19
-    box_url: http://opscode-vm-bento.s3.amazonaws.com/vagrant/virtualbox/opscode_fedora-19_chef-provisionerless.box
   attributes:
     riak:
       package:
         local:
-          checksum: "1672703f40e1d98954f40895c05435385651093e1268905ab46f79f4417b04b4"
+          checksum: "49264c49e025100126e83530ea8e5b690812da200bc4d5030338229148a43f99"
         enterprise:
-          checksum: ""
+          checksum: "d4381b2e976459b7a5775e4e3e2189b1a75daaf2c8fd825631fb8551a1e9f9b8"
 
 suites:
 - name: default
   run_list:
-  - recipe[minitest-handler]
   - recipe[riak]
   attributes:
     riak:
@@ -91,10 +75,9 @@ suites:
         version:
           major: "2"
           minor: "0"
-          incremental: "0pre11"
+          incremental: "0beta1"
 - name: enterprise
   run_list:
-  - recipe[minitest-handler]
   - recipe[riak]
   attributes:
     riak:
@@ -103,23 +86,22 @@ suites:
         version:
           major: "2"
           minor: "0"
-          incremental: "0pre11"
+          incremental: "0beta1"
         enterprise_key: <%= (ENV["RIAK_ENTERPRISE_KEY"].nil? ? "" : ENV["RIAK_ENTERPRISE_KEY"]) %>
+  excludes:
+  - fedora-19
 - name: custom_package
   run_list:
-  - recipe[minitest-handler]
   - recipe[riak]
   attributes: {}
 - name: custom_repository
   run_list:
-  - recipe[minitest-handler]
   - recipe[riak]
   attributes:
     riak:
       install_method: "custom_repository"
 - name: source
   run_list:
-  - recipe[minitest-handler]
   - recipe[riak]
   attributes:
     riak:
@@ -127,4 +109,4 @@ suites:
       source:
         major: "2"
         minor: "0"
-        incremental: "0pre11"
+        incremental: "0beta1"

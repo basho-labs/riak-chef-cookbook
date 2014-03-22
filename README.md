@@ -239,8 +239,8 @@ are set appropriately:
 
 ```ruby
 default["riak"]["install_method"] = "package"
-default["riak"]["package"]["local"]["filename"] = "riak-2.0.0pre11-1.el6.x86_64.rpm"
-default["riak"]["package"]["local"]["checksum"] = "24cbd215a123294ac7bbf65e9e76a513e0dca704e7362b86149ce9deebcae9f4"
+default["riak"]["package"]["local"]["filename"] = "riak-2.0.0beta1-1.el6.x86_64.rpm"
+default["riak"]["package"]["local"]["checksum"] = "2789de9a0d5eb536acb6eb5766393239e824b59e7da9055a765dca3c0596e110"
 ```
 
 #### Custom Repository
