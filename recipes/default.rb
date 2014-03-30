@@ -41,6 +41,11 @@ else
   include_recipe "riak::enterprise_package"
 end
 
+directory "#{node["riak"]["platform_etc_dir"]}" do
+  owner "root"
+  mode 0755
+end
+
 file "#{node["riak"]["platform_etc_dir"]}/riak.conf" do
   content Cuttlefish.compile("", node["riak"]["config"]).join("\n")
   owner "root"
