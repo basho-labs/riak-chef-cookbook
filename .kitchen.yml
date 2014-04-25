@@ -5,12 +5,8 @@ platforms:
 - name: ubuntu-12.04
   driver_config:
     box: opscode-ubuntu-12.04
-    box_url: https://opscode-vm.s3.amazonaws.com/vagrant/opscode_ubuntu-12.04_provisionerless.box
-    require_chef_omnibus: "11.6.0"
-    chef_omnibus_url: https://gist.github.com/hectcastro/6443633/raw/install.sh
-    # Requires a patched version of kitchen-vagrant:
-    # https://github.com/hectcastro/kitchen-vagrant/compare/hc-cachier
-    use_cachier_plugin: true
+    box_url: http://opscode-vm-bento.s3.amazonaws.com/vagrant/virtualbox/opscode_ubuntu-12.04_chef-provisionerless.box
+    vagrantfile_erb: Vagrantfile.erb
     customize:
       memory: 512
   run_list:
@@ -20,16 +16,12 @@ platforms:
       package:
         checksum:
           ubuntu:
-            precise: "b4e4e31b8e1cd25ea4d3bcd9af94e7322ce1c08645425891574f57ba58f8c516"
-- name: debian-7.1.0
+            precise: "280c816e5dc4a83e3bc5e82d011fed4b3fb83098b81df2997aa17462261c86e6"
+- name: debian-7.2.0
   driver_config:
-    box: opscode-debian-7.1.0
-    box_url: https://opscode-vm-bento.s3.amazonaws.com/vagrant/opscode_debian-7.1.0_provisionerless.box
-    require_chef_omnibus: "11.6.0"
-    chef_omnibus_url: https://gist.github.com/hectcastro/6443633/raw/install.sh
-    # Requires a patched version of kitchen-vagrant:
-    # https://github.com/hectcastro/kitchen-vagrant/compare/hc-cachier
-    use_cachier_plugin: true
+    box: opscode-debian-7.2.0
+    box_url: http://opscode-vm-bento.s3.amazonaws.com/vagrant/virtualbox/opscode_debian-7.2.0_chef-provisionerless.box
+    vagrantfile_erb: Vagrantfile.erb
     customize:
       memory: 512
   run_list:
@@ -39,51 +31,49 @@ platforms:
       package:
         checksum:
           debian:
-            "7": "ab5b07c9430aed4874020aa8c4688f1efa14f2a8fba5659fbcbf2004183b51fc"
-- name: centos-6.4
+            "7": "ddc35ba5de39bb31a5f4d1b39627ac6b859dc176ff8a6890d95fb32b3f560589"
+- name: centos-6.5
   driver_config:
-    box: opscode-centos-6.4
-    box_url: https://opscode-vm.s3.amazonaws.com/vagrant/opscode_centos-6.4_provisionerless.box
-    require_chef_omnibus: "11.6.0"
-    chef_omnibus_url: https://gist.github.com/hectcastro/6443633/raw/install.sh
-    # Requires a patched version of kitchen-vagrant:
-    # https://github.com/hectcastro/kitchen-vagrant/compare/hc-cachier
-    use_cachier_plugin: true
+    box: opscode-centos-6.5
+    box_url: http://opscode-vm-bento.s3.amazonaws.com/vagrant/virtualbox/opscode_centos-6.5_chef-provisionerless.box
+    vagrantfile_erb: Vagrantfile.erb
     customize:
       memory: 512
   run_list:
-  - recipe[yum::epel]
+  - recipe[yum-epel]
   attributes:
     riak:
       package:
         checksum:
           centos:
-            "6": "5bfed85a02df7f297cf20402f147997b06c8ea59dbe860186a54e9dec2dc26e2"
-- name: centos-5.9
+            "6": "2cf9f2481409d2871a6d453a9287f317bd4f5c1cb2e49432f4fee0ac106af56c"
+- name: centos-5.10
   driver_config:
-    box: opscode-centos-5.9
-    box_url: https://opscode-vm-bento.s3.amazonaws.com/vagrant/opscode_centos-5.9_provisionerless.box
-    require_chef_omnibus: "11.6.0"
-    chef_omnibus_url: https://gist.github.com/hectcastro/6443633/raw/install.sh
-    # Requires a patched version of kitchen-vagrant:
-    # https://github.com/hectcastro/kitchen-vagrant/compare/hc-cachier
-    use_cachier_plugin: true
+    box: opscode-centos-5.10
+    box_url: http://opscode-vm-bento.s3.amazonaws.com/vagrant/virtualbox/opscode_centos-5.10_chef-provisionerless.box
+    vagrantfile_erb: Vagrantfile.erb
     customize:
       memory: 512
   run_list:
-  - recipe[yum::epel]
+  - recipe[yum-epel]
   attributes:
     riak:
       package:
         checksum:
           centos:
-            "5": "c821ddea30cdce72464909ea0a6dd2bb9e0dada4041e2b56e3569bad11a5f869"
+            "5": "3e6ea55c08c0e0c5d92195955275faed082d0b42fa8bde36e485bbf10b98cae7"
 suites:
 - name: default
   run_list:
   - recipe[minitest-handler]
   - recipe[riak]
-  attributes: {}
+  attributes:
+    riak:
+      package:
+        version:
+          major: 1
+          minor: 4
+          incremental: 8
 - name: default13
   run_list:
   - recipe[minitest-handler]
@@ -92,6 +82,7 @@ suites:
     riak:
       package:
         version:
+          major: 1
           minor: 3
           incremental: 2
 - name: default12
@@ -102,6 +93,7 @@ suites:
     riak:
       package:
         version:
+          major: 1
           minor: 2
           incremental: 1
 - name: enterprise
@@ -111,6 +103,10 @@ suites:
   attributes:
     riak:
       package:
+        version:
+          major: 1
+          minor: 4
+          incremental: 8
         enterprise_key: <%= (ENV["RIAK_ENTERPRISE_KEY"].nil? ? "" : ENV["RIAK_ENTERPRISE_KEY"]) %>
 - name: enterprise13
   run_list:
@@ -120,6 +116,7 @@ suites:
     riak:
       package:
         version:
+          major: 1
           minor: 3
           incremental: 3
         enterprise_key: <%= (ENV["RIAK_ENTERPRISE_KEY"].nil? ? "" : ENV["RIAK_ENTERPRISE_KEY"]) %>
@@ -131,9 +128,26 @@ suites:
     riak:
       package:
         version:
+          major: 1
           minor: 2
           incremental: 1
         enterprise_key: <%= (ENV["RIAK_ENTERPRISE_KEY"].nil? ? "" : ENV["RIAK_ENTERPRISE_KEY"]) %>
+- name: custom_repository
+  run_list:
+  - recipe[minitest-handler]
+  - recipe[riak]
+  attributes:
+    riak:
+      install_method: "custom_repository"
+- name: custom_repository_enterprise
+  run_list:
+  - recipe[minitest-handler]
+  - recipe[riak]
+  attributes:
+    riak:
+      package:
+        name: "riak-ee"
+      install_method: "custom_repository"
 - name: source
   run_list:
   - recipe[minitest-handler]
@@ -147,6 +161,7 @@ suites:
     riak:
       source:
         version:
+          major: 1
           minor: 3
           incremental: 2
 - name: source12
@@ -157,5 +172,6 @@ suites:
     riak:
       source:
         version:
+          major: 1
           minor: 2
           incremental: 1

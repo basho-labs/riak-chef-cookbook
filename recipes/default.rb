@@ -18,9 +18,10 @@
 # limitations under the License.
 #
 include_recipe "ulimit" unless node['platform_family'] == "debian"
+include_recipe "sysctl"
 
 if node['riak']['package']['enterprise_key'].empty?
-  include_recipe "riak::package"
+  include_recipe "riak::#{node['riak']['install_method']}"
 else
   include_recipe "riak::enterprise_package"
 end
@@ -44,7 +45,7 @@ if node['platform_family'] == "debian"
     content "ulimit -n #{node['riak']['limits']['nofile']}"
     owner "root"
     mode 0644
-    action :create_if_missing
+    action :create
     notifies :restart, "service[riak]"
   end
 else
@@ -52,6 +53,16 @@ else
     filehandle_limit node['riak']['limits']['nofile']
   end
 end
+
+node.default['sysctl']['params']['vm']['swappiness'] = node['riak']['sysctl']['vm']['swappiness']
+node.default['sysctl']['params']['net']['core']['somaxconn'] = node['riak']['sysctl']['net']['core']['somaxconn']
+node.default['sysctl']['params']['net']['ipv4']['tcp_max_syn_backlog'] = node['riak']['sysctl']['net']['ipv4']['tcp_max_syn_backlog']
+node.default['sysctl']['params']['net']['ipv4']['tcp_sack'] = node['riak']['sysctl']['net']['ipv4']['tcp_sack']
+node.default['sysctl']['params']['net']['ipv4']['tcp_window_scaling'] = node['riak']['sysctl']['net']['ipv4']['tcp_window_scaling']
+node.default['sysctl']['params']['net']['ipv4']['tcp_fin_timeout'] = node['riak']['sysctl']['net']['ipv4']['tcp_fin_timeout']
+node.default['sysctl']['params']['net']['ipv4']['tcp_keepalive_intvl'] = node['riak']['sysctl']['net']['ipv4']['tcp_keepalive_intvl']
+node.default['sysctl']['params']['net']['ipv4']['tcp_tw_reuse'] = node['riak']['sysctl']['net']['ipv4']['tcp_tw_reuse']
+node.default['sysctl']['params']['net']['ipv4']['tcp_moderate_rcvbuf'] = node['riak']['sysctl']['net']['ipv4']['tcp_moderate_rcvbuf']
 
 node['riak']['patches'].each do |patch|
   cookbook_file "#{node['riak']['config']['riak_core']['platform_lib_dir'].gsub(/__string_/,'')}/lib/basho-patches/#{patch}" do
@@ -61,6 +72,13 @@ node['riak']['patches'].each do |patch|
     checksum
     notifies :restart, "service[riak]"
   end
+end
+
+directory node['riak']['data_dir'] do
+  owner 'riak'
+  group 'riak'
+  mode 0755
+  action :create
 end
 
 service "riak" do

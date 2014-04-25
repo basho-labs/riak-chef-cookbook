@@ -17,11 +17,12 @@
 # limitations under the License.
 #
 default['riak']['package']['enterprise_key'] = ""
+default['riak']['package']['name'] = "riak"
 
 default['riak']['package']['url'] = "http://s3.amazonaws.com/downloads.basho.com/riak"
 default['riak']['package']['version']['major'] = "1"
 default['riak']['package']['version']['minor'] = "4"
-default['riak']['package']['version']['incremental'] = "2"
+default['riak']['package']['version']['incremental'] = "8"
 default['riak']['package']['version']['build'] = "1"
 default['riak']['package']['config_dir'] = "/etc/riak"
 default['riak']['package']['local_package'] = false

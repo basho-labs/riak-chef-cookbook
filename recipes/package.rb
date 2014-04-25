@@ -88,16 +88,10 @@ else
   when "amazon"
     include_recipe "yum"
 
-    yum_key "RPM-GPG-KEY-basho" do
-      url "http://yum.basho.com/gpg/RPM-GPG-KEY-basho"
-      action :add
-    end
-
     yum_repository "basho" do
-      repo_name "basho"
       description "Basho Stable Repo"
-      url "http://yum.basho.com/el/#{platform_version == 2013 ? 6 : 5}/products/x86_64/"
-      key "RPM-GPG-KEY-basho"
+      baseurl "http://yum.basho.com/el/#{platform_version == 2013 ? 6 : 5}/products/x86_64/"
+      gpgkey "http://yum.basho.com/gpg/RPM-GPG-KEY-basho"
       action :add
     end
 

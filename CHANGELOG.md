@@ -1,3 +1,43 @@
+## v2.4.7:
+
+* Ensure /etc/default/riak is regenerated when open file limits change.
+* Ensure Riak data directory exists and is owned by the Riak user.
+* Make all cookbook dependency versions explicit.
+
+## v2.4.6:
+
+* Updated yum dependency constraint.
+
+## v2.4.5:
+
+* Riak `1.4.8` is now the default.
+
+## v2.4.4:
+
+* Riak `1.4.7` is now the default.
+
+## v2.4.3:
+
+* Add a constraint to `yum` cookbook dependency so that breaking changes in
+  v3.0 are mitigated.
+* Updated Gemfile to include integration test dependencies.
+
+## v2.4.2:
+
+* Riak `1.4.6` is now the default.
+* Make use of `vagrantfile_erb` setting of kitchen-vagrant.
+* Added kernel and network tuning via sysctl.
+
+## v2.4.1:
+
+* Removed Recipe Tester.
+* Bumped Chef to version `11.8.0` for Test Kitchen.
+* Make default for `cs_version` be `1.4.3`
+
+## v2.4.0:
+
+* Added a recipe for installing Riak through a custom package repository.
+
 ## v2.3.4:
 
 * Made Test Kitchen run faster by enabling the `vagrant-cachier` plugin

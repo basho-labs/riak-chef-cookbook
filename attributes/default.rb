@@ -18,6 +18,10 @@
 #
 include_attribute "riak::package"
 
+# install method
+default['riak']['install_method'] = "package"
+
+# directories
 default['riak']['bin_dir'] = "/usr/sbin"
 default['riak']['data_dir'] = "/var/lib/riak"
 default['riak']['etc_dir'] = "/etc/riak"
@@ -101,6 +105,7 @@ default['riak']['config']['riak_kv']['http_url_encoding'] = "on"
 default['riak']['config']['riak_kv']['vnode_vclocks'] = true
 default['riak']['config']['riak_kv']['listkeys_backpressure'] = true
 default['riak']['config']['riak_kv']['fsm_limit'] = 50000
+#default['riak']['config']['riak_kv']['secondary_index_sort_default'] = true
 default['riak']['config']['riak_kv']['object_format'] = "v1"
 
 # riak_kv storage_backend
@@ -117,7 +122,7 @@ case node['riak']['config']['riak_kv']['storage_backend']
     eleveldb_mult = ["eleveldb_mult", "riak_kv_eleveldb_backend", {"data_root" => "#{node['riak']['data_dir']}/leveldb".to_erl_string}]
     default['riak']['config']['riak_kv']['multi_backend'] = [bitcask_mult.to_erl_tuple, eleveldb_mult.to_erl_tuple]
   when "riak_cs_kv_multi_backend"
-    default['riak']['cs_version'] = "1.4.1"
+    default['riak']['cs_version'] = "1.4.3"
     if node['platform_family'] == "rhel" && node['kernel']['machine'] == "x86_64"
        default['riak']['config']['riak_kv']['add_paths'] = ["/usr/lib64/riak-cs/lib/riak_cs-#{node['riak']['cs_version']}/ebin".to_erl_string]
     else
@@ -183,6 +188,17 @@ default['riak']['config']['snmp']['agent']['db_dir'] = "#{node['riak']['data_dir
 
 # limits
 default['riak']['limits']['nofile'] = 4096
+
+# sysctl
+default['riak']['sysctl']['vm']['swappiness'] = 0
+default['riak']['sysctl']['net']['core']['somaxconn'] = 40000
+default['riak']['sysctl']['net']['ipv4']['tcp_max_syn_backlog'] = 40000
+default['riak']['sysctl']['net']['ipv4']['tcp_sack'] = 1
+default['riak']['sysctl']['net']['ipv4']['tcp_window_scaling'] = 1
+default['riak']['sysctl']['net']['ipv4']['tcp_fin_timeout'] = 15
+default['riak']['sysctl']['net']['ipv4']['tcp_keepalive_intvl'] = 30
+default['riak']['sysctl']['net']['ipv4']['tcp_tw_reuse'] = 1
+default['riak']['sysctl']['net']['ipv4']['tcp_moderate_rcvbuf'] = 1
 
 #patches
 default['riak']['patches'] = []
