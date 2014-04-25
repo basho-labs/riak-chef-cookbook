@@ -71,7 +71,7 @@ else
 
     yum_repository "basho" do
       description "Basho Stable Repo"
-      baseurl "http://yum.basho.com/el/#{platform_version}/products/x86_64/"
+      url "http://yum.basho.com/el/#{platform_version}/products/x86_64/"
       gpgkey "http://yum.basho.com/gpg/RPM-GPG-KEY-basho"
       action :add
     end
@@ -90,7 +90,7 @@ else
 
     yum_repository "basho" do
       description "Basho Stable Repo"
-      baseurl "http://yum.basho.com/el/#{platform_version == 2013 ? 6 : 5}/products/x86_64/"
+      url "http://yum.basho.com/el/#{platform_version == 2013 ? 6 : 5}/products/x86_64/"
       gpgkey "http://yum.basho.com/gpg/RPM-GPG-KEY-basho"
       action :add
     end
