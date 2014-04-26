@@ -26,9 +26,9 @@ checksum_val = node['riak']['package']['checksum'][node['platform']][node['platf
 case node['platform']
 when "ubuntu"
   machines = {"x86_64" => "amd64", "i386" => "i386", "i686" => "i386"}
-  base_uri = "#{base_uri}#{node['platform']}/#{node['lsb']['codename']}/"
-  package "libssl0.9.8" 
-  package_file = "#{base_filename.gsub(/\-/, '_').sub(/_/,'-')}-#{node['riak']['package']['version']['build']}_#{machines[node['kernel']['machine']]}.deb" 
+  base_uri = "#{base_uri}#{node['platform']}/#{node['lsb']['codename'] == "raring" ? "precise" : node['lsb']['codename']}/"
+  package "libssl0.9.8"
+  package_file = "#{base_filename.gsub(/\-/, '_').sub(/_/,'-')}-#{node['riak']['package']['version']['build']}_#{machines[node['kernel']['machine']]}.deb"
 when "debian"
   machines = {"x86_64" => "amd64", "i386" => "i386", "i686" => "i386"}
   base_uri = "#{base_uri}#{node['platform']}/#{node['platform_version'].to_i}/"
