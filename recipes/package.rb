@@ -56,7 +56,7 @@ else
 
     apt_repository "basho" do
       uri "http://apt.basho.com"
-      distribution node['lsb']['codename']
+      distribution (node['lsb']['codename'] == "raring" ? "precise" : node['lsb']['codename'])
       components ["main"]
       key "http://apt.basho.com/gpg/basho.apt.key"
     end
