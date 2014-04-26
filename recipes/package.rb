@@ -23,8 +23,8 @@ base_uri = "#{node['riak']['package']['url']}/#{version_str}/#{version_str}.#{no
 base_filename = "riak-#{version_str}.#{node['riak']['package']['version']['incremental']}"
 platform_version = node['platform_version'].to_i
 
-case node['platform']
-when "fedora", "centos", "redhat"
+case node['platform_family']
+when "rhel"
   node.set['riak']['config']['riak_core']['platform_lib_dir'] = "/usr/lib64/riak".to_erl_string if node['kernel']['machine'] == 'x86_64'
   machines = {"x86_64" => "x86_64", "i386" => "i386", "i686" => "i686"}
   base_uri = "#{base_uri}#{node['platform']}/#{platform_version}/"
@@ -78,6 +78,25 @@ else
 
     if platform_version >= 6
       package_version = "#{package_version}.el#{platform_version}"
+    end
+
+    package "riak" do
+      action :install
+      version package_version
+    end
+
+  when "amazon"
+    include_recipe "yum"
+
+    yum_repository "basho" do
+      description "Basho Stable Repo"
+      url "http://yum.basho.com/el/#{platform_version == 2013 ? 6 : 5}/products/x86_64/"
+      gpgkey "http://yum.basho.com/gpg/RPM-GPG-KEY-basho"
+      action :add
+    end
+
+    if platform_version >= 2013
+      package_version = "#{package_version}.el6"
     end
 
     package "riak" do
