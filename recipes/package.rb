@@ -66,8 +66,14 @@ else
       version package_version
     end
 
-  when "centos", "redhat"
+  when "centos", "redhat", "amazon"
     include_recipe "yum"
+
+    if node['platform'] == "amazon" && platform_version >= 2013
+      platform_version = 6
+    elsif node['platform'] == "amazon"
+      platform_version = 5
+    end
 
     yum_repository "basho" do
       description "Basho Stable Repo"
