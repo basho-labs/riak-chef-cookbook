@@ -1,3 +1,9 @@
+## v2.4.8:
+
+* Make default for `cs_version` be `1.4.5`
+* Add support for Ubuntu 13.04 (Raring).
+* Add support for Amazon Linux (2014.03).
+
 ## v2.4.7:
 
 * Ensure /etc/default/riak is regenerated when open file limits change.

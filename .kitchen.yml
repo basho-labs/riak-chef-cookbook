@@ -6,13 +6,10 @@ driver:
     memory: 512
 
 provisioner:
-  name: chef_solo
-  root_path: /home/vagrant/kitchen
+  name: chef_zero
 
 platforms:
 - name: ubuntu-13.04
-  run_list:
-  - recipe[apt]
   attributes:
     riak:
       package:
@@ -20,8 +17,6 @@ platforms:
           ubuntu:
             precise: "280c816e5dc4a83e3bc5e82d011fed4b3fb83098b81df2997aa17462261c86e6"
 - name: ubuntu-12.04
-  run_list:
-  - recipe[apt]
   attributes:
     riak:
       package:
@@ -29,8 +24,6 @@ platforms:
           ubuntu:
             precise: "280c816e5dc4a83e3bc5e82d011fed4b3fb83098b81df2997aa17462261c86e6"
 - name: debian-7.2.0
-  run_list:
-  - recipe[apt]
   attributes:
     riak:
       package:
@@ -38,8 +31,6 @@ platforms:
           debian:
             "7": "ddc35ba5de39bb31a5f4d1b39627ac6b859dc176ff8a6890d95fb32b3f560589"
 - name: centos-6.5
-  run_list:
-  - recipe[yum-epel]
   attributes:
     riak:
       package:
@@ -47,8 +38,6 @@ platforms:
           centos:
             "6": "2cf9f2481409d2871a6d453a9287f317bd4f5c1cb2e49432f4fee0ac106af56c"
 - name: centos-5.10
-  run_list:
-  - recipe[yum-epel]
   attributes:
     riak:
       package:
