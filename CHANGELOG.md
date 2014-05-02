@@ -1,3 +1,7 @@
+## v2.4.9:
+
+* Revert errant change of Riak node name from FQDN to IP address.
+
 ## v2.4.8:
 
 * Make default for `cs_version` be `1.4.5`
