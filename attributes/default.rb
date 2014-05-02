@@ -29,7 +29,7 @@ default['riak']['lib_dir'] = "/usr/lib/riak"
 default['riak']['log_dir'] = "/var/log/riak"
 
 # vm.args
-default['riak']['args']['-name'] = "riak@#{node['ipaddress']}"
+default['riak']['args']['-name'] = "riak@#{node['fqdn']}"
 default['riak']['args']['-setcookie'] = "riak"
 default['riak']['args']['+K'] = true
 default['riak']['args']['+A'] = 64
