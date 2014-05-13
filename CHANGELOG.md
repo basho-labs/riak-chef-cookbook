@@ -1,3 +1,7 @@
+## v2.4.10:
+
+* Fix invalid default Multi backend definitions.
+
 ## v2.4.9:
 
 * Revert errant change of Riak node name from FQDN to IP address.
