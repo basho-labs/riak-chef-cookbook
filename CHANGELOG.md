@@ -1,3 +1,7 @@
+## v2.4.11:
+
+* Ensure SNMP directory is created when customer `data_dir` is provided.
+
 ## v2.4.10:
 
 * Fix invalid default Multi backend definitions.
