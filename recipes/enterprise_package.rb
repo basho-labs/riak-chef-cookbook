@@ -21,6 +21,7 @@
 version_str = [ "major", "minor", "incremental" ].map { |ver| node["riak"]["package"]["version"][ver] }.join(".")
 base_uri = "#{node["riak"]["package"]["url"]}/#{node["riak"]["package"]["enterprise_key"]}/#{version_str}/"
 base_filename = "riak-ee-#{version_str}"
+platform_version = node['platform_version'].to_i
 checksum_val = node["riak"]["package"]["enterprise"]["checksum"]
 
 case node["platform_family"]
@@ -35,16 +36,22 @@ when "debian"
       action :install
     end
   elsif node["platform"] == "debian"
-    base_uri = "#{base_uri}#{node["platform"]}/#{node["platform_version"].to_i}/"
+    base_uri = "#{base_uri}#{node["platform"]}/#{platform_version}/"
   end
 when "rhel"
+  if node["platform"] == "amazon" && platform_version >= 2013
+    platform_version = 6
+  elsif node["platform"] == "amazon"
+    platform_version = 5
+  end
+
   machines = {"x86_64" => "x86_64", "i386" => "i386", "i686" => "i686"}
-  package_file = "#{base_filename}-#{node["riak"]["package"]["version"]["build"]}.el#{node["platform_version"].to_i}.#{machines[node["kernel"]["machine"]]}.rpm"
-  base_uri = "#{base_uri}rhel/#{node["platform_version"].to_i}/"
+  package_file = "#{base_filename}-#{node["riak"]["package"]["version"]["build"]}.el#{platform_version}.#{machines[node["kernel"]["machine"]]}.rpm"
+  base_uri = "#{base_uri}rhel/#{platform_version}/"
 when "fedora"
   machines = {"x86_64" => "x86_64", "i386" => "i386", "i686" => "i686"}
-  base_uri = "#{base_uri}#{node["platform"]}/#{node["platform_version"].to_i}/"
-  package_file = "#{base_filename}-#{node["riak"]["package"]["version"]["build"]}.fc#{node["platform_version"].to_i}.#{node["kernel"]["machine"]}.rpm"
+  base_uri = "#{base_uri}#{node["platform"]}/#{platform_version}/"
+  package_file = "#{base_filename}-#{node["riak"]["package"]["version"]["build"]}.fc#{platform_version}.#{node["kernel"]["machine"]}.rpm"
 end
 
 package_uri = "#{base_uri}#{package_file}"

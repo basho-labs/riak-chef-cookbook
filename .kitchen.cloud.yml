@@ -1,0 +1,53 @@
+---
+driver:
+  name: ec2
+  aws_access_key_id: <%= ENV["AWS_ACCESS_KEY_ID"] %>
+  aws_secret_access_key: <%= ENV["AWS_SECRET_ACCESS_KEY"] %>
+  aws_ssh_key_id: <%= ENV["AWS_KEYPAIR_NAME"] %>
+
+provisioner:
+  name: chef_zero
+  require_chef_omnibus: latest
+
+platforms:
+- name: amazon-2014.03.1
+  driver:
+    image_id: ami-ed8e9284
+    username: ec2-user
+    ssh_key: <%= ENV["EC2_SSH_KEY_PATH"] %>
+  run_list:
+  - recipe[yum-epel]
+  attributes:
+    riak:
+      package:
+        local:
+          filename: "riak-2.0.0beta1-1.el6.x86_64.rpm"
+          checksum: "2789de9a0d5eb536acb6eb5766393239e824b59e7da9055a765dca3c0596e110"
+        enterprise:
+          checksum: "7fdd3bca7d4d8961a601dc70925398ddb31c0f56d8f823596e6920d27f26f5db"
+
+suites:
+- name: default
+  run_list:
+  - recipe[riak]
+  attributes:
+    riak:
+      package:
+        local:
+          filename: ""
+        version:
+          major: "2"
+          minor: "0"
+          incremental: "0beta1"
+- name: enterprise
+  run_list:
+  - recipe[riak]
+  attributes:
+    riak:
+      package:
+        url: "http://private.downloads.basho.com/riak_ee"
+        version:
+          major: "2"
+          minor: "0"
+          incremental: "0beta1"
+        enterprise_key: <%= (ENV["RIAK_ENTERPRISE_KEY"].nil? ? "" : ENV["RIAK_ENTERPRISE_KEY"]) %>

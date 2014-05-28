@@ -6,4 +6,5 @@ gem "foodcritic", "~> 3.0"
 group :integration do
   gem "test-kitchen", "~> 1.0"
   gem "kitchen-vagrant", "~> 0.11"
+  gem "kitchen-ec2", "~> 0.8.0"
 end
