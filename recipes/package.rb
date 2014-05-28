@@ -20,6 +20,18 @@
 unless node["riak"]["package"]["local"]["filename"].empty?
   package_file = node["riak"]["package"]["local"]["filename"]
 
+  unless node["riak"]["package"]["local"]["url"].empty?
+    package_uri = "#{node["riak"]["package"]["local"]["url"]}/#{package_file}"
+    checksum_val = node["riak"]["package"]["local"]["checksum"]
+
+    remote_file "#{Chef::Config[:file_cache_path]}/#{package_file}" do
+      source package_uri
+      checksum checksum_val
+      owner "root"
+      mode 0644
+    end
+  end
+
   package node["riak"]["package"]["name"] do
     source "#{Chef::Config[:file_cache_path]}/#{package_file}"
     action :install

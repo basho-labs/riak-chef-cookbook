@@ -27,3 +27,4 @@ default["riak"]["package"]["version"]["build"] = "1"
 
 default["riak"]["package"]["local"]["filename"] = ""
 default["riak"]["package"]["local"]["checksum"] = ""
+default["riak"]["package"]["local"]["url"] = ""
