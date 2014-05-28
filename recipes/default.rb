@@ -78,6 +78,15 @@ directory node["riak"]["platform_data_dir"] do
   action :create
 end
 
+directory ::File.join(node["riak"]["platform_data_dir"], "snmp", "agent", "db") do
+  owner "riak"
+  group "riak"
+  mode 0755
+  action :create
+  recursive true
+  not_if { node["riak"]["package"]["enterprise_key"].empty? }
+end
+
 service "riak" do
   supports :start => true, :stop => true, :restart => true, :status => true
   action [ :enable, :start ]
