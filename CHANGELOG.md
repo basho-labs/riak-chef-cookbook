@@ -1,3 +1,7 @@
+## v2.4.12:
+
+* Increase default `ulimit` from `4096` to `65536`.
+
 ## v2.4.11:
 
 * Ensure SNMP directory is created when customer `data_dir` is provided.
