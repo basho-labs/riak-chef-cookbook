@@ -187,7 +187,7 @@ default['riak']['config']['snmp']['agent']['config']['force_load'] = true
 default['riak']['config']['snmp']['agent']['db_dir'] = "#{node['riak']['data_dir']}/snmp/agent/db".to_erl_string
 
 # limits
-default['riak']['limits']['nofile'] = 4096
+default['riak']['limits']['nofile'] = 65536
 
 # sysctl
 default['riak']['sysctl']['vm']['swappiness'] = 0
