@@ -28,7 +28,7 @@ node['riak']['install_method'] = "package"
 # package.rb
 node['riak']['package']['version']['major'] = "1"
 node['riak']['package']['version']['minor'] = "4"
-node['riak']['package']['version']['incremental'] = "8"
+node['riak']['package']['version']['incremental'] = "9"
 ```
 
 If you are installing Riak Enterprise with the `custom_repository` method,
