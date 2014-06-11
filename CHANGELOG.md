@@ -1,3 +1,8 @@
+## v2.4.13:
+
+* Increase pessimistic version constraint on `build-essential`.
+* Restrict version constraint on `sysctl` due to breaking changes.
+
 ## v2.4.12:
 
 * Increase default `ulimit` from `4096` to `65536`.
