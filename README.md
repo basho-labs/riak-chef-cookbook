@@ -112,6 +112,21 @@ Storage Backends
 
 Riak requires specification of a storage backend along with various backend storage options, specific to each backend.  While Riak supports specification of different backends for different buckets, the Chef cookbook does not yet allow such configurations. The backend options are Bitcask (the default) or LevelDB.  The typical configuration options and their defaults are given below.
 
+Changing Storage Backend
+------------------------
+
+Changing Riak's storage backend is accomplished by changing the ```riak_kv``` parameter to one of:
+
+- ```riak_kv_bitcask_backend``` for Bitcask
+- ```riak_kv_eleveldb_backend``` for eLevelDB
+- ```riak_kv_multi_backend``` for Multi Backend
+
+By default, Riak will use Bitcask, with ```riak_kv_bitcask_backend```. To change this to eLevelDB for example:
+
+```ruby
+node['riak']['config']['riak_kv']['storage_backend'] = 'riak_kv_eleveldb_backend'
+```
+
 Bitcask
 -------
 
