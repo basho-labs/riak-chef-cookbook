@@ -127,6 +127,19 @@ By default, Riak will use Bitcask, with ```riak_kv_bitcask_backend```. To change
 node['riak']['config']['riak_kv']['storage_backend'] = 'riak_kv_eleveldb_backend'
 ```
 
+*NOTE:* you can override any of the existing ```storage_backend``` configurations by including the following in the attributes of a Riak wrapper cookbook of your own creation:
+
+```ruby
+# custom Multi-backend
+case node['riak']['config']['riak_kv']['storage_backend']
+  when "riak_kv_multi_backend"
+    default['riak']['config']['riak_kv']['multi_backend_default'] = "bitcask". to_erl_binary
+    bitcask = ["bitcask".to_erl_binary, "riak_kv_bitcask_backend", {"data_root" => "#{node['riak']['data_dir']}/bitcask".to_erl_string, "expiry_secs" => -1}]
+    expiring_data = ["expiring_data".to_erl_binary, "riak_kv_bitcask_backend", {"data_root" => "#{node['riak']['data_dir']}/expiring_data".to_erl_string, "expiry_secs" => 5184000}]
+    default['riak']['config']['riak_kv']['multi_backend'] = [bitcask.to_erl_tuple, expiring_data.to_erl_tuple]
+end
+```
+
 Bitcask
 -------
 
