@@ -9,41 +9,48 @@ provisioner:
   name: chef_zero
 
 platforms:
-- name: ubuntu-13.04
+- name: ubuntu-14.04
   attributes:
     riak:
       package:
         checksum:
           ubuntu:
-            precise: "a8599331d78e2975bd1adc63970c84b060a1e1a2a3b6ba25f8979e909dec91e2"
+            precise: "f2f5af17cce01a769d31517bbdba5a9e1b99e3581bcc4b33e970dbd0ef4140c6"
+- name: ubuntu-13.10
+  attributes:
+    riak:
+      package:
+        checksum:
+          ubuntu:
+            precise: "f2f5af17cce01a769d31517bbdba5a9e1b99e3581bcc4b33e970dbd0ef4140c6"
 - name: ubuntu-12.04
   attributes:
     riak:
       package:
         checksum:
           ubuntu:
-            precise: "a8599331d78e2975bd1adc63970c84b060a1e1a2a3b6ba25f8979e909dec91e2"
+            precise: "f2f5af17cce01a769d31517bbdba5a9e1b99e3581bcc4b33e970dbd0ef4140c6"
 - name: debian-7.2.0
   attributes:
     riak:
       package:
         checksum:
           debian:
-            "7": "8a2dd7e756be3c9fb3f994ca3af1ae1113e206a216c2b6fe302008d622bffb67"
+            "7": "3bb6bcc409f51e303978fdb72c8605ac87a502e99bb5b7fda5ecd6af9c343d42"
 - name: centos-6.5
   attributes:
     riak:
       package:
         checksum:
           centos:
-            "6": "bdf8ab68692b2cf6d9433ac381e40c51d2a6effd23f8129a37f5dfc4087e8223"
+            "6": "5f93a9ed1d7c9326297ebc432d69d1b03e941c057a7cfa37b45138045efdfb4f"
 - name: centos-5.10
   attributes:
     riak:
       package:
         checksum:
           centos:
-            "5": "eb6d3191193297217a9ebe62468d6c4bc4ef3bcfa18c43f366b95224239a896f"
+            "5": "33c54fd0daccca7005bf65e152b4893d4fecd0cd70becdcde596fb935d93625e"
 
 suites:
 - name: default
@@ -56,7 +63,7 @@ suites:
         version:
           major: 1
           minor: 4
-          incremental: 9
+          incremental: 10
 - name: default13
   run_list:
   - recipe[minitest-handler]
@@ -89,7 +96,7 @@ suites:
         version:
           major: 1
           minor: 4
-          incremental: 9
+          incremental: 10
         enterprise_key: <%= (ENV["RIAK_ENTERPRISE_KEY"].nil? ? "" : ENV["RIAK_ENTERPRISE_KEY"]) %>
 - name: enterprise13
   run_list:
