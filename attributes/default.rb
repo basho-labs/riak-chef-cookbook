@@ -122,7 +122,7 @@ case node['riak']['config']['riak_kv']['storage_backend']
     eleveldb_mult = ["eleveldb_mult".to_erl_binary, "riak_kv_eleveldb_backend", {"data_root" => "#{node['riak']['data_dir']}/leveldb".to_erl_string}]
     default['riak']['config']['riak_kv']['multi_backend'] = [bitcask_mult.to_erl_tuple, eleveldb_mult.to_erl_tuple]
   when "riak_cs_kv_multi_backend"
-    default['riak']['cs_version'] = "1.4.5"
+    default['riak']['cs_version'] = "1.5.0"
     if node['platform_family'] == "rhel" && node['kernel']['machine'] == "x86_64"
        default['riak']['config']['riak_kv']['add_paths'] = ["/usr/lib64/riak-cs/lib/riak_cs-#{node['riak']['cs_version']}/ebin".to_erl_string]
     else

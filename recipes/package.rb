@@ -56,7 +56,7 @@ else
 
     apt_repository "basho" do
       uri "http://apt.basho.com"
-      distribution (node['lsb']['codename'] == "raring" ? "precise" : node['lsb']['codename'])
+      distribution (node['platform_version'].to_f > 12.04 ? "precise" : node['lsb']['codename'])
       components ["main"]
       key "http://apt.basho.com/gpg/basho.apt.key"
     end
@@ -64,6 +64,7 @@ else
     package "riak" do
       action :install
       version package_version
+      options '-o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold"'
     end
 
   when "centos", "redhat", "amazon"
