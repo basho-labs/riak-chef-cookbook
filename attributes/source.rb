@@ -19,7 +19,7 @@
 default['riak']['source']['url'] = "http://s3.amazonaws.com/downloads.basho.com/riak"
 default['riak']['source']['version']['major'] = "1"
 default['riak']['source']['version']['minor'] = "4"
-default['riak']['source']['version']['incremental'] = "9"
+default['riak']['source']['version']['incremental'] = "10"
 default['riak']['source']['prefix'] = "/usr/local"
 default['riak']['source']['config_dir'] = node['riak']['source']['prefix'] + "/riak/etc"
 

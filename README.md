@@ -28,7 +28,7 @@ node['riak']['install_method'] = "package"
 # package.rb
 node['riak']['package']['version']['major'] = "1"
 node['riak']['package']['version']['minor'] = "4"
-node['riak']['package']['version']['incremental'] = "9"
+node['riak']['package']['version']['incremental'] = "10"
 ```
 
 If you are installing Riak Enterprise with the `custom_repository` method,
@@ -111,6 +111,34 @@ Storage Backends
 ================
 
 Riak requires specification of a storage backend along with various backend storage options, specific to each backend.  While Riak supports specification of different backends for different buckets, the Chef cookbook does not yet allow such configurations. The backend options are Bitcask (the default) or LevelDB.  The typical configuration options and their defaults are given below.
+
+Changing Storage Backend
+------------------------
+
+Changing Riak's storage backend is accomplished by changing the ```node['riak']['config']['riak_kv']['storage_backend']``` parameter to one of:
+
+- ```riak_kv_bitcask_backend``` for Bitcask
+- ```riak_kv_eleveldb_backend``` for eLevelDB
+- ```riak_kv_multi_backend``` for Multi Backend
+
+By default, Riak will use Bitcask, with ```riak_kv_bitcask_backend```. To change this to eLevelDB for example:
+
+```ruby
+node['riak']['config']['riak_kv']['storage_backend'] = 'riak_kv_eleveldb_backend'
+```
+
+*NOTE:* you can override any of the existing ```storage_backend``` configurations by including the following in the attributes of a Riak wrapper cookbook of your own creation:
+
+```ruby
+# custom Multi-backend
+case node['riak']['config']['riak_kv']['storage_backend']
+  when "riak_kv_multi_backend"
+    default['riak']['config']['riak_kv']['multi_backend_default'] = "bitcask". to_erl_binary
+    bitcask = ["bitcask".to_erl_binary, "riak_kv_bitcask_backend", {"data_root" => "#{node['riak']['data_dir']}/bitcask".to_erl_string, "expiry_secs" => -1}]
+    expiring_data = ["expiring_data".to_erl_binary, "riak_kv_bitcask_backend", {"data_root" => "#{node['riak']['data_dir']}/expiring_data".to_erl_string, "expiry_secs" => 5184000}]
+    default['riak']['config']['riak_kv']['multi_backend'] = [bitcask.to_erl_tuple, expiring_data.to_erl_tuple]
+end
+```
 
 Bitcask
 -------

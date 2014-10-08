@@ -1,3 +1,10 @@
+## v2.4.14:
+
+* Riak `1.4.10` is now the default.
+* Remove Ubuntu 13.04 support (EOL).
+* Add Ubuntu 13.10 support
+* Add Ubuntu 14.04 support
+
 ## v2.4.13:
 
 * Increase pessimistic version constraint on `build-essential`.
