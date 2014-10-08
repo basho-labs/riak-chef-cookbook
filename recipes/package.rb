@@ -64,6 +64,7 @@ else
     package "riak" do
       action :install
       version package_version
+      options '-o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold"'
     end
 
   when "centos", "redhat", "amazon"
