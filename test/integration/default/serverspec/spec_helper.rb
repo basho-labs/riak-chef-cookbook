@@ -1,11 +1,6 @@
-require "serverspec"
+ require 'serverspec'
 
-include Serverspec::Helper::Exec
-include Serverspec::Helper::DetectOS
+# Required by serverspec
+set :backend, :exec
 
-RSpec.configure do |c|
-  c.before :all do
-    c.os = backend(Serverspec::Commands::Base).check_os
-    c.path = "/sbin:/usr/sbin"
-  end
-end
+set :path, '/sbin:/usr/local/sbin:$PATH'

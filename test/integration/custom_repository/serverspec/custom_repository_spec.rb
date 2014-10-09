@@ -22,5 +22,5 @@ describe file("/etc/riak/riak.conf") do
 end
 
 describe command("riak ping") do
-  it { should return_stdout "pong" }
+  its(:stdout) { should eq "pong\n" }
 end
