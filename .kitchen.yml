@@ -17,11 +17,11 @@ platforms:
     riak:
       package:
         local:
-          filename: "riak_2.0.0beta1-1_amd64.deb"
-          checksum: "fbbd08bcfcef012a7ed9ce6c4744862fdf4642ba7a8eeed7d00beb465466d863"
-          url: "http://s3.amazonaws.com/downloads.basho.com/riak/2.0/2.0.0beta1/ubuntu/precise"
+          filename: "riak_2.0.1-1_amd64.deb"
+          checksum: "57e1118066dc1f25c5063c841fefd13bbc9658f3acf7adf68d60fa3001a6b5a5"
+          url: "http://s3.amazonaws.com/downloads.basho.com/riak/2.0/2.0.1/ubuntu/precise"
         enterprise:
-          checksum: "a700c3284a687bb4a8298da99d6c1886ba41e931662bf10075566125544d162d"
+          checksum: "???"
 - name: debian-7.2.0
   run_list:
   - recipe[apt]
@@ -29,11 +29,11 @@ platforms:
     riak:
       package:
         local:
-          filename: "riak_2.0.0beta1-1_amd64.deb"
-          checksum: "076b7bd58f179bed13da8cbb9b6cdaba7b123da8ada14e80b84b4e214bf24781"
+          filename: "riak_2.0.1-1_amd64.deb"
+          checksum: "5f19d8d475062fe21549c30fbb05d446c09e4dfb6a9e49836f3afd8e84f74783"
           url: "http://s3.amazonaws.com/downloads.basho.com/riak/2.0/2.0.0beta1/debian/7"
         enterprise:
-          checksum: "554e48bc39424c3bf08b357add663ad86bcc618d63755a601efdc608aa016a79"
+          checksum: "???"
 - name: centos-6.5
   run_list:
   - recipe[yum-epel]
@@ -41,11 +41,11 @@ platforms:
     riak:
       package:
         local:
-          filename: "riak-2.0.0beta1-1.el6.x86_64.rpm"
+          filename: "riak-2.0.1-1.el6.x86_64.rpm"
           checksum: "2789de9a0d5eb536acb6eb5766393239e824b59e7da9055a765dca3c0596e110"
           url: "http://s3.amazonaws.com/downloads.basho.com/riak/2.0/2.0.0beta1/rhel/6"
         enterprise:
-          checksum: "7fdd3bca7d4d8961a601dc70925398ddb31c0f56d8f823596e6920d27f26f5db"
+          checksum: "???"
 - name: centos-5.10
   run_list:
   - recipe[yum-epel]
@@ -53,21 +53,21 @@ platforms:
     riak:
       package:
         local:
-          filename: "riak-2.0.0beta1-1.el5.x86_64.rpm"
-          checksum: "156401435bd2d0e30d5eec0f39c4e12b29b0bc4d0dc0d9e3c6f3672bcf2956b6"
+          filename: "riak-2.0.1-1.el5.x86_64.rpm"
+          checksum: "3b12ba792672f52d94aacfe9d6b89377ffecee2a241452aeac50570f19ec0fc9"
           url: "http://s3.amazonaws.com/downloads.basho.com/riak/2.0/2.0.0beta1/rhel/5"
         enterprise:
-          checksum: "77b1e6c05040f4d47051208a23d85234c4532875a3afdbe451c63e81d175c021"
+          checksum: "???"
 - name: fedora-19
   attributes:
     riak:
       package:
         local:
-          filename: "riak-2.0.0beta1-1.fc19.x86_64.rpm"
-          checksum: "49264c49e025100126e83530ea8e5b690812da200bc4d5030338229148a43f99"
+          filename: "riak-2.0.1-1.fc19.x86_64.rpm"
+          checksum: "bd9b0c775100986c2ddc33ce41134911c1163db623fdf7db5deec71685065f73"
           url: "http://s3.amazonaws.com/downloads.basho.com/riak/2.0/2.0.0beta1/fedora/19"
         enterprise:
-          checksum: "d4381b2e976459b7a5775e4e3e2189b1a75daaf2c8fd825631fb8551a1e9f9b8"
+          checksum: "???"
 
 suites:
 - name: default
@@ -81,7 +81,7 @@ suites:
         version:
           major: "2"
           minor: "0"
-          incremental: "0beta1"
+          incremental: "1"
 - name: enterprise
   run_list:
   - recipe[riak]
@@ -92,7 +92,7 @@ suites:
         version:
           major: "2"
           minor: "0"
-          incremental: "0beta1"
+          incremental: "1"
         enterprise_key: <%= (ENV["RIAK_ENTERPRISE_KEY"].nil? ? "" : ENV["RIAK_ENTERPRISE_KEY"]) %>
   excludes:
   - fedora-19
@@ -117,4 +117,4 @@ suites:
       source:
         major: "2"
         minor: "0"
-        incremental: "0beta1"
+        incremental: "1"
