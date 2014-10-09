@@ -54,11 +54,8 @@ else
 
   case node["platform"]
   when "ubuntu", "debian"
-    apt_repository "basho" do
-      uri "http://apt.basho.com"
-      distribution node["lsb"]["codename"]
-      components ["main"]
-      key "http://apt.basho.com/gpg/basho.apt.key"
+    packagecloud_repo "basho/riak" do
+      type "deb"
     end
 
     if node["platform"] == "ubuntu" && package_version == "1.3.2-1"
@@ -70,17 +67,8 @@ else
       version package_version
     end
   when "centos", "redhat", "amazon"
-    if node["platform"] == "amazon" && platform_version >= 2013
-      platform_version = 6
-    elsif node["platform"] == "amazon"
-      platform_version = 5
-    end
-
-    yum_repository "basho" do
-      description "Basho Stable Repo"
-      url "http://yum.basho.com/el/#{platform_version}/products/x86_64/"
-      gpgkey "http://yum.basho.com/gpg/RPM-GPG-KEY-basho"
-      action :add
+    packagecloud_repo "basho/riak" do
+      type "rpm"
     end
 
     if platform_version >= 6
@@ -105,6 +93,30 @@ else
     end
 
     package "riak" do
+      source "#{Chef::Config[:file_cache_path]}/#{package_file}"
+      action :install
+    end
+  when "amazon"
+    if node['platform'] == "amazon" && platform_version >= 2013
+      platform_version = 6
+    elsif node['platform'] == "amazon"
+      platform_version = 5
+    end
+
+    machines = {"x86_64" => "x86_64", "i386" => "i386", "i686" => "i686"}
+    base_uri = "#{base_uri}#{node['platform_family']}/#{platform_version}/"
+    package_file = "#{base_filename}-#{node['riak_cs']['package']['version']['build']}.el#{platform_version}.#{node['kernel']['machine']}.rpm"
+    package_uri = base_uri + package_file
+    package_name = package_file.split("[-_]\d+\.").first
+
+    remote_file "#{Chef::Config[:file_cache_path]}/#{package_file}" do
+      source package_uri
+      owner "root"
+      mode 0644
+      not_if { File.exists?("#{Chef::Config[:file_cache_path]}/#{package_file}") }
+    end
+
+    package package_name do
       source "#{Chef::Config[:file_cache_path]}/#{package_file}"
       action :install
     end
