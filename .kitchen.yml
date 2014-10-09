@@ -10,6 +10,18 @@ provisioner:
   root_path: /home/vagrant/kitchen
 
 platforms:
+- name: ubuntu-14.04
+  run_list:
+  - recipe[apt]
+  attributes:
+    riak:
+      package:
+        local:
+          filename: "riak_2.0.1-1_amd64.deb"
+          checksum: "57e1118066dc1f25c5063c841fefd13bbc9658f3acf7adf68d60fa3001a6b5a5"
+          url: "http://s3.amazonaws.com/downloads.basho.com/riak/2.0/2.0.1/ubuntu/trusty"
+        enterprise:
+          checksum: "???"
 - name: ubuntu-12.04
   run_list:
   - recipe[apt]
