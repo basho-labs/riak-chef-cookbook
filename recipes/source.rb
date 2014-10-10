@@ -22,7 +22,7 @@ node.default["erlang"]["source"]["url"] = "http://s3.amazonaws.com/downloads.bas
 node.default["erlang"]["source"]["checksum"] = "33400b86ee9b167cdcdc969ef63a51474420d79183974fd4e6dc54ca85864772"
 node.default["erlang"]["source"]["build_flags"] = "--disable-hipe --enable-smp-support --without-odbc --enable-m64-build"
 
-if node["platform_family"] == "rhel" && node["platform_version"] == "6.5"
+if node["platform_family"] == "rhel" && node["platform_version"] >= "6.5"
   node.default["erlang"]["source"]["cflags"] = "-DOPENSSL_NO_EC=1"
 end
 
