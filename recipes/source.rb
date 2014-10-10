@@ -17,9 +17,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-node.default["erlang"]["source"]["version"] = "R16B02-basho4"
+node.default["erlang"]["source"]["version"] = "R16B02-basho5"
 node.default["erlang"]["source"]["url"] = "http://s3.amazonaws.com/downloads.basho.com/erlang/otp_src_#{node["erlang"]["source"]["version"]}.tar.gz"
-node.default["erlang"]["source"]["checksum"] = "539263be01b584cac2f26f422cce576e12e1d8fd0aff2bc9ad876a33f1803d31"
+node.default["erlang"]["source"]["checksum"] = "33400b86ee9b167cdcdc969ef63a51474420d79183974fd4e6dc54ca85864772"
 node.default["erlang"]["source"]["build_flags"] = "--disable-hipe --enable-smp-support --without-odbc --enable-m64-build"
 
 if node["platform_family"] == "rhel" && node["platform_version"] == "6.5"

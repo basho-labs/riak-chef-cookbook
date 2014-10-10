@@ -46,6 +46,18 @@ platforms:
           url: "http://s3.amazonaws.com/downloads.basho.com/riak/2.0/2.0.0beta1/debian/7"
         enterprise:
           checksum: "???"
+- name: centos-7.0
+  run_list:
+  - recipe[yum-epel]
+  attributes:
+    riak:
+      package:
+        local:
+          filename: "riak-2.0.1-1.el7.x86_64.rpm"
+          checksum: "3773f9ce7355dd96b051f049a92cf8ad4c0e7b1b82283e704d3b8b35ee12881e"
+          url: "http://s3.amazonaws.com/downloads.basho.com/riak/2.0/2.0.0beta1/rhel/7"
+        enterprise:
+          checksum: "???"
 - name: centos-6.5
   run_list:
   - recipe[yum-epel]

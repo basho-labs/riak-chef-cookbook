@@ -21,10 +21,11 @@ platforms:
     riak:
       package:
         local:
-          filename: "riak-2.0.0beta1-1.el6.x86_64.rpm"
+          filename: "riak-2.0.1-1.el6.x86_64.rpm"
           checksum: "2789de9a0d5eb536acb6eb5766393239e824b59e7da9055a765dca3c0596e110"
+          url: "http://s3.amazonaws.com/downloads.basho.com/riak/2.0/2.0.0beta1/rhel/6"
         enterprise:
-          checksum: "7fdd3bca7d4d8961a601dc70925398ddb31c0f56d8f823596e6920d27f26f5db"
+          checksum: "???"
 
 suites:
 - name: default
