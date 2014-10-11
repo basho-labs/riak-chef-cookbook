@@ -1,3 +1,7 @@
+## v2.4.15:
+
+* Update Riak CS default version to 1.5.1
+
 ## v2.4.14:
 
 * Riak `1.4.10` is now the default.
