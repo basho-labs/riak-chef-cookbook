@@ -26,6 +26,13 @@ else
   include_recipe "riak::enterprise_package"
 end
 
+# validate the fqdn and if probalo then use IP address
+valid_fqdn_regexp = /(?=^.{4,255}$)(^((?!-)[a-zA-Z0-9-]{1,63}(?<!-)\.)+[a-zA-Z]{2,63}$)/
+ 
+unless valid_fqdn_regexp.match("#{node['fqdn']}")
+  node.default['riak']['args']['-name'] = "riak@#{node['ipaddress']}"
+end
+
 file "#{node['riak']['package']['config_dir']}/app.config" do
   content Eth::Config.new(node['riak']['config'].to_hash).pp
   owner "root"
