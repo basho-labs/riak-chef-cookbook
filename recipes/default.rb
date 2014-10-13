@@ -41,6 +41,13 @@ else
   include_recipe "riak::enterprise_package"
 end
 
+# validate the fqdn and if probalo then use IP address
+valid_fqdn_regexp = /(?=^.{4,255}$)(^((?!-)[a-zA-Z0-9-]{1,63}(?<!-)\.)+[a-zA-Z]{2,63}$)/
+ 
+unless valid_fqdn_regexp.match(node['fqdn'])
+  node.default["riak"]["config"]["nodename"] = "riak@#{node['ipaddress']}"
+end
+
 file "#{node["riak"]["platform_etc_dir"]}/riak.conf" do
   content Cuttlefish.compile("", node["riak"]["config"]).join("\n")
   owner "root"
@@ -97,7 +104,7 @@ directory ::File.join(node["riak"]["platform_data_dir"], "snmp", "agent", "db") 
   not_if { node["riak"]["package"]["enterprise_key"].empty? }
 end
 
-service "#{node["platform"] == "fedora" ? "riak.service" : "riak"}" do
+service node["platform"] == "fedora" ? "riak.service" : "riak" do
   supports :start => true, :stop => true, :restart => true, :status => true
   action [ :enable, :start ]
   not_if { node["riak"]["install_method"] == "source" }
