@@ -45,7 +45,12 @@ file "#{node["riak"]["platform_etc_dir"]}/riak.conf" do
   content Cuttlefish.compile("", node["riak"]["config"]).join("\n")
   owner "root"
   mode 0644
-  notifies :restart, "service[riak]"
+
+  if node["platform"] == "fedora"
+    notifies :restart, "service[riak.service]"
+  else
+    notifies :restart, "service[riak]"
+  end
 end
 
 if node["platform_family"] == "debian"
@@ -67,7 +72,12 @@ node["riak"]["patches"].each do |patch|
     source patch
     owner "root"
     mode 0644
-    notifies :restart, "service[riak]"
+
+    if node["platform"] == "fedora"
+      notifies :restart, "service[riak.service]"
+    else
+      notifies :restart, "service[riak]"
+    end
   end
 end
 
@@ -87,8 +97,8 @@ directory ::File.join(node["riak"]["platform_data_dir"], "snmp", "agent", "db") 
   not_if { node["riak"]["package"]["enterprise_key"].empty? }
 end
 
-service "riak" do
+service "#{node["platform"] == "fedora" ? "riak.service" : "riak"}" do
   supports :start => true, :stop => true, :restart => true, :status => true
   action [ :enable, :start ]
-  not_if { node["riak"]["install_method"] == "source" || node["platform"] == "fedora" }
+  not_if { node["riak"]["install_method"] == "source" }
 end
