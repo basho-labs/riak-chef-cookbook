@@ -10,13 +10,8 @@ provisioner:
 
 platforms:
 - name: ubuntu-14.04
-  attributes:
-    riak:
-      package:
-        checksum:
-          ubuntu:
-            precise: "f2f5af17cce01a769d31517bbdba5a9e1b99e3581bcc4b33e970dbd0ef4140c6"
-- name: ubuntu-13.10
+  run_list:
+  - recipe[apt]
   attributes:
     riak:
       package:
@@ -24,6 +19,8 @@ platforms:
           ubuntu:
             precise: "f2f5af17cce01a769d31517bbdba5a9e1b99e3581bcc4b33e970dbd0ef4140c6"
 - name: ubuntu-12.04
+  run_list:
+  - recipe[apt]
   attributes:
     riak:
       package:
@@ -31,6 +28,8 @@ platforms:
           ubuntu:
             precise: "f2f5af17cce01a769d31517bbdba5a9e1b99e3581bcc4b33e970dbd0ef4140c6"
 - name: debian-7.2.0
+  run_list:
+  - recipe[apt]
   attributes:
     riak:
       package:
@@ -38,6 +37,8 @@ platforms:
           debian:
             "7": "3bb6bcc409f51e303978fdb72c8605ac87a502e99bb5b7fda5ecd6af9c343d42"
 - name: centos-6.5
+  run_list:
+  - recipe[yum-epel]
   attributes:
     riak:
       package:
@@ -45,6 +46,8 @@ platforms:
           centos:
             "6": "5f93a9ed1d7c9326297ebc432d69d1b03e941c057a7cfa37b45138045efdfb4f"
 - name: centos-5.10
+  run_list:
+  - recipe[yum-epel]
   attributes:
     riak:
       package:
@@ -55,7 +58,6 @@ platforms:
 suites:
 - name: default
   run_list:
-  - recipe[minitest-handler]
   - recipe[riak]
   attributes:
     riak:
@@ -66,7 +68,6 @@ suites:
           incremental: 10
 - name: default13
   run_list:
-  - recipe[minitest-handler]
   - recipe[riak]
   attributes:
     riak:
@@ -77,7 +78,6 @@ suites:
           incremental: 2
 - name: default12
   run_list:
-  - recipe[minitest-handler]
   - recipe[riak]
   attributes:
     riak:
@@ -88,7 +88,6 @@ suites:
           incremental: 1
 - name: enterprise
   run_list:
-  - recipe[minitest-handler]
   - recipe[riak]
   attributes:
     riak:
@@ -100,7 +99,6 @@ suites:
         enterprise_key: <%= (ENV["RIAK_ENTERPRISE_KEY"].nil? ? "" : ENV["RIAK_ENTERPRISE_KEY"]) %>
 - name: enterprise13
   run_list:
-  - recipe[minitest-handler]
   - recipe[riak]
   attributes:
     riak:
@@ -112,7 +110,6 @@ suites:
         enterprise_key: <%= (ENV["RIAK_ENTERPRISE_KEY"].nil? ? "" : ENV["RIAK_ENTERPRISE_KEY"]) %>
 - name: enterprise12
   run_list:
-  - recipe[minitest-handler]
   - recipe[riak]
   attributes:
     riak:
@@ -124,14 +121,12 @@ suites:
         enterprise_key: <%= (ENV["RIAK_ENTERPRISE_KEY"].nil? ? "" : ENV["RIAK_ENTERPRISE_KEY"]) %>
 - name: custom_repository
   run_list:
-  - recipe[minitest-handler]
   - recipe[riak]
   attributes:
     riak:
       install_method: "custom_repository"
 - name: custom_repository_enterprise
   run_list:
-  - recipe[minitest-handler]
   - recipe[riak]
   attributes:
     riak:
@@ -140,12 +135,10 @@ suites:
       install_method: "custom_repository"
 - name: source
   run_list:
-  - recipe[minitest-handler]
   - recipe[riak::source]
   attributes: {}
 - name: source13
   run_list:
-  - recipe[minitest-handler]
   - recipe[riak::source]
   attributes:
     riak:
@@ -156,7 +149,6 @@ suites:
           incremental: 2
 - name: source12
   run_list:
-  - recipe[minitest-handler]
   - recipe[riak::source]
   attributes:
     riak:
