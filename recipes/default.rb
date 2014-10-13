@@ -29,7 +29,7 @@ end
 # validate the fqdn and if probalo then use IP address
 valid_fqdn_regexp = /(?=^.{4,255}$)(^((?!-)[a-zA-Z0-9-]{1,63}(?<!-)\.)+[a-zA-Z]{2,63}$)/
  
-unless valid_fqdn_regexp.match("#{node['fqdn']}")
+unless valid_fqdn_regexp.match(node['fqdn'])
   node.default['riak']['args']['-name'] = "riak@#{node['ipaddress']}"
 end
 
