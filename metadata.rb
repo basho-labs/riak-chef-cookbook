@@ -33,7 +33,7 @@ depends "erlang", "~> 1.5.0"
 depends "git", "~> 3.0"
 depends "sysctl", "< 0.5.0"
 depends "ulimit", "~> 0.3.2"
-depends "yum", "~> 3.0"
+depends "yum", "~> 3.4"
 depends "yum-epel", "~> 0.3"
 
 %w{ubuntu debian centos redhat fedora amazon}.each do |os|
