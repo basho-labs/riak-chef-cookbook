@@ -1,3 +1,11 @@
+## v2.4.16
+
+* If fqdn isn't valid, use ipaddress for vm.args -name
+* Drop 13.10 support (EOL)
+* Drop minitest for serverspec
+* Update yum dependency which fixes https://github.com/opscode-cookbooks/yum/issues/99
+
+
 ## v2.4.15:
 
 * Update Riak CS default version to 1.5.1
