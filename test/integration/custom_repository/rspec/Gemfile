@@ -1,0 +1,4 @@
+source "https://rubygems.org"
+
+gem "serverspec", "~> 2.3.1"
+gem "specinfra", "~> 2.3.0"
