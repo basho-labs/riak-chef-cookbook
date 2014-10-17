@@ -1,9 +1,4 @@
 ---
-driver:
-  name: ec2
-  aws_access_key_id: <%= ENV["AWS_ACCESS_KEY_ID"] %>
-  aws_secret_access_key: <%= ENV["AWS_SECRET_ACCESS_KEY"] %>
-  aws_ssh_key_id: <%= ENV["AWS_KEYPAIR_NAME"] %>
 
 provisioner:
   name: chef_zero
@@ -12,6 +7,7 @@ provisioner:
 platforms:
 - name: amazon-2014.03.1
   driver:
+    name: ec2
     image_id: ami-ed8e9284
     username: ec2-user
     ssh_key: <%= ENV["EC2_SSH_KEY_PATH"] %>
@@ -23,11 +19,41 @@ platforms:
         checksum:
           amazon:
             "2014": "2cf9f2481409d2871a6d453a9287f317bd4f5c1cb2e49432f4fee0ac106af56c"
+    authorization:
+      sudo: 
+        users: ["ec2-user"]
+        passwordless: true
+- name: ubuntu-14-04-x64
+  driver:
+    name: digitalocean
+  run_list:
+  - recipe[apt]
+- name: ubuntu-12-04-x64
+  driver:
+    name: digitalocean
+  run_list:
+  - recipe[apt]
+- name: debian-7-0-x64
+  driver:
+    name: digitalocean
+  run_list:
+  - recipe[apt]
+- name: centos-6-5-x64
+  driver:
+    name: digitalocean
+  run_list:
+  - recipe[sudo]
+  - recipe[yum-epel]
+- name: centos-5-8-x64
+  driver:
+    name: digitalocean
+  run_list:
+  - recipe[sudo]
+  - recipe[yum-epel]
 
 suites:
 - name: default
   run_list:
-  - recipe[minitest-handler]
   - recipe[riak]
   attributes:
     riak:
@@ -35,10 +61,9 @@ suites:
         version:
           major: 1
           minor: 4
-          incremental: 8
+          incremental: 10
 - name: enterprise
   run_list:
-  - recipe[minitest-handler]
   - recipe[riak]
   attributes:
     riak:
@@ -46,5 +71,8 @@ suites:
         version:
           major: 1
           minor: 4
-          incremental: 8
+          incremental: 10
         enterprise_key: <%= (ENV["RIAK_ENTERPRISE_KEY"].nil? ? "" : ENV["RIAK_ENTERPRISE_KEY"]) %>
+- name: source
+  run_list:
+  - recipe[riak::source]
