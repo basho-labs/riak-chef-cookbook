@@ -1,3 +1,9 @@
+## v2.4.17
+
+* Fix and update tests
+* Add digitalocean to .kitchen.cloud.yml
+* Add source build suit to .kitchen.cloud.yml
+
 ## v2.4.16
 
 * If fqdn isn't valid, use ipaddress for vm.args -name
