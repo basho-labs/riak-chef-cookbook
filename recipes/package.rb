@@ -17,74 +17,74 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-unless node["riak"]["package"]["local"]["filename"].empty?
-  package_file = node["riak"]["package"]["local"]["filename"]
+unless node['riak']['package']['local']['filename'].empty?
+  package_file = node['riak']['package']['local']['filename']
 
-  unless node["riak"]["package"]["local"]["url"].empty?
-    package_uri = "#{node["riak"]["package"]["local"]["url"]}/#{package_file}"
-    checksum_val = node["riak"]["package"]["local"]["checksum"]
+  unless node['riak']['package']['local']['url'].empty?
+    package_uri = "#{node['riak']['package']['local']['url']}/#{package_file}"
+    checksum_val = node['riak']['package']['local']['checksum']
 
     remote_file "#{Chef::Config[:file_cache_path]}/#{package_file}" do
       source package_uri
       checksum checksum_val
-      owner "root"
+      owner 'root'
       mode 0644
     end
   end
 
-  package node["riak"]["package"]["name"] do
+  package node['riak']['package']['name'] do
     source "#{Chef::Config[:file_cache_path]}/#{package_file}"
     action :install
-    options "--force-confdef --force-confold" if node["platform_family"] == "debian"
+    options '--force-confdef --force-confold' if node['platform_family'] == 'debian'
     provider value_for_platform_family(
-      [ "debian" ] => Chef::Provider::Package::Dpkg,
-      [ "rhel", "fedora" ] => Chef::Provider::Package::Rpm
+      ['debian'] => Chef::Provider::Package::Dpkg,
+      %w(rhel fedora) => Chef::Provider::Package::Rpm
     )
     only_if do
-      ::File.exists?("#{Chef::Config[:file_cache_path]}/#{package_file}") &&
-        Digest::SHA256.file("#{Chef::Config[:file_cache_path]}/#{package_file}").hexdigest == node["riak"]["package"]["local"]["checksum"]
+      ::File.exist?("#{Chef::Config[:file_cache_path]}/#{package_file}") &&
+        Digest::SHA256.file("#{Chef::Config[:file_cache_path]}/#{package_file}").hexdigest == node['riak']['package']['local']['checksum']
     end
   end
 else
-  version_str = [ "major", "minor", "incremental" ].map { |ver| node["riak"]["package"]["version"][ver] }.join(".")
-  base_uri = "#{node["riak"]["package"]["url"]}/#{node["riak"]["package"]["version"]["major"]}.#{node["riak"]["package"]["version"]["minor"]}/#{version_str}/"
+  version_str = %w(major minor incremental).map { |ver| node['riak']['package']['version'][ver] }.join('.')
+  base_uri = "#{node['riak']['package']['url']}/#{node['riak']['package']['version']['major']}.#{node['riak']['package']['version']['minor']}/#{version_str}/"
   base_filename = "riak-#{version_str}"
-  platform_version = node["platform_version"].to_i
-  package_version = "#{version_str}-#{node["riak"]["package"]["version"]["build"]}"
+  platform_version = node['platform_version'].to_i
+  package_version = "#{version_str}-#{node['riak']['package']['version']['build']}"
 
-  case node["platform"]
-  when "ubuntu", "debian"
-    packagecloud_repo "basho/riak" do
-      type "deb"
+  case node['platform']
+  when 'ubuntu', 'debian'
+    packagecloud_repo 'basho/riak' do
+      type 'deb'
     end
 
-    package "riak" do
+    package 'riak' do
       action :install
       version package_version
     end
-  when "centos", "redhat", "amazon", "fedora"
-    packagecloud_repo "basho/riak" do
-      type "rpm"
+  when 'centos', 'redhat', 'amazon', 'fedora'
+    packagecloud_repo 'basho/riak' do
+      type 'rpm'
     end
 
     case node['platform']
-    when "centos", "redhat"
-     if platform_version == 6
+    when 'centos', 'redhat'
+      if platform_version == 6
         package_version = "#{package_version}.el6"
-     elsif platform_version == 7
+      elsif platform_version == 7
         package_version = "#{package_version}.el7.centos"
-     end
-    when "amazon"
+      end
+    when 'amazon'
       if platform_version >= 2013
         package_version = "#{package_version}.el6"
       else
         package_version = "#{package_version}.el5"
       end
-    when "fedora"
+    when 'fedora'
       package_version = "#{package_version}.fc#{platform_version}"
     end
 
-    package "riak" do
+    package 'riak' do
       action :install
       version package_version
     end

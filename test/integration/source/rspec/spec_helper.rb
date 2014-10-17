@@ -1,8 +1,8 @@
  require 'serverspec'
 
-# Required by serverspec
-set :backend, :exec
+ # Required by serverspec
+ set :backend, :exec
 
-set :path, '/sbin:/usr/local/sbin:$PATH'
+ set :path, '/sbin:/usr/local/sbin:$PATH'
 
-set :formatter, :documentation
+ set :formatter, :documentation

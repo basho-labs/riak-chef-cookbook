@@ -17,17 +17,17 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-version_str = [ "major", "minor", "incremental" ].map { |ver| node["riak"]["package"]["version"][ver] }.join(".")
-package_version = "#{version_str}-#{node["riak"]["package"]["version"]["build"]}"
-platform_version = node["platform_version"].to_i
+version_str = %w(major minor incremental).map { |ver| node['riak']['package']['version'][ver] }.join('.')
+package_version = "#{version_str}-#{node['riak']['package']['version']['build']}"
+platform_version = node['platform_version'].to_i
 
-if node["platform_family"] == "rhel" && platform_version >= 6
+if node['platform_family'] == 'rhel' && platform_version >= 6
   package_version = "#{package_version}.el#{platform_version}"
-elsif node["platform_family"] == "fedora"
+elsif node['platform_family'] == 'fedora'
   package_version = "#{package_version}.fc#{platform_version}"
 end
 
-package node["riak"]["package"]["name"] do
+package node['riak']['package']['name'] do
   action :install
   version package_version
 end
