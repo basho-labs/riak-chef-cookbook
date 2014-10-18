@@ -48,8 +48,6 @@ unless valid_fqdn_regexp.match(node['fqdn'])
   node.default['riak']['config']['nodename'] = "riak@#{node['ipaddress']}"
 end
 
-end
-
 file "#{node['riak']['platform_etc_dir']}/riak.conf" do
   content Cuttlefish.compile('', node['riak']['config']).join("\n")
   owner 'root'
