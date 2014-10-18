@@ -1,6 +1,9 @@
 # riak [![Cookbook Version](http://img.shields.io/cookbook/v/riak.svg)][cookbook]
 [![Build Status](http://img.shields.io/travis/basho/riak-chef-cookbook.svg)][travis]
 
+[cookbook]: https://supermarket.getchef.com/cookbooks/riak
+[travis]: http://travis-ci.org/basho/riak-chef-cookbook
+
 ## Description
 
 [Riak](http://basho.com/riak/) is an open source, distributed database that
