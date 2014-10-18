@@ -30,157 +30,157 @@ latency.
 
 ## Attributes
 
-* `node["riak"]["install_method"]` - Method to install Riak (`package`,
+* `node['riak']['install_method']` - Method to install Riak (`package`,
   `enterprise_package`, `source`, `source`, `custom_repository`)
-* `node["riak"]["platform_bin_dir"]` - Base directory for binaries.
-* `node["riak"]["platform_data_dir"]` - Base directory for data files.
-* `node["riak"]["platform_etc_dir"]` - Base directory for configuration files.
-* `node["riak"]["platform_log_dir"]` - Base directory for log files.
-* `node["riak"]["platform_lib_dir"]` - Base directory for libraries.
-* `node["riak"]["patches"]` - List of patches to apply by placing in the
+* `node['riak']['platform_bin_dir']` - Base directory for binaries.
+* `node['riak']['platform_data_dir']` - Base directory for data files.
+* `node['riak']['platform_etc_dir']` - Base directory for configuration files.
+* `node['riak']['platform_log_dir']` - Base directory for log files.
+* `node['riak']['platform_lib_dir']` - Base directory for libraries.
+* `node['riak']['patches']` - List of patches to apply by placing in the
   `basho-patches` directory.
-* `node["riak"]["config"]["log.console"]` - Where to emit the default log
+* `node['riak']['config']['log.console']` - Where to emit the default log
   messages (`off`, `file`, `console`, `both`).
-* `node["riak"]["config"]["log"]["console"]["level"]` - Severity level of the
+* `node['riak']['config']['log']['console']['level']` - Severity level of the
   console log (`ebug`, `info`, `warning`, `error`).
-* `node["riak"]["config"]["log"]["console"]["file"]` - When
-  `node["riak"]["config"]["log.console"]` is set to `file` or `both`, the file
+* `node['riak']['config']['log']['console']['file']` - When
+  `node['riak']['config']['log.console']` is set to `file` or `both`, the file
   where console messages will be logged.
-* `node["riak"]["config"]["log"]["error"]["file"]` - The file where error
+* `node['riak']['config']['log']['error']['file']` - The file where error
   messages will be logged.
-* `node["riak"]["config"]["log"]["syslog"]` - Enables log output to syslog
+* `node['riak']['config']['log']['syslog']` - Enables log output to syslog
   (`on`, `off`).
-* `node["riak"]["config"]["log.crash"]` - Whether to enable the crash log (`on`, `off`).
-* `node["riak"]["config"]["log"]["crash"]["file"]` - The file where its
+* `node['riak']['config']['log.crash']` - Whether to enable the crash log (`on`, `off`).
+* `node['riak']['config']['log']['crash']['file']` - The file where its
   messages will be written.
-* `node["riak"]["config"]["log"]["crash"]["maximum_message_size"]` - Maximum
+* `node['riak']['config']['log']['crash']['maximum_message_size']` - Maximum
   size (in bytes) of individual messages in the crash log.
-* `node["riak"]["config"]["log"]["crash"]["size"]` - Maximum size of the crash
+* `node['riak']['config']['log']['crash']['size']` - Maximum size of the crash
   log (in bytes), before it is rotated.
-* `node["riak"]["config"]["log"]["crash.rotation"]` - The schedule on which to
+* `node['riak']['config']['log']['crash.rotation']` - The schedule on which to
   rotate the crash log. See
   [here](https://github.com/basho/lager/blob/master/README.md#internal-log-rotation)
   for details.
-* `node["riak"]["config"]["log"]["crash"]["rotation"]["keep"]` - The number of
+* `node['riak']['config']['log']['crash']['rotation']['keep']` - The number of
   rotated crash logs to keep.
-* `node["riak"]["config"]["nodename"]` - Name of the Erlang node.
-* `node["riak"]["config"]["distributed_cookie"]` - Cookie for distributed node
+* `node['riak']['config']['nodename']` - Name of the Erlang node.
+* `node['riak']['config']['distributed_cookie']` - Cookie for distributed node
   communication.
-* `node["riak"]["config"]["erlang"]["async_threads"]` - Number of threads in
+* `node['riak']['config']['erlang']['async_threads']` - Number of threads in
   async thread pool (`0`-`1024`).
-* `node["riak"]["config"]["erlang"]["max_ports"]` - Number of concurrent
+* `node['riak']['config']['erlang']['max_ports']` - Number of concurrent
   ports/sockets (`1024`-`134217727`).
-* `node["riak"]["config"]["ring_size"]` - Number of partitions in the cluster
+* `node['riak']['config']['ring_size']` - Number of partitions in the cluster
   (must be a power of 2).
-* `node["riak"]["config"]["transfer_limit"]` - Number of concurrent node-to-
+* `node['riak']['config']['transfer_limit']` - Number of concurrent node-to-
   node transfers allowed.
-* `node["riak"]["config"]["ring"]["state_dir"]` - Location of ring state.
-* `node["riak"]["config"]["ssl"]["certfile"]` - Default certificate location
+* `node['riak']['config']['ring']['state_dir']` - Location of ring state.
+* `node['riak']['config']['ssl']['certfile']` - Default certificate location
   for HTTPS.
-* `node["riak"]["config"]["ssl"]["keyfile"]` - Default key location for HTTPS.
-* `node["riak"]["config"]["ssl"]["cacertfile"]` - Default signing authority
+* `node['riak']['config']['ssl']['keyfile']` - Default key location for HTTPS.
+* `node['riak']['config']['ssl']['cacertfile']` - Default signing authority
   for HTTPS.
-* `node["riak"]["config"]["dtrace"]` - Enable DTrace (`on`, `off`).
-* `node["riak"]["config"]["strong_consistency"]` - Enable consensus subsystem (`on`, `off`).
-* `node["riak"]["config"]["listener"]["http"]["internal"]` - IP address and
+* `node['riak']['config']['dtrace']` - Enable DTrace (`on`, `off`).
+* `node['riak']['config']['strong_consistency']` - Enable consensus subsystem (`on`, `off`).
+* `node['riak']['config']['listener']['http']['internal']` - IP address and
   TCP port that the Riak HTTP interface will bind to.
-* `node["riak"]["config"]["listener"]["protobuf"]["internal"]` - IP address
+* `node['riak']['config']['listener']['protobuf']['internal']` - IP address
   and TCP port that the Riak Protocol Buffers interface will bind to.
-* `node["riak"]["config"]["protobuf"]["backlog"]` - Maximum length of pending
+* `node['riak']['config']['protobuf']['backlog']` - Maximum length of pending
   connections queue.
-* `node["riak"]["config"]["listener"]["https"]["internal"]` - IP address and
+* `node['riak']['config']['listener']['https']['internal']` - IP address and
   TCP port that the Riak HTTPS interface will bind to.
-* `node["riak"]["config"]["anti_entropy"]` - Strategy of repairing out-of-sync
+* `node['riak']['config']['anti_entropy']` - Strategy of repairing out-of-sync
   keys (`active`, `passive`, `active-debug`).
-* `node["riak"]["config"]["storage_backend"]` - Storage backend for Riak's
+* `node['riak']['config']['storage_backend']` - Storage backend for Riak's
   key-value and secondary index data (`bitcask`, `leveldb`, `memory`,
   `multi`).
-* `node["riak"]["config"]["object"]["format"]` - Binary representation of a
+* `node['riak']['config']['object']['format']` - Binary representation of a
   Riak value stored on disk (`0`, `1`).
-* `node["riak"]["config"]["metadata_cache_size"]` - Size of the metadata cache
+* `node['riak']['config']['metadata_cache_size']` - Size of the metadata cache
   for each vnode.
-* `node["riak"]["config"]["object"]["size"]["warning_threshold"]` - Reading or
+* `node['riak']['config']['object']['size']['warning_threshold']` - Reading or
   writing objects larger than this size will write a warning in the logs.
-* `node["riak"]["config"]["object"]["size"]["maximum"]` - Writing an object
+* `node['riak']['config']['object']['size']['maximum']` - Writing an object
   larger than this will send a failure to the client.
-* `node["riak"]["config"]["object"]["siblings"]["warning_threshold"]` -
+* `node['riak']['config']['object']['siblings']['warning_threshold']` -
   Writing an object with more than this number of siblings will generate a
   warning in the logs.
-* `node["riak"]["config"]["object"]["siblings"]["maximum"]` - Writing an
+* `node['riak']['config']['object']['siblings']['maximum']` - Writing an
   object with more than this number of siblings will send a failure to the
   client.
-* `node["riak"]["config"]["bitcask"]["data_root"]` - A path under which
+* `node['riak']['config']['bitcask']['data_root']` - A path under which
   Bitcask data files will be stored.
-* `node["riak"]["config"]["bitcask"]["io_mode"]` - How Bitcask writes to disk
+* `node['riak']['config']['bitcask']['io_mode']` - How Bitcask writes to disk
   (`erlang`, `nif`).
-* `node["riak"]["config"]["riak_control.top_level"]` - Enable administrative
+* `node['riak']['config']['riak_control.top_level']` - Enable administrative
   UI (`on`, `off`).
-* `node["riak"]["config"]["riak_control"]["auth"]["mode"]` - Authentication
+* `node['riak']['config']['riak_control']['auth']['mode']` - Authentication
   mode used for access to the administrative panel.
-* `node["riak"]["config"]["riak_control"]["auth"]["user"]["user"]["password"]`
+* `node['riak']['config']['riak_control']['auth']['user']['user']['password']`
   - List of usernames and passwords for access to Riak Control.
-* `node["riak"]["config"]["leveldb"]["data_root"]` - A path under which
+* `node['riak']['config']['leveldb']['data_root']` - A path under which
   LevelDB data files will be stored.
-* `node["riak"]["config"]["leveldb"]["maximum_memory"]["percent"]` -
+* `node['riak']['config']['leveldb']['maximum_memory']['percent']` -
   Percentage of total server memory to assign to LevelDB.
-* `node["riak"]["config"]["leveldb"]["compaction"]["trigger"]["tombstone_count"]`
+* `node['riak']['config']['leveldb']['compaction']['trigger']['tombstone_count']`
   - Controls when background LevelDB compaction initiates.
-* `node["riak"]["config"]["jmx"]` - Enable JMX monitoring output (`on`,
+* `node['riak']['config']['jmx']` - Enable JMX monitoring output (`on`,
   `off`).
-* `node["riak"]["config"]["search.top_level"]` - Enable Riak Search (`on`,
+* `node['riak']['config']['search.top_level']` - Enable Riak Search (`on`,
   `off`).
-* `node["riak"]["config"]["search"]["solr"]["start_timeout"]` - How long Riak
+* `node['riak']['config']['search']['solr']['start_timeout']` - How long Riak
   will wait for Solr to start.
-* `node["riak"]["config"]["search"]["solr"]["port"]` - Port number Solr will
+* `node['riak']['config']['search']['solr']['port']` - Port number Solr will
   bind to.
-* `node["riak"]["config"]["search"]["solr"]["jmx_port"]` - Port number which
+* `node['riak']['config']['search']['solr']['jmx_port']` - Port number which
   Solr JMX binds to.
-* `node["riak"]["config"]["search"]["solr"]["jvm_options"]` - Options to pass
+* `node['riak']['config']['search']['solr']['jvm_options']` - Options to pass
   to the Solr JVM.
-* `node["riak"]["config"]["search"]["anti_entropy"]["data_dir"]` - Path where
+* `node['riak']['config']['search']['anti_entropy']['data_dir']` - Path where
   Riak Search's Active Anti-Entropy data files will reside.
-* `node["riak"]["config"]["search"]["root_dir"]` - Path for Riak Search index
+* `node['riak']['config']['search']['root_dir']` - Path for Riak Search index
   data.
 
 ### Package
 
-* `node["riak"]["package"]["enterprise_key"]` - Riak Enterprise key.
-* `node["riak"]["package"]["name"]` - Name of the Riak package to install.
-* `node["riak"]["package"]["url"]` - Base path for downloading Riak packages.
-* `node["riak"]["package"]["version"]["major"]` - Major version number.
-* `node["riak"]["package"]["version"]["minor"]` - Minor version number.
-* `node["riak"]["package"]["version"]["incremental"]` - Incremental version number.
-* `node["riak"]["package"]["version"]["build"]` - Build version number.
-* `node["riak"]["package"]["local"]["filename"]` - File name for local Riak
-* `node["riak"]["package"]["local"]["checksum"]` - Checksum for local Riak
+* `node['riak']['package']['enterprise_key']` - Riak Enterprise key.
+* `node['riak']['package']['name']` - Name of the Riak package to install.
+* `node['riak']['package']['url']` - Base path for downloading Riak packages.
+* `node['riak']['package']['version']['major']` - Major version number.
+* `node['riak']['package']['version']['minor']` - Minor version number.
+* `node['riak']['package']['version']['incremental']` - Incremental version number.
+* `node['riak']['package']['version']['build']` - Build version number.
+* `node['riak']['package']['local']['filename']` - File name for local Riak
+* `node['riak']['package']['local']['checksum']` - Checksum for local Riak
   package.
 
 ### Source
 
-* `node["riak"]["source"]["url"]` - Base path for downloading Riak source
+* `node['riak']['source']['url']` - Base path for downloading Riak source
   tarballs.
-* `node["riak"]["source"]["version"]["major"]`- Major version number.
-* `node["riak"]["source"]["version"]["minor"]` - Minor version number.
-* `node["riak"]["source"]["version"]["incremental"]` - Incremental version
+* `node['riak']['source']['version']['major']`- Major version number.
+* `node['riak']['source']['version']['minor']` - Minor version number.
+* `node['riak']['source']['version']['incremental']` - Incremental version
   number.
-* `node["riak"]["source"]["prefix"]` - Installation prefix for source install.
-* `node["riak"]["source"]["checksum"]` - Checksum for source tarball.
+* `node['riak']['source']['prefix']` - Installation prefix for source install.
+* `node['riak']['source']['checksum']` - Checksum for source tarball.
 
 ### ulimit
 
-* `node["riak"]["limits"]["nofile"]` - File descriptor limit for user running the Riak service
+* `node['riak']['limits']['nofile']` - File descriptor limit for user running the Riak service
 
 ### sysctl
 
-* `node["riak"]["sysctl"]["vm"]["swappiness"]`
-* `node["riak"]["sysctl"]["net"]["core"]["somaxconn"]`
-* `node["riak"]["sysctl"]["net"]["ipv4"]["tcp_max_syn_backlog"]`
-* `node["riak"]["sysctl"]["net"]["ipv4"]["tcp_sack"]`
-* `node["riak"]["sysctl"]["net"]["ipv4"]["tcp_window_scaling"]`
-* `node["riak"]["sysctl"]["net"]["ipv4"]["tcp_fin_timeout"]`
-* `node["riak"]["sysctl"]["net"]["ipv4"]["tcp_keepalive_intvl"]`
-* `node["riak"]["sysctl"]["net"]["ipv4"]["tcp_tw_reuse"]`
-* `node["riak"]["sysctl"]["net"]["ipv4"]["tcp_moderate_rcvbuf"]`
+* `node['riak']['sysctl']['vm']['swappiness']`
+* `node['riak']['sysctl']['net']['core']['somaxconn']`
+* `node['riak']['sysctl']['net']['ipv4']['tcp_max_syn_backlog']`
+* `node['riak']['sysctl']['net']['ipv4']['tcp_sack']`
+* `node['riak']['sysctl']['net']['ipv4']['tcp_window_scaling']`
+* `node['riak']['sysctl']['net']['ipv4']['tcp_fin_timeout']`
+* `node['riak']['sysctl']['net']['ipv4']['tcp_keepalive_intvl']`
+* `node['riak']['sysctl']['net']['ipv4']['tcp_tw_reuse']`
+* `node['riak']['sysctl']['net']['ipv4']['tcp_moderate_rcvbuf']`
 
 ## Usage
 
@@ -196,9 +196,9 @@ A quick example:
 `search.solr.port` beneath it:
 
 ```ruby
-default["riak"]["config"]["search.top_level"] = "off"
-default["riak"]["config"]["search"]["solr"]["start_timeout"] = "30s"
-default["riak"]["config"]["search"]["solr"]["port"] = 8093
+default['riak']['config']['search.top_level'] = 'off'
+default['riak']['config']['search']['solr']['start_timeout'] = '30s'
+default['riak']['config']['search']['solr']['port'] = 8093
 ```
 
 These attributes render as:
@@ -219,7 +219,7 @@ For more precise examples, please see the `.kitchen.yml` file.
 #### Package
 
 This is the default method of installation. Ensure that
-`node["riak"]["install_method"]` is set to `package`.
+`node['riak']['install_method']` is set to `package`.
 
 #### Enterprise Package
 
@@ -227,8 +227,8 @@ For Riak Enterprise users, installing the Enterprise package requires setting
 two attributes:
 
 ```ruby
-default["riak"]["package"]["enterprise_key"] = "*******"
-default["riak"]["install_method"] = "enterprise_package"
+default['riak']['package']['enterprise_key'] = '*******'
+default['riak']['install_method'] = 'enterprise_package'
 ```
 
 #### Custom Package
@@ -238,22 +238,22 @@ operating system's package repository), ensure that the following attributes
 are set appropriately:
 
 ```ruby
-default["riak"]["install_method"] = "package"
-default["riak"]["package"]["local"]["filename"] = "riak_2.0.0beta1-1_amd64.deb"
-default["riak"]["package"]["local"]["checksum"] = "fbbd08bcfcef012a7ed9ce6c4744862fdf4642ba7a8eeed7d00beb465466d863"
-default["riak"]["package"]["local"]["url"] = "http://s3.amazonaws.com/downloads.basho.com/riak/2.0/2.0.0beta1/ubuntu/precise
+default['riak']['install_method'] = 'package'
+default['riak']['package']['local']['filename'] = 'riak_2.0.1-1_amd64.deb'
+default['riak']['package']['local']['checksum'] = '57e1118066dc1f25c5063c841fefd13bbc9658f3acf7adf68d60fa3001a6b5a5'
+default['riak']['package']['local']['url'] = 'http://s3.amazonaws.com/downloads.basho.com/riak/2.0/2.0.1/ubuntu/precise
 ```
 
 #### Custom Repository
 
 If you have a package repository setup on your operating system (that isn't
 Basho's) and want to install Riak from there, ensure that
-`node["riak"]["install_method"]` is set to `custom_repository`.
+`node['riak']['install_method']` is set to `custom_repository`.
 
 #### Source
 
 If you want to install Riak (and Erlang) from source, ensure that
-`node["riak"]["install_method"]` is set to `source`.
+`node['riak']['install_method']` is set to `source`.
 
 ## License and Author
 
