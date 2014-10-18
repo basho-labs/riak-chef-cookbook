@@ -19,7 +19,7 @@
 default['riak']['install_method'] = 'package'
 
 # ulimit
-default['riak']['limits']['nofile'] = 4096
+default['riak']['limits']['nofile'] = 65536
 
 # sysctl
 default['riak']['sysctl']['vm']['swappiness'] = 0

@@ -1,3 +1,55 @@
+## v2.4.17
+
+* Fix and update tests
+* Add digitalocean to .kitchen.cloud.yml
+* Add source build suit to .kitchen.cloud.yml
+
+## v2.4.16
+
+* If fqdn isn't valid, use ipaddress for vm.args -name
+* Drop 13.10 support (EOL)
+* Drop minitest for serverspec
+* Update yum dependency which fixes https://github.com/opscode-cookbooks/yum/issues/99
+
+
+## v2.4.15:
+
+* Update Riak CS default version to 1.5.1
+
+## v2.4.14:
+
+* Riak `1.4.10` is now the default.
+* Remove Ubuntu 13.04 support (EOL).
+* Add Ubuntu 13.10 support
+* Add Ubuntu 14.04 support
+
+## v2.4.13:
+
+* Increase pessimistic version constraint on `build-essential`.
+* Restrict version constraint on `sysctl` due to breaking changes.
+
+## v2.4.12:
+
+* Increase default `ulimit` from `4096` to `65536`.
+
+## v2.4.11:
+
+* Ensure SNMP directory is created when customer `data_dir` is provided.
+
+## v2.4.10:
+
+* Fix invalid default Multi backend definitions.
+
+## v2.4.9:
+
+* Revert errant change of Riak node name from FQDN to IP address.
+
+## v2.4.8:
+
+* Make default for `cs_version` be `1.4.5`
+* Add support for Ubuntu 13.04 (Raring).
+* Add support for Amazon Linux (2014.03).
+
 ## v2.4.7:
 
 * Ensure /etc/default/riak is regenerated when open file limits change.
