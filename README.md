@@ -1,4 +1,5 @@
-# riak [![Cookbook Version](http://img.shields.io/cookbook/v/riak.svg)][cookbook]
+# riak
+[![Cookbook Version](http://img.shields.io/cookbook/v/riak.svg)][cookbook]
 [![Build Status](http://img.shields.io/travis/basho/riak-chef-cookbook.svg)][travis]
 
 [cookbook]: https://supermarket.getchef.com/cookbooks/riak
