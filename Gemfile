@@ -1,10 +1,11 @@
-source "https://rubygems.org"
+source 'https://rubygems.org'
 
-gem "berkshelf",  "~> 2.0"
-gem "foodcritic", "~> 3.0"
+gem 'berkshelf',  '~> 3.1'
+gem 'foodcritic', '~> 4.0'
 
 group :integration do
-  gem "test-kitchen", "~> 1.0"
-  gem "kitchen-vagrant", "~> 0.11"
-  gem "kitchen-ec2", "~> 0.8.0"
+  gem 'test-kitchen', '~> 1.2'
+  gem 'kitchen-vagrant', '~> 0.15'
+  gem 'kitchen-ec2', '~> 0.8.0'
+  gem 'kitchen-digitalocean', '~> 0.8.0'
 end

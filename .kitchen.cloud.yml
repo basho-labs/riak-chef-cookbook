@@ -5,24 +5,23 @@ provisioner:
   require_chef_omnibus: latest
 
 platforms:
-- name: amazon-2014.03.1
+- name: amazon-2014.09.01
   driver:
     name: ec2
-    image_id: ami-ed8e9284
+    image_id: ami-9a6ed3f2
     username: ec2-user
     ssh_key: <%= ENV["EC2_SSH_KEY_PATH"] %>
   run_list:
-  - recipe[sudo]
+  - recipe[yum-epel]
   attributes:
     riak:
       package:
-        checksum:
-          amazon:
-            "2014": "2cf9f2481409d2871a6d453a9287f317bd4f5c1cb2e49432f4fee0ac106af56c"
-    authorization:
-      sudo: 
-        users: ["ec2-user"]
-        passwordless: true
+        local:
+          filename: "riak-2.0.1-1.el6.x86_64.rpm"
+          checksum: "59aadeab2dc00fba6d6d45575e7d678fc15411d39f195cfe6aec3be303acc071"
+          url: "http://s3.amazonaws.com/downloads.basho.com/riak/2.0/2.0.1/rhel/6"
+        enterprise:
+          checksum: "???"
 - name: ubuntu-14-04-x64
   driver:
     name: digitalocean
@@ -38,19 +37,24 @@ platforms:
     name: digitalocean
   run_list:
   - recipe[apt]
+- name: centos-7-0-x64
+  driver:
+    name: digitalocean
+  run_list:
+  - recipe[yum-epel]
 - name: centos-6-5-x64
   driver:
     name: digitalocean
   run_list:
-  - recipe[sudo]
   - recipe[yum-epel]
 - name: centos-5-8-x64
   driver:
     name: digitalocean
   run_list:
-  - recipe[sudo]
   - recipe[yum-epel]
-
+- name: fedora-19-x64
+  driver:
+    name: digitalocean
 suites:
 - name: default
   run_list:
@@ -59,20 +63,32 @@ suites:
     riak:
       package:
         version:
-          major: 1
-          minor: 4
-          incremental: 10
+          major: "2"
+          minor: "0"
+          incremental: "1"
+  excludes:
+  - fedora-19-x64
 - name: enterprise
   run_list:
   - recipe[riak]
   attributes:
     riak:
       package:
+        url: "http://private.downloads.basho.com/riak_ee"
         version:
-          major: 1
-          minor: 4
-          incremental: 10
+          major: "2"
+          minor: "0"
+          incremental: "1"
         enterprise_key: <%= (ENV["RIAK_ENTERPRISE_KEY"].nil? ? "" : ENV["RIAK_ENTERPRISE_KEY"]) %>
+  excludes:
+  - fedora-19-x64
 - name: source
   run_list:
-  - recipe[riak::source]
+  - recipe[riak]
+  attributes:
+    riak:
+      install_method: "source"
+      source:
+        major: "2"
+        minor: "0"
+        incremental: "1"

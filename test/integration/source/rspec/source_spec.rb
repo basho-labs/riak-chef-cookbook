@@ -1,13 +1,9 @@
-require "spec_helper"
+require 'spec_helper'
 
-describe file("/opt/riak") do
+describe file('/opt/riak') do
   it { should be_directory }
 end
 
-describe file("/opt/riak/etc/app.config") do
-  it { should be_file }
-end
-
-describe file("/opt/riak/etc/vm.args") do
+describe file('/opt/riak/etc/riak.conf') do
   it { should be_file }
 end

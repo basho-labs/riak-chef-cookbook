@@ -1,6 +1,6 @@
-desc "Runs foodcritic linter"
+desc 'Runs foodcritic linter'
 task :foodcritic do
-  if Gem::Version.new("1.9.2") <= Gem::Version.new(RUBY_VERSION.dup)
+  if Gem::Version.new('1.9.2') <= Gem::Version.new(RUBY_VERSION.dup)
     sandbox = File.join(File.dirname(__FILE__), %w{tmp foodcritic cookbook})
     prepare_foodcritic_sandbox(sandbox)
 
@@ -10,13 +10,13 @@ task :foodcritic do
   end
 end
 
-task :default => 'foodcritic'
+task default: 'foodcritic'
 
 private
 
 def prepare_foodcritic_sandbox(sandbox)
   files = %w{*.md *.rb attributes definitions files providers
-recipes resources templates}
+             recipes resources templates}
 
   rm_rf sandbox
   mkdir_p sandbox
