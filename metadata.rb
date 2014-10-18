@@ -34,8 +34,8 @@ depends 'git', '~> 3.0'
 depends 'java', '~> 1.22.0'
 depends 'sysctl', '~> 0.3.5'
 depends 'ulimit', '~> 0.3.2'
-depends 'yum', '~> 3.0'
-depends 'yum-epel', '~> 0.3'
+depends 'yum', '~> 3.4'
+depends 'yum-epel', '~> 0.5.1'
 depends 'packagecloud'
 
 %w{ubuntu debian centos redhat fedora amazon}.each do |os|
