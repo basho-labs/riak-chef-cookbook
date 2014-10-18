@@ -1,4 +1,5 @@
-# riak [![Build Status](https://travis-ci.org/basho/riak-chef-cookbook.png)](https://travis-ci.org/basho/riak-chef-cookbook)
+# riak [![Cookbook Version](http://img.shields.io/cookbook/v/riak.svg)][cookbook]
+[![Build Status](http://img.shields.io/travis/basho/riak-chef-cookbook.svg)][travis]
 
 ## Description
 
@@ -10,8 +11,10 @@ latency.
 
 ### Platforms
 
+* Ubuntu 14.04
 * Ubuntu 12.04
 * Debian 7.2.0
+* CentOS 7.0
 * CentOS 6.5
 * CentOS 5.10
 * Fedora 19
@@ -241,7 +244,7 @@ are set appropriately:
 default['riak']['install_method'] = 'package'
 default['riak']['package']['local']['filename'] = 'riak_2.0.1-1_amd64.deb'
 default['riak']['package']['local']['checksum'] = '57e1118066dc1f25c5063c841fefd13bbc9658f3acf7adf68d60fa3001a6b5a5'
-default['riak']['package']['local']['url'] = 'http://s3.amazonaws.com/downloads.basho.com/riak/2.0/2.0.1/ubuntu/precise
+default['riak']['package']['local']['url'] = 'http://s3.amazonaws.com/downloads.basho.com/riak/2.0/2.0.1/ubuntu/precise'
 ```
 
 #### Custom Repository

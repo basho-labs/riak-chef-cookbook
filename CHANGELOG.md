@@ -1,8 +1,14 @@
+## v3.0.0
+
+* Riak `2.0.1` is now the default
+* Add CentOS 7 Support
+* Migrate to packagecloud.io repos
+
 ## v2.4.17
 
 * Fix and update tests
 * Add digitalocean to .kitchen.cloud.yml
-* Add source build suit to .kitchen.cloud.yml
+* Add source build suite to .kitchen.cloud.yml
 
 ## v2.4.16
 
