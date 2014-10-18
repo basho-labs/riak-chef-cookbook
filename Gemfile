@@ -5,7 +5,7 @@ gem 'foodcritic', '~> 4.0'
 
 group :integration do
   gem 'test-kitchen', '~> 1.2'
-  gem 'kitchen-vagrant', '~> 0.15g'
+  gem 'kitchen-vagrant', '~> 0.15'
   gem 'kitchen-ec2', '~> 0.8.0'
-  gem "kitchen-digitalocean", "~> 0.8.0"
+  gem 'kitchen-digitalocean', '~> 0.8.0'
 end
