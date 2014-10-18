@@ -22,9 +22,6 @@ platforms:
           url: "http://s3.amazonaws.com/downloads.basho.com/riak/2.0/2.0.1/ubuntu/trusty"
         enterprise:
           checksum: "???"
-        checksum:
-          ubuntu:
-            precise: "f2f5af17cce01a769d31517bbdba5a9e1b99e3581bcc4b33e970dbd0ef4140c6"
 - name: ubuntu-12.04
   run_list:
   - recipe[apt]
@@ -135,15 +132,11 @@ suites:
   attributes:
     riak:
       install_method: "custom_repository"
+- name: source
   run_list:
   - recipe[riak]
   attributes:
     riak:
-      package:
-        name: "riak-ee"
-      install_method: "custom_repository"
-- name: source
-  run_list:
       install_method: "source"
       source:
         major: "2"
