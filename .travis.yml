@@ -1,6 +1,13 @@
+
+language: ruby
+
 rvm:
-  - 1.9.3
-bundler_args: --without=development
-script: bundle exec rake foodcritic
-notifications:
-  email: devops@basho.com
+  - 2.1.0
+
+bundler_args: --jobs 7 --without kitchen_vagrant --without development
+
+before_install:
+  - export USE_SYSTEM_GECODE=1
+  - sudo apt-get -y install libgecode-dev
+
+script: bundle exec rake travis:ci
