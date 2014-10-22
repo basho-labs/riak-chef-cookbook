@@ -19,6 +19,8 @@
 #
 node.default['java']['install_flavor'] = 'oracle'
 node.default['java']['jdk_version'] = 7
+node.default['java']['jdk']['7']['x86_64']['url'] = 'http://download.oracle.com/otn-pub/java/jdk/7u25-b15/jdk-7u25-linux-x64.tar.gz'
+node.default['java']['jdk']['7']['x86_64']['checksum'] = '83ba05e260813f7a9140b76e3d37ea33'
 node.default['java']['oracle']['accept_oracle_download_terms'] = true
 
 node.default['sysctl']['params']['vm']['swappiness'] = node['riak']['sysctl']['vm']['swappiness']
