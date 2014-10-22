@@ -21,7 +21,7 @@ describe file('/etc/riak/riak.conf') do
   it { should be_file }
 end
 
-if ['debian', 'ubuntu'].include?(os[:family])
+if %w(debian ubuntu).include?(os[:family])
   describe command('/etc/init.d/riak ping') do
     its(:stdout) { should eq "pong\n" }
   end

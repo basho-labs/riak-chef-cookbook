@@ -19,7 +19,8 @@
 # limitations under the License.
 #
 version_str = %w(major minor incremental).map { |ver| node['riak']['package']['version'][ver] }.join('.')
-base_uri = "#{node['riak']['package']['url']}/#{node['riak']['package']['enterprise_key']}/#{version_str}/"
+major_minor = %w(major minor).map { |ver| node['riak']['package']['version'][ver] }.join('.')
+base_uri = "#{node['riak']['package']['url']}/#{node['riak']['package']['enterprise_key']}/#{major_minor}/#{version_str}/"
 base_filename = "riak-ee-#{version_str}"
 platform_version = node['platform_version'].to_i
 checksum_val = node['riak']['package']['enterprise']['checksum']
