@@ -25,21 +25,57 @@ platforms:
 - name: ubuntu-14-04-x64
   driver:
     name: digitalocean
+  attributes:
+    riak:
+      package:
+        local:
+          filename: "riak_2.0.1-1_amd64.deb"
+          checksum: "72892a6ac36306525597dc036969a6d0aa496fde1d5b13af05324843af17d661"
+          url: "http://s3.amazonaws.com/downloads.basho.com/riak/2.0/2.0.1/ubuntu/trusty"
+        enterprise:
+          checksum: "???"
   run_list:
   - recipe[apt]
 - name: ubuntu-12-04-x64
   driver:
     name: digitalocean
+  attributes:
+    riak:
+      package:
+        local:
+          filename: "riak_2.0.1-1_amd64.deb"
+          checksum: "57e1118066dc1f25c5063c841fefd13bbc9658f3acf7adf68d60fa3001a6b5a5"
+          url: "http://s3.amazonaws.com/downloads.basho.com/riak/2.0/2.0.1/ubuntu/precise"
+        enterprise:
+          checksum: "???"
   run_list:
   - recipe[apt]
 - name: debian-7-0-x64
   driver:
     name: digitalocean
+  attributes:
+    riak:
+      package:
+        local:
+          filename: "riak_2.0.1-1_amd64.deb"
+          checksum: "5f19d8d475062fe21549c30fbb05d446c09e4dfb6a9e49836f3afd8e84f74783"
+          url: "http://s3.amazonaws.com/downloads.basho.com/riak/2.0/2.0.1/debian/7"
+        enterprise:
+          checksum: "???"
   run_list:
   - recipe[apt]
 - name: centos-7-0-x64
   driver:
     name: digitalocean
+  attributes:
+    riak:
+      package:
+        local:
+          filename: "riak-2.0.1-1.el7.centos.x86_64.rpm"
+          checksum: "3773f9ce7355dd96b051f049a92cf8ad4c0e7b1b82283e704d3b8b35ee12881e"
+          url: "http://s3.amazonaws.com/downloads.basho.com/riak/2.0/2.0.1/rhel/7"
+        enterprise:
+          checksum: "???"
   run_list:
   - recipe[yum-epel]
 - name: centos-6-5-x64
@@ -47,14 +83,44 @@ platforms:
     name: digitalocean
   run_list:
   - recipe[yum-epel]
+  attributes:
+    riak:
+      package:
+        local:
+          filename: "riak-2.0.1-1.el6.x86_64.rpm"
+          checksum: "59aadeab2dc00fba6d6d45575e7d678fc15411d39f195cfe6aec3be303acc071"
+          url: "http://s3.amazonaws.com/downloads.basho.com/riak/2.0/2.0.1/rhel/6"
+        enterprise:
+          checksum: "???"
 - name: centos-5-8-x64
   driver:
     name: digitalocean
   run_list:
   - recipe[yum-epel]
+  attributes:
+    riak:
+      package:
+        local:
+          filename: "riak-2.0.1-1.el5.x86_64.rpm"
+          checksum: "3b12ba792672f52d94aacfe9d6b89377ffecee2a241452aeac50570f19ec0fc9"
+          url: "http://s3.amazonaws.com/downloads.basho.com/riak/2.0/2.0.1/rhel/5"
+        enterprise:
+          checksum: "???"
 - name: fedora-19-x64
   driver:
     name: digitalocean
+  attributes:
+    riak:
+      package:
+        local:
+          filename: "riak-2.0.1-1.fc19.x86_64.rpm"
+          checksum: "bd9b0c775100986c2ddc33ce41134911c1163db623fdf7db5deec71685065f73"
+          url: "http://s3.amazonaws.com/downloads.basho.com/riak/2.0/2.0.1/fedora/19"
+        enterprise:
+          checksum: "???"
+  provisioner:
+    root_path: /home/vagrant/kitchen
+
 suites:
 - name: default
   run_list:
@@ -62,6 +128,8 @@ suites:
   attributes:
     riak:
       package:
+        local:
+          filename: ""
         version:
           major: "2"
           minor: "0"
@@ -82,6 +150,12 @@ suites:
         enterprise_key: <%= (ENV["RIAK_ENTERPRISE_KEY"].nil? ? "" : ENV["RIAK_ENTERPRISE_KEY"]) %>
   excludes:
   - fedora-19-x64
+- name: custom_package
+  run_list:
+  - recipe[riak]
+  attributes: {}
+  excludes:
+   - fedora-19-x64
 - name: source
   run_list:
   - recipe[riak]

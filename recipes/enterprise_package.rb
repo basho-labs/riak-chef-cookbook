@@ -19,7 +19,8 @@
 # limitations under the License.
 #
 version_str = %w(major minor incremental).map { |ver| node['riak']['package']['version'][ver] }.join('.')
-base_uri = "#{node['riak']['package']['url']}/#{node['riak']['package']['enterprise_key']}/#{version_str}/"
+major_minor = %w(major minor).map { |ver| node['riak']['package']['version'][ver] }.join('.')
+base_uri = "#{node['riak']['package']['url']}/#{node['riak']['package']['enterprise_key']}/#{major_minor}/#{version_str}/"
 base_filename = "riak-ee-#{version_str}"
 platform_version = node['platform_version'].to_i
 checksum_val = node['riak']['package']['enterprise']['checksum']
@@ -46,10 +47,15 @@ when 'rhel'
   end
 
   machines = { 'x86_64' => 'x86_64', 'i386' => 'i386', 'i686' => 'i686' }
-  package_file = "#{base_filename}-#{node['riak']['package']['version']['build']}.el#{platform_version}.#{machines[node['kernel']['machine']]}.rpm"
+
+  if platform_version == 7
+    package_file = "#{base_filename}-#{node['riak']['package']['version']['build']}.el#{platform_version}.centos.#{machines[node['kernel']['machine']]}.rpm"
+  else
+    package_file = "#{base_filename}-#{node['riak']['package']['version']['build']}.el#{platform_version}.#{machines[node['kernel']['machine']]}.rpm"
+  end
+
   base_uri = "#{base_uri}rhel/#{platform_version}/"
 when 'fedora'
-  machines = { 'x86_64' => 'x86_64', 'i386' => 'i386', 'i686' => 'i686' }
   base_uri = "#{base_uri}#{node['platform']}/#{platform_version}/"
   package_file = "#{base_filename}-#{node['riak']['package']['version']['build']}.fc#{platform_version}.#{node['kernel']['machine']}.rpm"
 end

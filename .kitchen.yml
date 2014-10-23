@@ -7,7 +7,6 @@ driver:
 
 provisioner:
   name: chef_zero
-  root_path: /home/vagrant/kitchen
 
 platforms:
 - name: ubuntu-14.04
@@ -18,7 +17,7 @@ platforms:
       package:
         local:
           filename: "riak_2.0.1-1_amd64.deb"
-          checksum: "57e1118066dc1f25c5063c841fefd13bbc9658f3acf7adf68d60fa3001a6b5a5"
+          checksum: "72892a6ac36306525597dc036969a6d0aa496fde1d5b13af05324843af17d661"
           url: "http://s3.amazonaws.com/downloads.basho.com/riak/2.0/2.0.1/ubuntu/trusty"
         enterprise:
           checksum: "???"
@@ -43,7 +42,7 @@ platforms:
         local:
           filename: "riak_2.0.1-1_amd64.deb"
           checksum: "5f19d8d475062fe21549c30fbb05d446c09e4dfb6a9e49836f3afd8e84f74783"
-          url: "http://s3.amazonaws.com/downloads.basho.com/riak/2.0/2.0.0beta1/debian/7"
+          url: "http://s3.amazonaws.com/downloads.basho.com/riak/2.0/2.0.1/debian/7"
         enterprise:
           checksum: "???"
 - name: centos-7.0
@@ -53,9 +52,9 @@ platforms:
     riak:
       package:
         local:
-          filename: "riak-2.0.1-1.el7.x86_64.rpm"
+          filename: "riak-2.0.1-1.el7.centos.x86_64.rpm"
           checksum: "3773f9ce7355dd96b051f049a92cf8ad4c0e7b1b82283e704d3b8b35ee12881e"
-          url: "http://s3.amazonaws.com/downloads.basho.com/riak/2.0/2.0.0beta1/rhel/7"
+          url: "http://s3.amazonaws.com/downloads.basho.com/riak/2.0/2.0.1/rhel/7"
         enterprise:
           checksum: "???"
 - name: centos-6.5
@@ -67,7 +66,7 @@ platforms:
         local:
           filename: "riak-2.0.1-1.el6.x86_64.rpm"
           checksum: "2789de9a0d5eb536acb6eb5766393239e824b59e7da9055a765dca3c0596e110"
-          url: "http://s3.amazonaws.com/downloads.basho.com/riak/2.0/2.0.0beta1/rhel/6"
+          url: "http://s3.amazonaws.com/downloads.basho.com/riak/2.0/2.0.1/rhel/6"
         enterprise:
           checksum: "???"
 - name: centos-5.10
@@ -79,7 +78,7 @@ platforms:
         local:
           filename: "riak-2.0.1-1.el5.x86_64.rpm"
           checksum: "3b12ba792672f52d94aacfe9d6b89377ffecee2a241452aeac50570f19ec0fc9"
-          url: "http://s3.amazonaws.com/downloads.basho.com/riak/2.0/2.0.0beta1/rhel/5"
+          url: "http://s3.amazonaws.com/downloads.basho.com/riak/2.0/2.0.1/rhel/5"
         enterprise:
           checksum: "???"
 - name: fedora-19
@@ -89,9 +88,11 @@ platforms:
         local:
           filename: "riak-2.0.1-1.fc19.x86_64.rpm"
           checksum: "bd9b0c775100986c2ddc33ce41134911c1163db623fdf7db5deec71685065f73"
-          url: "http://s3.amazonaws.com/downloads.basho.com/riak/2.0/2.0.0beta1/fedora/19"
+          url: "http://s3.amazonaws.com/downloads.basho.com/riak/2.0/2.0.1/fedora/19"
         enterprise:
           checksum: "???"
+  provisioner:
+    root_path: /home/vagrant/kitchen
 
 suites:
 - name: default
