@@ -47,10 +47,15 @@ when 'rhel'
   end
 
   machines = { 'x86_64' => 'x86_64', 'i386' => 'i386', 'i686' => 'i686' }
-  package_file = "#{base_filename}-#{node['riak']['package']['version']['build']}.el#{platform_version}.#{machines[node['kernel']['machine']]}.rpm"
+
+  if platform_version == 7
+    package_file = "#{base_filename}-#{node['riak']['package']['version']['build']}.el#{platform_version}.centos.#{machines[node['kernel']['machine']]}.rpm"
+  else
+    package_file = "#{base_filename}-#{node['riak']['package']['version']['build']}.el#{platform_version}.#{machines[node['kernel']['machine']]}.rpm"
+  end
+
   base_uri = "#{base_uri}rhel/#{platform_version}/"
 when 'fedora'
-  machines = { 'x86_64' => 'x86_64', 'i386' => 'i386', 'i686' => 'i686' }
   base_uri = "#{base_uri}#{node['platform']}/#{platform_version}/"
   package_file = "#{base_filename}-#{node['riak']['package']['version']['build']}.fc#{platform_version}.#{node['kernel']['machine']}.rpm"
 end

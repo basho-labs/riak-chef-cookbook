@@ -17,7 +17,7 @@ Encoding:
 GuardClause:
   Enabled: false
 LineLength:
-  Max: 120
+  Max: 160
 MethodLength:
   Max: 20
 PercentLiteralDelimiters:

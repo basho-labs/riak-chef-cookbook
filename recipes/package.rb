@@ -17,7 +17,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-unless node['riak']['package']['local']['filename'].empty?
+if node['riak']['package']['local']['filename'].length > 0
   package_file = node['riak']['package']['local']['filename']
 
   unless node['riak']['package']['local']['url'].empty?
@@ -42,13 +42,12 @@ unless node['riak']['package']['local']['filename'].empty?
     )
     only_if do
       ::File.exist?("#{Chef::Config[:file_cache_path]}/#{package_file}") &&
-        Digest::SHA256.file("#{Chef::Config[:file_cache_path]}/#{package_file}").hexdigest == node['riak']['package']['local']['checksum']
+        Digest::SHA256.file("#{Chef::Config[:file_cache_path]}/#{package_file}").hexdigest ==
+        node['riak']['package']['local']['checksum']
     end
   end
 else
   version_str = %w(major minor incremental).map { |ver| node['riak']['package']['version'][ver] }.join('.')
-  base_uri = "#{node['riak']['package']['url']}/#{node['riak']['package']['version']['major']}.#{node['riak']['package']['version']['minor']}/#{version_str}/"
-  base_filename = "riak-#{version_str}"
   platform_version = node['platform_version'].to_i
   package_version = "#{version_str}-#{node['riak']['package']['version']['build']}"
 
@@ -68,20 +67,12 @@ else
       type 'rpm'
     end
 
-    case node['platform']
-    when 'centos', 'redhat'
-      if platform_version == 6
-        package_version = "#{package_version}.el6"
-      elsif platform_version == 7
-        package_version = "#{package_version}.el7.centos"
-      end
-    when 'amazon'
-      if platform_version >= 2013
-        package_version = "#{package_version}.el6"
-      else
-        package_version = "#{package_version}.el5"
-      end
-    when 'fedora'
+    case platform_version
+    when 6, 2013, 2014
+      package_version = "#{package_version}.el6"
+    when 7
+      package_version = "#{package_version}.el7.centos"
+    when 19
       package_version = "#{package_version}.fc#{platform_version}"
     end
 
