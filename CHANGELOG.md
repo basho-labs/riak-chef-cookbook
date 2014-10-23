@@ -1,3 +1,10 @@
+## v3.0.1
+
+* Fixes enterprise package installs
+* Passing all RuboCop checks
+* Lots of small testing related fixes
+* Pinning JDK version
+
 ## v3.0.0
 
 * Riak `2.0.1` is now the default
