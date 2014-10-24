@@ -1,3 +1,7 @@
+## v2.4.18
+
+* Update Riak CS default version to 1.5.2
+
 ## v2.4.17
 
 * Fix and update tests
