@@ -22,7 +22,7 @@ default['riak']['package']['name'] = 'riak'
 default['riak']['package']['url'] = 'http://s3.amazonaws.com/downloads.basho.com/riak'
 default['riak']['package']['version']['major'] = '2'
 default['riak']['package']['version']['minor'] = '0'
-default['riak']['package']['version']['incremental'] = '1'
+default['riak']['package']['version']['incremental'] = '2'
 default['riak']['package']['version']['build'] = '1'
 
 default['riak']['package']['local']['filename'] = ''

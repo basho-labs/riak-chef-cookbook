@@ -246,9 +246,9 @@ are set appropriately:
 
 ```ruby
 default['riak']['install_method'] = 'package'
-default['riak']['package']['local']['filename'] = 'riak_2.0.1-1_amd64.deb'
-default['riak']['package']['local']['checksum'] = '57e1118066dc1f25c5063c841fefd13bbc9658f3acf7adf68d60fa3001a6b5a5'
-default['riak']['package']['local']['url'] = 'http://s3.amazonaws.com/downloads.basho.com/riak/2.0/2.0.1/ubuntu/precise'
+default['riak']['package']['local']['filename'] = 'riak_2.0.2-1_amd64.deb'
+default['riak']['package']['local']['checksum'] = 'db290d17208861b2eb8694d2eb3d1dc8e7ad280edf577fac8bd355446ca6b85a'
+default['riak']['package']['local']['url'] = 'http://s3.amazonaws.com/downloads.basho.com/riak/2.0/2.0.2/ubuntu/precise'
 ```
 
 #### Custom Repository
