@@ -1,3 +1,8 @@
+## v3.0.2
+
+* Riak `2.0.2` is now the default
+* Updated build-essentials dependency
+
 ## v3.0.1
 
 * Fixes enterprise package installs
