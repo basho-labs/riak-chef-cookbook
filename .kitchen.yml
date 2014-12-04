@@ -93,7 +93,36 @@ platforms:
           checksum: "???"
   provisioner:
     root_path: /home/vagrant/kitchen
-
+- name: freebsd-10.1
+  driver:
+    guest: ":freebsd"
+    vagrantfile_erb: vagrantfile_bsd.erb
+  run_list:
+  - recipe[freebsd::portsnap]
+  attributes:
+    riak:
+      package:
+        local:
+          filename: "riak-2.0.2.txz"
+          checksum: "8b3afb7f3896678ed6aca0533d94510db9aa2c59f2bbac8a03277906ab9e8b8b"
+          url: "http://s3.amazonaws.com/downloads.basho.com/riak/2.0/2.0.2/freebsd/10/"
+        enterprise:
+          checksum: "???"
+- name: freebsd-9.2
+  driver:
+    guest: ":freebsd"
+    vagrantfile_erb: vagrantfile_bsd.erb
+  run_list:
+  - recipe[freebsd::portsnap]
+  attributes:
+    riak:
+      package:
+        local:
+          filename: "riak-2.0.2-FreeBSD-amd64.tbz"
+          checksum: "5b67b8f9d8488f848a54e6ee733d67964a2381ee06b35d60044f1f61b3da2f7c"
+          url: "http://s3.amazonaws.com/downloads.basho.com/riak/2.0/2.0.2/freebsd/9.2/"
+        enterprise:
+          checksum: "???"
 suites:
 - name: default
   run_list:
@@ -107,6 +136,20 @@ suites:
           major: "2"
           minor: "0"
           incremental: "2"
+- name: search
+  run_list:
+  - recipe[riak]
+  attributes:
+    riak:
+      package:
+        local:
+          filename: ""
+        version:
+          major: "2"
+          minor: "0"
+          incremental: "2"
+      config:
+        search.top_level: "on"
 - name: enterprise
   run_list:
   - recipe[riak]

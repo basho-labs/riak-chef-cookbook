@@ -136,6 +136,22 @@ suites:
           incremental: "2"
   excludes:
   - fedora-19-x64
+- name: search
+  run_list:
+  - recipe[riak]
+  attributes:
+    riak:
+      package:
+        local:
+          filename: ""
+        version:
+          major: "2"
+          minor: "0"
+          incremental: "2"
+      config:
+        search.top_level: "on"
+  excludes:
+  - fedora-19-x64
 - name: enterprise
   run_list:
   - recipe[riak]

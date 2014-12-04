@@ -17,8 +17,14 @@ describe port(8087) do
   it { should be_listening }
 end
 
-describe file('/etc/riak/riak.conf') do
-  it { should be_file }
+if %w(freebsd).include?(os[:family])
+  describe file('/usr/local/etc/riak/riak.conf') do
+    it { should be_file }
+  end
+else
+  describe file('/etc/riak/riak.conf') do
+    it { should be_file }
+  end
 end
 
 if %w(debian ubuntu).include?(os[:family])

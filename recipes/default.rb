@@ -17,11 +17,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-node.default['java']['install_flavor'] = 'oracle'
-node.default['java']['jdk_version'] = 7
-node.default['java']['jdk']['7']['x86_64']['url'] = 'http://download.oracle.com/otn-pub/java/jdk/7u25-b15/jdk-7u25-linux-x64.tar.gz'
-node.default['java']['jdk']['7']['x86_64']['checksum'] = '83ba05e260813f7a9140b76e3d37ea33'
-node.default['java']['oracle']['accept_oracle_download_terms'] = true
+
 
 node.default['sysctl']['params']['vm']['swappiness'] = node['riak']['sysctl']['vm']['swappiness']
 node.default['sysctl']['params']['net']['core']['somaxconn'] = node['riak']['sysctl']['net']['core']['somaxconn']
@@ -35,7 +31,7 @@ node.default['sysctl']['params']['net']['ipv4']['tcp_moderate_rcvbuf'] = node['r
 
 include_recipe 'ulimit' unless node['platform_family'] == 'debian'
 include_recipe 'sysctl'
-include_recipe 'java'
+include_recipe 'riak::java' if node['riak']['config']['search.top_level'] == 'on'
 
 if node['riak']['package']['enterprise_key'].empty?
   include_recipe "riak::#{node['riak']['install_method']}"
@@ -62,7 +58,8 @@ file "#{node['riak']['platform_etc_dir']}/riak.conf" do
   end
 end
 
-if node['platform_family'] == 'debian'
+case node['platform_family']
+when 'debian'
   file '/etc/default/riak' do
     content "ulimit -n #{node['riak']['limits']['nofile']}"
     owner 'root'
@@ -70,7 +67,7 @@ if node['platform_family'] == 'debian'
     action :create
     notifies :restart, 'service[riak]'
   end
-else
+when 'rhel'
   user_ulimit 'riak' do
     filehandle_limit node['riak']['limits']['nofile']
   end

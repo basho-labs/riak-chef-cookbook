@@ -48,6 +48,7 @@ if node['riak']['package']['local']['filename'].length > 0
   end
 else
   version_str = %w(major minor incremental).map { |ver| node['riak']['package']['version'][ver] }.join('.')
+  major_minor = %w(major minor).map { |ver| node['riak']['package']['version'][ver] }.join('.')
   platform_version = node['platform_version'].to_i
   package_version = "#{version_str}-#{node['riak']['package']['version']['build']}"
 
@@ -79,6 +80,53 @@ else
     package 'riak' do
       action :install
       version package_version
+    end
+  when 'freebsd'
+    case platform_version
+    when 10
+      package_file = "riak-#{version_str}.txz"
+      package_uri = "#{node['riak']['package']['url']}/#{major_minor}/#{version_str}/" +
+                    "freebsd/#{platform_version}/#{package_file}"
+
+      checksum_val = node['riak']['package']['local']['checksum']
+
+      package "lang/gcc"
+
+      execute "pkg upgrade -y"
+
+      remote_file "#{Chef::Config[:file_cache_path]}/#{package_file}" do
+        source package_uri
+        checksum checksum_val
+        owner 'root'
+        mode 0644
+      end
+
+      package node['riak']['package']['name'] do
+        source "#{Chef::Config[:file_cache_path]}/#{package_file}"
+        action :install
+        only_if do
+          ::File.exist?("#{Chef::Config[:file_cache_path]}/#{package_file}") &&
+            Digest::SHA256.file("#{Chef::Config[:file_cache_path]}/#{package_file}").hexdigest ==
+            node['riak']['package']['local']['checksum']
+        end
+      end
+    when 9
+      package_file = "riak-#{version_str}-FreeBSD-amd64.tbz"
+      package_uri = "#{node['riak']['package']['url']}/#{major_minor}/#{version_str}/" +
+                    "freebsd/9.2/#{package_file}"
+
+      include_recipe "pkg_add"
+
+      pkg_add "riak" do
+        location package_uri
+        action :install
+      end
+
+      template "/usr/local/etc/rc.d/riak" do
+        source "rcd.erb"
+        mode  0755
+        action :create
+      end
     end
   end
 end
