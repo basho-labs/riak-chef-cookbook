@@ -1,6 +1,7 @@
 #
 # Author:: Seth Thomas (<sthomas@chef.io>)
-# Cookbook Name:: riak Recipe:: package
+# Cookbook Name:: riak
+# Recipe:: java
 #
 # Copyright (c) 2014 Basho Technologies, Inc.
 #

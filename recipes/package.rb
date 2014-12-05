@@ -1,7 +1,8 @@
 #
 # Author:: Benjamin Black (<b@b3k.us>), Sean Cribbs (<sean@basho.com>),
 # Seth Thomas (<sthomas@basho.com>), and Hector Castro (<hector@basho.com>)
-# Cookbook Name:: riak Recipe:: package
+# Cookbook Name:: riak
+# Recipe:: package
 #
 # Copyright (c) 2014 Basho Technologies, Inc.
 #
@@ -43,7 +44,7 @@ if node['riak']['package']['local']['filename'].length > 0
     only_if do
       ::File.exist?("#{Chef::Config[:file_cache_path]}/#{package_file}") &&
         Digest::SHA256.file("#{Chef::Config[:file_cache_path]}/#{package_file}").hexdigest ==
-        node['riak']['package']['local']['checksum']
+          node['riak']['package']['local']['checksum']
     end
   end
 else
@@ -85,14 +86,14 @@ else
     case platform_version
     when 10
       package_file = "riak-#{version_str}.txz"
-      package_uri = "#{node['riak']['package']['url']}/#{major_minor}/#{version_str}/" +
+      package_uri = "#{node['riak']['package']['url']}/#{major_minor}/#{version_str}/" \
                     "freebsd/#{platform_version}/#{package_file}"
 
       checksum_val = node['riak']['package']['local']['checksum']
 
-      package "lang/gcc"
+      package 'lang/gcc'
 
-      execute "pkg upgrade -y"
+      execute 'pkg upgrade -y'
 
       remote_file "#{Chef::Config[:file_cache_path]}/#{package_file}" do
         source package_uri
@@ -107,23 +108,23 @@ else
         only_if do
           ::File.exist?("#{Chef::Config[:file_cache_path]}/#{package_file}") &&
             Digest::SHA256.file("#{Chef::Config[:file_cache_path]}/#{package_file}").hexdigest ==
-            node['riak']['package']['local']['checksum']
+              node['riak']['package']['local']['checksum']
         end
       end
     when 9
       package_file = "riak-#{version_str}-FreeBSD-amd64.tbz"
-      package_uri = "#{node['riak']['package']['url']}/#{major_minor}/#{version_str}/" +
+      package_uri = "#{node['riak']['package']['url']}/#{major_minor}/#{version_str}/" \
                     "freebsd/9.2/#{package_file}"
 
-      include_recipe "pkg_add"
+      include_recipe 'pkg_add'
 
-      pkg_add "riak" do
+      pkg_add 'riak' do
         location package_uri
         action :install
       end
 
-      template "/usr/local/etc/rc.d/riak" do
-        source "rcd.erb"
+      template '/usr/local/etc/rc.d/riak' do
+        source 'rcd.erb'
         mode  0755
         action :create
       end

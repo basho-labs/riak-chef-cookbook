@@ -79,7 +79,7 @@ remote_file "#{Chef::Config[:file_cache_path]}/#{source_filename}" do
 
   not_if do
     ::File.exist?("#{Chef::Config[:file_cache_path]}/#{source_filename}") &&
-    Digest::SHA256.file("#{Chef::Config[:file_cache_path]}/#{source_filename}").hexdigest == node['riak']['source']['checksum']
+      Digest::SHA256.file("#{Chef::Config[:file_cache_path]}/#{source_filename}").hexdigest == node['riak']['source']['checksum']
   end
 end
 
