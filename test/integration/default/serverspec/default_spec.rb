@@ -28,9 +28,17 @@ describe port(8087) do
   end
 end
 
-describe file('/etc/riak/riak.conf') do
-  it 'is a file' do
-    expect(subject).to be_file
+if %w(freebsd).include?(os[:family])
+  describe file('/usr/local/etc/riak/riak.conf') do
+    it 'is a file' do
+      expect(subject).to be_file
+    end
+  end
+else
+  describe file('/etc/riak/riak.conf') do
+    it 'is a file' do
+      expect(subject).to be_file
+    end
   end
 end
 
