@@ -20,7 +20,7 @@ platforms:
           amazon:
             "2014": "2cf9f2481409d2871a6d453a9287f317bd4f5c1cb2e49432f4fee0ac106af56c"
     authorization:
-      sudo: 
+      sudo:
         users: ["ec2-user"]
         passwordless: true
 - name: ubuntu-14-04-x64
@@ -61,7 +61,7 @@ suites:
         version:
           major: 1
           minor: 4
-          incremental: 10
+          incremental: 12
 - name: enterprise
   run_list:
   - recipe[riak]
@@ -71,7 +71,7 @@ suites:
         version:
           major: 1
           minor: 4
-          incremental: 10
+          incremental: 12
         enterprise_key: <%= (ENV["RIAK_ENTERPRISE_KEY"].nil? ? "" : ENV["RIAK_ENTERPRISE_KEY"]) %>
 - name: source
   run_list:

@@ -65,7 +65,7 @@ suites:
         version:
           major: 1
           minor: 4
-          incremental: 10
+          incremental: 12
 - name: default13
   run_list:
   - recipe[riak]
@@ -95,7 +95,7 @@ suites:
         version:
           major: 1
           minor: 4
-          incremental: 10
+          incremental: 12
         enterprise_key: <%= (ENV["RIAK_ENTERPRISE_KEY"].nil? ? "" : ENV["RIAK_ENTERPRISE_KEY"]) %>
 - name: enterprise13
   run_list:
