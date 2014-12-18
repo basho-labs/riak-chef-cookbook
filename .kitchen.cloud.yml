@@ -18,7 +18,7 @@ platforms:
       package:
         checksum:
           amazon:
-            "2014": "2cf9f2481409d2871a6d453a9287f317bd4f5c1cb2e49432f4fee0ac106af56c"
+            "2014": "9794847ed23efd20927d4b1ff61d0ca60a41ae359b4dbf8e2b89ef18933108d8"
     authorization:
       sudo:
         users: ["ec2-user"]

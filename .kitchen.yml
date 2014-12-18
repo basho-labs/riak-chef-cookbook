@@ -17,7 +17,7 @@ platforms:
       package:
         checksum:
           ubuntu:
-            precise: "f2f5af17cce01a769d31517bbdba5a9e1b99e3581bcc4b33e970dbd0ef4140c6"
+            precise: "538aee5b5d1081465cc828482be70bae6e3d4e31f10321e7563fde62c902c1af"
 - name: ubuntu-12.04
   run_list:
   - recipe[apt]
@@ -26,7 +26,7 @@ platforms:
       package:
         checksum:
           ubuntu:
-            precise: "f2f5af17cce01a769d31517bbdba5a9e1b99e3581bcc4b33e970dbd0ef4140c6"
+            precise: "538aee5b5d1081465cc828482be70bae6e3d4e31f10321e7563fde62c902c1af"
 - name: debian-7.2.0
   run_list:
   - recipe[apt]
@@ -35,7 +35,7 @@ platforms:
       package:
         checksum:
           debian:
-            "7": "3bb6bcc409f51e303978fdb72c8605ac87a502e99bb5b7fda5ecd6af9c343d42"
+            "7": "2808a15b8b1b29e002e7aacc37c06dfaf42cb5ab1eebac3d0171c6f2c008466e"
 - name: centos-6.5
   run_list:
   - recipe[yum-epel]
@@ -44,7 +44,7 @@ platforms:
       package:
         checksum:
           centos:
-            "6": "5f93a9ed1d7c9326297ebc432d69d1b03e941c057a7cfa37b45138045efdfb4f"
+            "6": "9794847ed23efd20927d4b1ff61d0ca60a41ae359b4dbf8e2b89ef18933108d8"
 - name: centos-5.10
   run_list:
   - recipe[yum-epel]
@@ -53,7 +53,7 @@ platforms:
       package:
         checksum:
           centos:
-            "5": "33c54fd0daccca7005bf65e152b4893d4fecd0cd70becdcde596fb935d93625e"
+            "5": "3ef25500b859e050d9d1f196f5a9fe271760d92bc66bcbad29138ccc7aaa6f74"
 
 suites:
 - name: default
