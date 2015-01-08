@@ -59,7 +59,4 @@ namespace :travis do
 end
 
 # The default rake task should just run it all
-task default: %w(travis:ci integration)
-
-# The default rake task should just run it all
 task default: ['style', 'spec', 'integration:vagrant']
