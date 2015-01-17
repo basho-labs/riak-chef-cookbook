@@ -1,3 +1,8 @@
+## v2.4.20
+
+* Update Riak CS default version to 1.5.3
+* Update Gemfile deps
+
 ## v2.4.19
 
 * Riak `1.4.12` is now the default
