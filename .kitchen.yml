@@ -16,7 +16,7 @@ platforms:
     riak:
       package:
         local:
-          url: "http://s3.amazonaws.com/downloads.basho.com/riak/2.0/2.0.2/ubuntu/trusty"
+          url: "http://s3.amazonaws.com/downloads.basho.com/riak/2.0/2.0.5/ubuntu/trusty"
 - name: ubuntu-12.04
   run_list:
   - recipe[apt]
@@ -24,7 +24,7 @@ platforms:
     riak:
       package:
         local:
-          url: "http://s3.amazonaws.com/downloads.basho.com/riak/2.0/2.0.2/ubuntu/precise"
+          url: "http://s3.amazonaws.com/downloads.basho.com/riak/2.0/2.0.5/ubuntu/precise"
 - name: debian-7.2.0
   run_list:
   - recipe[apt]
@@ -32,7 +32,7 @@ platforms:
     riak:
       package:
         local:
-          url: "http://s3.amazonaws.com/downloads.basho.com/riak/2.0/2.0.2/debian/7"
+          url: "http://s3.amazonaws.com/downloads.basho.com/riak/2.0/2.0.5/debian/7"
 - name: centos-7.0
   run_list:
   - recipe[yum-epel]
@@ -40,7 +40,7 @@ platforms:
     riak:
       package:
         local:
-          url: "http://s3.amazonaws.com/downloads.basho.com/riak/2.0/2.0.2/rhel/7"
+          url: "http://s3.amazonaws.com/downloads.basho.com/riak/2.0/2.0.5/rhel/7"
 - name: centos-6.5
   run_list:
   - recipe[yum-epel]
@@ -48,7 +48,7 @@ platforms:
     riak:
       package:
         local:
-          url: "http://s3.amazonaws.com/downloads.basho.com/riak/2.0/2.0.2/rhel/6"
+          url: "http://s3.amazonaws.com/downloads.basho.com/riak/2.0/2.0.5/rhel/6"
 - name: centos-5.10
   run_list:
   - recipe[yum-epel]
@@ -56,13 +56,13 @@ platforms:
     riak:
       package:
         local:
-          url: "http://s3.amazonaws.com/downloads.basho.com/riak/2.0/2.0.2/rhel/5"
+          url: "http://s3.amazonaws.com/downloads.basho.com/riak/2.0/2.0.5/rhel/5"
 - name: fedora-19
   attributes:
     riak:
       package:
         local:
-          url: "http://s3.amazonaws.com/downloads.basho.com/riak/2.0/2.0.2/fedora/19"
+          url: "http://s3.amazonaws.com/downloads.basho.com/riak/2.0/2.0.5/fedora/19"
   provisioner:
     root_path: /home/vagrant/kitchen
 - name: freebsd-10.1
@@ -75,7 +75,7 @@ platforms:
     riak:
       package:
         local:
-          url: "http://s3.amazonaws.com/downloads.basho.com/riak/2.0/2.0.2/freebsd/10"
+          url: "http://s3.amazonaws.com/downloads.basho.com/riak/2.0/2.0.5/freebsd/10"
 - name: freebsd-9.2
   driver:
     guest: ":freebsd"
@@ -86,7 +86,7 @@ platforms:
     riak:
       package:
         local:
-          url: "http://s3.amazonaws.com/downloads.basho.com/riak/2.0/2.0.2/freebsd/9.2"
+          url: "http://s3.amazonaws.com/downloads.basho.com/riak/2.0/2.0.5/freebsd/9.2"
 suites:
 - name: default
   run_list:
@@ -97,7 +97,7 @@ suites:
         version:
           major: "2"
           minor: "0"
-          incremental: "2"
+          incremental: "5"
 - name: search
   run_list:
   - recipe[riak]
@@ -108,7 +108,7 @@ suites:
         version:
           major: "2"
           minor: "0"
-          incremental: "2"
+          incremental: "5"
       config:
         search.top_level: "on"
   excludes: ["freebsd-10.1", "freebsd-9.2"]
@@ -121,7 +121,7 @@ suites:
         version:
           major: "2"
           minor: "0"
-          incremental: "2"
+          incremental: "5"
         local:
           url: ""
         enterprise_key: <%= (ENV["RIAK_ENTERPRISE_KEY"].nil? ? "" : ENV["RIAK_ENTERPRISE_KEY"]) %>
@@ -140,4 +140,4 @@ suites:
       source:
         major: "2"
         minor: "0"
-        incremental: "2"
+        incremental: "5"
