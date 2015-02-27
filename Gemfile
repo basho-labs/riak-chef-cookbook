@@ -2,16 +2,16 @@ source 'https://rubygems.org'
 
 group :lint do
   gem 'foodcritic', '~> 4.0'
-  gem 'rubocop',    '= 0.26.1'
+  gem 'rubocop',    '= 0.28.0'
 end
 
 group :unit do
-  gem 'berkshelf',  '~> 3.1'
+  gem 'berkshelf',  '~> 3.2.3'
   gem 'chefspec',   '~> 4.0'
 end
 
 group :kitchen_common do
-  gem 'test-kitchen', '~> 1.2'
+  gem 'test-kitchen', '~> 1.3.1'
 end
 
 group :kitchen_vagrant do

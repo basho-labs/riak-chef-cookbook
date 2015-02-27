@@ -19,7 +19,7 @@
 default['riak']['source']['url'] = 'http://s3.amazonaws.com/downloads.basho.com/riak'
 default['riak']['source']['version']['major'] = '2'
 default['riak']['source']['version']['minor'] = '0'
-default['riak']['source']['version']['incremental'] = '2'
+default['riak']['source']['version']['incremental'] = '5'
 default['riak']['source']['prefix'] = '/opt'
 
-default['riak']['source']['checksum'] = 'c593c02d520f5a1d006df92fea59fc0152ae60c118fd5f1150a29b994b84911c'
+default['riak']['source']['checksum'] = '390cd596762a7465712b472eb7058314a400068fa1ad567b93530eecdaed8047'
