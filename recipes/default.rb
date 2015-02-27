@@ -30,13 +30,7 @@ node.default['sysctl']['params']['net']['ipv4']['tcp_moderate_rcvbuf'] = node['r
 
 include_recipe 'ulimit' unless node['platform_family'] == 'debian'
 include_recipe 'sysctl'
-include_recipe 'riak::java' if node['riak']['config']['search.top_level'] == 'on'
-
-if node['riak']['package']['enterprise_key'].empty?
-  include_recipe "riak::#{node['riak']['install_method']}"
-else
-  include_recipe 'riak::enterprise_package'
-end
+include_recipe 'riak::java' if node['riak']['manage_java']
 
 # validate the fqdn and if probalo then use IP address
 valid_fqdn_regexp = /(?=^.{4,255}$)(^((?!-)[a-zA-Z0-9-]{1,63}(?<!-)\.)+[a-zA-Z]{2,63}$)/
@@ -45,17 +39,7 @@ unless valid_fqdn_regexp.match(node['fqdn'])
   node.default['riak']['config']['nodename'] = "riak@#{node['ipaddress']}"
 end
 
-file "#{node['riak']['platform_etc_dir']}/riak.conf" do
-  content Cuttlefish.compile('', node['riak']['config']).join("\n")
-  owner 'root'
-  mode 0644
-
-  if node['platform'] == 'fedora'
-    notifies :restart, 'service[riak.service]'
-  else
-    notifies :restart, 'service[riak]'
-  end
-end
+riak_service = node['platform'] == 'fedora' ? 'riak.service' : 'riak'
 
 case node['platform_family']
 when 'debian'
@@ -64,12 +48,39 @@ when 'debian'
     owner 'root'
     mode 0644
     action :create
-    notifies :restart, 'service[riak]'
+    notifies :restart, "service[#{riak_service}]"
   end
 when 'rhel'
   user_ulimit 'riak' do
     filehandle_limit node['riak']['limits']['nofile']
   end
+when 'freebsd'
+  case node['platform_version'].to_i
+  when 10
+    package 'lang/gcc'
+    execute 'pkg upgrade -y'
+  when 9
+    include_recipe 'pkg_add'
+
+    template '/usr/local/etc/rc.d/riak' do
+      source 'rcd.erb'
+      mode  0755
+      action :create
+    end
+  end
+end
+
+if node['riak']['install_method'] == 'source'
+  include_recipe 'riak::source'
+else
+  include_recipe 'riak::package'
+end
+
+file "#{node['riak']['platform_etc_dir']}/riak.conf" do
+  content Cuttlefish.compile('', node['riak']['config']).join("\n")
+  owner 'root'
+  mode 0644
+  notifies :restart, "service[#{riak_service}]"
 end
 
 node['riak']['patches'].each do |patch|
@@ -77,12 +88,7 @@ node['riak']['patches'].each do |patch|
     source patch
     owner 'root'
     mode 0644
-
-    if node['platform'] == 'fedora'
-      notifies :restart, 'service[riak.service]'
-    else
-      notifies :restart, 'service[riak]'
-    end
+    notifies :restart, "service[#{riak_service}]"
   end
 end
 
@@ -102,7 +108,7 @@ directory ::File.join(node['riak']['platform_data_dir'], 'snmp', 'agent', 'db') 
   not_if { node['riak']['package']['enterprise_key'].empty? }
 end
 
-service node['platform'] == 'fedora' ? 'riak.service' : 'riak' do
+service riak_service do
   supports start: true, stop: true, restart: true, status: true
   action [:enable, :start]
   not_if { node['riak']['install_method'] == 'source' }

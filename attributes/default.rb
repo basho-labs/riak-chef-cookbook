@@ -17,6 +17,7 @@
 # limitations under the License.
 #
 default['riak']['install_method'] = 'package'
+default['riak']['manage_java'] = false
 
 # ulimit
 default['riak']['limits']['nofile'] = 65_536
