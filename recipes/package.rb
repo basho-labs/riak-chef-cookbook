@@ -25,6 +25,7 @@ major_minor = %w(major minor).map { |ver| node['riak']['package']['version'][ver
 package_version = "#{version_str}-#{node['riak']['package']['version']['build']}"
 install_method = node['platform'] == 'freebsd' || oss_or_ee == 'riak-ee' ? 'custom_package' : node['riak']['install_method']
 ee_url_prefix = "http://private.downloads.basho.com/riak_ee/#{node['riak']['package']['enterprise_key']}/#{major_minor}/#{version_str}"
+plat_ver_int = node['platform_version'].to_i
 
 case  install_method
 when 'package', 'custom_repository'
@@ -41,13 +42,13 @@ when 'package', 'custom_repository'
       not_if { install_method == 'custom_repository' }
     end
 
-    case node['platform_version'].to_i
+    case plat_ver_int
     when 6, 2013, 2014
       package_version = "#{package_version}.el6"
     when 7
       package_version = "#{package_version}.el7.centos"
     when 19
-      package_version = "#{package_version}.fc#{node['platform_version'].to_i}"
+      package_version = "#{package_version}.fc#{plat_ver_int}"
     end
   end
 
@@ -61,26 +62,26 @@ when 'custom_package', 'enterprise_package'
   case node['platform']
   when 'debian'
     package_file = "#{oss_or_ee}_#{package_version}_amd64.deb"
-    ee_url_suffix = "/debian/#{node['platform_version'].to_i}/#{package_file}"
+    ee_url_suffix = "/debian/#{plat_ver_int}/#{package_file}"
   when 'ubuntu'
     package_file = "#{oss_or_ee}_#{package_version}_amd64.deb"
     ee_url_suffix = "/ubuntu/#{node['lsb']['codename']}/#{package_file}"
   when 'centos', 'redhat'
-    case node['platform_version'].to_i
+    case plat_ver_int
     when 7
       package_file = "#{oss_or_ee}-#{package_version}.el7.centos.x86_64.rpm"
     when 5, 6
-      package_file = "#{oss_or_ee}-#{package_version}.el#{node['platform_version'].to_i}.x86_64.rpm"
+      package_file = "#{oss_or_ee}-#{package_version}.el#{plat_ver_int}.x86_64.rpm"
     end
-    ee_url_suffix = "/rhel/#{node['platform_version'].to_i}/#{package_file}"
+    ee_url_suffix = "/rhel/#{plat_ver_int}/#{package_file}"
   when 'amazon'
     package_file = "#{oss_or_ee}-#{package_version}.el6.x86_64.rpm"
     ee_url_suffix = "/rhel/6/#{package_file}"
   when 'fedora'
-    package_file = "#{oss_or_ee}-#{package_version}.fc#{node['platform_version'].to_i}.x86_64.rpm"
-    ee_url_suffix = "/fedora/#{node['platform_version'].to_i}/#{package_file}"
+    package_file = "#{oss_or_ee}-#{package_version}.fc#{plat_ver_int}.x86_64.rpm"
+    ee_url_suffix = "/fedora/#{plat_ver_int}/#{package_file}"
   when 'freebsd'
-    case node['platform_version'].to_i
+    case plat_ver_int
     when 10
       package_file = "#{oss_or_ee}-#{version_str}.txz"
       ee_url_suffix = "/freebsd/10/#{package_file}"
@@ -91,13 +92,13 @@ when 'custom_package', 'enterprise_package'
   end
 
   if node['riak']['package']['enterprise_key'].empty?
-    checksum_val = node['riak']['package']['local']['checksum'][node['platform']]["#{node['platform_version'].to_i}"]
+    checksum_val = node['riak']['package']['local']['checksum'][node['platform']][plat_ver_int.to_s]
     pkg_url = "#{node['riak']['package']['local']['url']}/#{package_file}"
   elsif node['riak']['package']['enterprise_key'].length > 0 && node['riak']['package']['local']['url'].length > 0
-    checksum_val = node['riak']['package']['enterprise']['checksum'][node['platform']]["#{node['platform_version'].to_i}"]
+    checksum_val = node['riak']['package']['enterprise']['checksum'][node['platform']][plat_ver_int.to_s]
     pkg_url = "#{node['riak']['package']['local']['url']}/#{package_file}"
   else
-    checksum_val = node['riak']['package']['enterprise']['checksum'][node['platform']]["#{node['platform_version'].to_i}"]
+    checksum_val = node['riak']['package']['enterprise']['checksum'][node['platform']][plat_ver_int.to_s]
     pkg_url = ee_url_prefix + ee_url_suffix
   end
 
@@ -107,7 +108,7 @@ when 'custom_package', 'enterprise_package'
     owner 'root'
     mode 0644
   end
-  if node['platform'] == 'freebsd' && node['platform_version'].to_i == 9
+  if node['platform'] == 'freebsd' && plat_ver_int == 9
     pkg_add 'riak' do
       location pkg_url
       action :install
