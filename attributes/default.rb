@@ -17,6 +17,7 @@
 # limitations under the License.
 #
 default['riak']['install_method'] = 'package'
+default['riak']['manage_java'] = false
 
 # ulimit
 default['riak']['limits']['nofile'] = 65_536
@@ -39,6 +40,11 @@ default['riak']['platform_log_dir'] = '/var/log/riak'
 
 if node.platform_family?('rhel')
   default['riak']['platform_lib_dir'] = '/usr/lib64/riak/lib'
+elsif node.platform_family?('freebsd')
+  default['riak']['platform_bin_dir'] = '/usr/local/sbin'
+  default['riak']['platform_data_dir'] = '/var/db/riak'
+  default['riak']['platform_etc_dir'] = '/usr/local/etc/riak'
+  default['riak']['platform_lib_dir'] = '/usr/local/lib/riak'
 else
   default['riak']['platform_lib_dir'] = '/usr/lib/riak/lib'
 end

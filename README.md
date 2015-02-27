@@ -22,6 +22,8 @@ latency.
 * CentOS 6.5
 * CentOS 5.10
 * Fedora 19
+* FreeBSD 10.1
+* FreeBSD 9.2
 
 ### Cookbooks
 
@@ -38,7 +40,7 @@ latency.
 ## Attributes
 
 * `node['riak']['install_method']` - Method to install Riak (`package`,
-  `enterprise_package`, `source`, `source`, `custom_repository`)
+  `enterprise_package`, `source`, `custom_repository`)
 * `node['riak']['platform_bin_dir']` - Base directory for binaries.
 * `node['riak']['platform_data_dir']` - Base directory for data files.
 * `node['riak']['platform_etc_dir']` - Base directory for configuration files.
@@ -152,13 +154,10 @@ latency.
 ### Package
 
 * `node['riak']['package']['enterprise_key']` - Riak Enterprise key.
-* `node['riak']['package']['name']` - Name of the Riak package to install.
-* `node['riak']['package']['url']` - Base path for downloading Riak packages.
 * `node['riak']['package']['version']['major']` - Major version number.
 * `node['riak']['package']['version']['minor']` - Minor version number.
 * `node['riak']['package']['version']['incremental']` - Incremental version number.
 * `node['riak']['package']['version']['build']` - Build version number.
-* `node['riak']['package']['local']['filename']` - File name for local Riak
 * `node['riak']['package']['local']['checksum']` - Checksum for local Riak
   package.
 
@@ -188,6 +187,13 @@ latency.
 * `node['riak']['sysctl']['net']['ipv4']['tcp_keepalive_intvl']`
 * `node['riak']['sysctl']['net']['ipv4']['tcp_tw_reuse']`
 * `node['riak']['sysctl']['net']['ipv4']['tcp_moderate_rcvbuf']`
+
+### Java
+
+* `node['riak']['manage_java']` - Installs and configures Java.
+
+**NOTE**: If `node['riak']['config']['search.top_level']` is set to `on` then Java must be 
+        installed beforehand (either by another recipe or this one) or Riak will fail to start
 
 ## Usage
 
@@ -231,11 +237,10 @@ This is the default method of installation. Ensure that
 #### Enterprise Package
 
 For Riak Enterprise users, installing the Enterprise package requires setting
-two attributes:
+one attribute:
 
 ```ruby
 default['riak']['package']['enterprise_key'] = '*******'
-default['riak']['install_method'] = 'enterprise_package'
 ```
 
 #### Custom Package
@@ -245,17 +250,20 @@ operating system's package repository), ensure that the following attributes
 are set appropriately:
 
 ```ruby
-default['riak']['install_method'] = 'package'
-default['riak']['package']['local']['filename'] = 'riak_2.0.2-1_amd64.deb'
+default['riak']['install_method'] = 'custom_package'
 default['riak']['package']['local']['checksum'] = 'db290d17208861b2eb8694d2eb3d1dc8e7ad280edf577fac8bd355446ca6b85a'
 default['riak']['package']['local']['url'] = 'http://s3.amazonaws.com/downloads.basho.com/riak/2.0/2.0.2/ubuntu/precise'
 ```
+
+**NOTE**: FreeBSD uses custom_package regardless.
 
 #### Custom Repository
 
 If you have a package repository setup on your operating system (that isn't
 Basho's) and want to install Riak from there, ensure that
 `node['riak']['install_method']` is set to `custom_repository`.
+
+**NOTE**: This will fail unless the package repository is configured beforehand (earlier in run_list)
 
 #### Source
 

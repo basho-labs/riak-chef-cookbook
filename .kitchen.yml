@@ -16,11 +16,7 @@ platforms:
     riak:
       package:
         local:
-          filename: "riak_2.0.2-1_amd64.deb"
-          checksum: "cab9b89cd0ee82528669facee149c9d6f2a0d0e6fa89496406133ca9c28cd48e"
           url: "http://s3.amazonaws.com/downloads.basho.com/riak/2.0/2.0.2/ubuntu/trusty"
-        enterprise:
-          checksum: "???"
 - name: ubuntu-12.04
   run_list:
   - recipe[apt]
@@ -28,11 +24,7 @@ platforms:
     riak:
       package:
         local:
-          filename: "riak_2.0.2-1_amd64.deb"
-          checksum: "db290d17208861b2eb8694d2eb3d1dc8e7ad280edf577fac8bd355446ca6b85a"
           url: "http://s3.amazonaws.com/downloads.basho.com/riak/2.0/2.0.2/ubuntu/precise"
-        enterprise:
-          checksum: "???"
 - name: debian-7.2.0
   run_list:
   - recipe[apt]
@@ -40,11 +32,7 @@ platforms:
     riak:
       package:
         local:
-          filename: "riak_2.0.2-1_amd64.deb"
-          checksum: "31ca5d472e992e3af267b440945239b110354a64fc197d2a3d73b93fc66483d4"
           url: "http://s3.amazonaws.com/downloads.basho.com/riak/2.0/2.0.2/debian/7"
-        enterprise:
-          checksum: "???"
 - name: centos-7.0
   run_list:
   - recipe[yum-epel]
@@ -52,11 +40,7 @@ platforms:
     riak:
       package:
         local:
-          filename: "riak-2.0.2-1.el7.centos.x86_64.rpm"
-          checksum: "15a732f0b79c934f8dbc3d5b86124a0eedfe7da6e1df84a595df15b2b703106d"
           url: "http://s3.amazonaws.com/downloads.basho.com/riak/2.0/2.0.2/rhel/7"
-        enterprise:
-          checksum: "???"
 - name: centos-6.5
   run_list:
   - recipe[yum-epel]
@@ -64,11 +48,7 @@ platforms:
     riak:
       package:
         local:
-          filename: "riak-2.0.2-1.el6.x86_64.rpm"
-          checksum: "ab51c3d65dcd63c1f8d94bdd241b26671b18fcb19d272f4397d07021cfa71a3c"
           url: "http://s3.amazonaws.com/downloads.basho.com/riak/2.0/2.0.2/rhel/6"
-        enterprise:
-          checksum: "???"
 - name: centos-5.10
   run_list:
   - recipe[yum-epel]
@@ -76,24 +56,37 @@ platforms:
     riak:
       package:
         local:
-          filename: "riak-2.0.2-1.el5.x86_64.rpm"
-          checksum: "8b829b6b7349ace62d7a69ccb113ea5d52f5f39f4f39b08c900e5ffed1119cf5"
           url: "http://s3.amazonaws.com/downloads.basho.com/riak/2.0/2.0.2/rhel/5"
-        enterprise:
-          checksum: "???"
 - name: fedora-19
   attributes:
     riak:
       package:
         local:
-          filename: "riak-2.0.2-1.fc19.x86_64.rpm"
-          checksum: "7f182beaa3c79ac023811d23ef3957a07fabebd128b62fcc77ac710b98c72b98"
           url: "http://s3.amazonaws.com/downloads.basho.com/riak/2.0/2.0.2/fedora/19"
-        enterprise:
-          checksum: "???"
   provisioner:
     root_path: /home/vagrant/kitchen
-
+- name: freebsd-10.1
+  driver:
+    guest: ":freebsd"
+    vagrantfile_erb: vagrantfile_bsd.erb
+  run_list:
+  - recipe[freebsd::portsnap]
+  attributes:
+    riak:
+      package:
+        local:
+          url: "http://s3.amazonaws.com/downloads.basho.com/riak/2.0/2.0.2/freebsd/10"
+- name: freebsd-9.2
+  driver:
+    guest: ":freebsd"
+    vagrantfile_erb: vagrantfile_bsd.erb
+  run_list:
+  - recipe[freebsd::portsnap]
+  attributes:
+    riak:
+      package:
+        local:
+          url: "http://s3.amazonaws.com/downloads.basho.com/riak/2.0/2.0.2/freebsd/9.2"
 suites:
 - name: default
   run_list:
@@ -101,38 +94,43 @@ suites:
   attributes:
     riak:
       package:
-        local:
-          filename: ""
         version:
           major: "2"
           minor: "0"
           incremental: "2"
+- name: search
+  run_list:
+  - recipe[riak]
+  attributes:
+    riak:
+      manage_java: true
+      package:
+        version:
+          major: "2"
+          minor: "0"
+          incremental: "2"
+      config:
+        search.top_level: "on"
+  excludes: ["freebsd-10.1", "freebsd-9.2"]
 - name: enterprise
   run_list:
   - recipe[riak]
   attributes:
     riak:
       package:
-        url: "http://private.downloads.basho.com/riak_ee"
         version:
           major: "2"
           minor: "0"
           incremental: "2"
+        local:
+          url: ""
         enterprise_key: <%= (ENV["RIAK_ENTERPRISE_KEY"].nil? ? "" : ENV["RIAK_ENTERPRISE_KEY"]) %>
-  excludes:
-  - fedora-19
 - name: custom_package
-  run_list:
-  - recipe[riak]
-  attributes: {}
-  excludes:
-  - fedora-19
-- name: custom_repository
   run_list:
   - recipe[riak]
   attributes:
     riak:
-      install_method: "custom_repository"
+      install_method: "custom_package"
 - name: source
   run_list:
   - recipe[riak]

@@ -37,6 +37,7 @@ depends 'ulimit', '~> 0.3.2'
 depends 'yum', '~> 3.4'
 depends 'yum-epel', '~> 0.5.1'
 depends 'packagecloud'
+depends 'pkg_add'
 
 %w{ubuntu debian centos redhat fedora amazon}.each do |os|
   supports os

@@ -19,7 +19,7 @@
 #
 node.default['erlang']['source']['version'] = 'R16B02-basho5'
 node.default['erlang']['source']['url'] = "http://s3.amazonaws.com/downloads.basho.com/erlang/otp_src_#{node['erlang']['source']['version']}.tar.gz"
-node.default['erlang']['source']['checksum'] = '33400b86ee9b167cdcdc969ef63a51474420d79183974fd4e6dc54ca85864772'
+node.default['erlang']['source']['checksum'] = '5c36ed749f0f56d003d28ab352fa7cb405f11dbbfb885370edb69d3c1bd321fb'
 node.default['erlang']['source']['build_flags'] = '--disable-hipe --enable-smp-support --without-odbc --enable-m64-build'
 
 if node['platform_family'] == 'rhel' && node['platform_version'] >= '6.5'
@@ -79,7 +79,7 @@ remote_file "#{Chef::Config[:file_cache_path]}/#{source_filename}" do
 
   not_if do
     ::File.exist?("#{Chef::Config[:file_cache_path]}/#{source_filename}") &&
-    Digest::SHA256.file("#{Chef::Config[:file_cache_path]}/#{source_filename}").hexdigest == node['riak']['source']['checksum']
+      Digest::SHA256.file("#{Chef::Config[:file_cache_path]}/#{source_filename}").hexdigest == node['riak']['source']['checksum']
   end
 end
 
