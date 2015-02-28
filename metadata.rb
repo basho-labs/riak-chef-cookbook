@@ -22,7 +22,7 @@ maintainer        'Basho Technologies, Inc.'
 maintainer_email  'riak@basho.com'
 license           'Apache 2.0'
 description       'Installs and configures Riak distributed data store'
-version           '3.0.2'
+version           '3.1.0'
 
 recipe            'riak', 'Installs Riak from a package'
 recipe            'riak::source', 'Installs Erlang and Riak from source'
@@ -39,6 +39,6 @@ depends 'yum-epel', '~> 0.5.1'
 depends 'packagecloud'
 depends 'pkg_add'
 
-%w{ubuntu debian centos redhat fedora amazon}.each do |os|
+%w{ubuntu debian centos redhat fedora amazon freebsd}.each do |os|
   supports os
 end

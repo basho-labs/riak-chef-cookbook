@@ -13,19 +13,21 @@ latency.
 
 ## Requirements
 
-### Platforms
+* Chef 11 or higher
+
+## Platform Support
 
 * Ubuntu 14.04
 * Ubuntu 12.04
-* Debian 7.2.0
-* CentOS 7.0
-* CentOS 6.5
-* CentOS 5.10
+* Debian 7
+* CentOS 7
+* CentOS 6
+* CentOS 5
 * Fedora 19
 * FreeBSD 10.1
 * FreeBSD 9.2
 
-### Cookbooks
+## Cookbook Dependencies
 
 * apt
 * build-essential
@@ -251,8 +253,8 @@ are set appropriately:
 
 ```ruby
 default['riak']['install_method'] = 'custom_package'
-default['riak']['package']['local']['checksum'] = 'db290d17208861b2eb8694d2eb3d1dc8e7ad280edf577fac8bd355446ca6b85a'
-default['riak']['package']['local']['url'] = 'http://s3.amazonaws.com/downloads.basho.com/riak/2.0/2.0.2/ubuntu/precise'
+default['riak']['package']['local']['checksum'] = '186f6b4890bb72aaab5c0a2b6cd31ff90f2098d8a50c955a8ed3a80e26d67c57'
+default['riak']['package']['local']['url'] = 'http://s3.amazonaws.com/downloads.basho.com/riak/2.0/2.0.5/ubuntu/trusty'
 ```
 
 **NOTE**: FreeBSD uses custom_package regardless.
@@ -270,7 +272,7 @@ Basho's) and want to install Riak from there, ensure that
 If you want to install Riak (and Erlang) from source, ensure that
 `node['riak']['install_method']` is set to `source`.
 
-## License and Author
+## License and Authors
 
 * Author: Benjamin Black (<b@b3k.us>)
 * Author: Sean Carey (<sean@densone.com>)
