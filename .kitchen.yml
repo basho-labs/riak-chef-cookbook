@@ -96,8 +96,8 @@ suites:
       package:
         version:
           major: "2"
-          minor: "0"
-          incremental: "5"
+          minor: "1"
+          incremental: "1"
 - name: search
   run_list:
   - recipe[riak]
@@ -107,8 +107,8 @@ suites:
       package:
         version:
           major: "2"
-          minor: "0"
-          incremental: "5"
+          minor: "1"
+          incremental: "1"
       config:
         search.top_level: "on"
   excludes: ["freebsd-10.1", "freebsd-9.2"]
@@ -120,8 +120,8 @@ suites:
       package:
         version:
           major: "2"
-          minor: "0"
-          incremental: "5"
+          minor: "1"
+          incremental: "1"
         local:
           url: ""
         enterprise_key: <%= (ENV["RIAK_ENTERPRISE_KEY"].nil? ? "" : ENV["RIAK_ENTERPRISE_KEY"]) %>
@@ -139,5 +139,5 @@ suites:
       install_method: "source"
       source:
         major: "2"
-        minor: "0"
-        incremental: "5"
+        minor: "1"
+        incremental: "1"
