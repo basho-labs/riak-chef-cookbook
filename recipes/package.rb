@@ -24,8 +24,14 @@ version_str = %w(major minor incremental).map { |ver| node['riak']['package']['v
 major_minor = %w(major minor).map { |ver| node['riak']['package']['version'][ver] }.join('.')
 package_version = "#{version_str}-#{node['riak']['package']['version']['build']}"
 install_method = node['platform'] == 'freebsd' || oss_or_ee == 'riak-ee' ? 'custom_package' : node['riak']['install_method']
-ee_url_prefix = "http://private.downloads.basho.com/riak_ee/#{node['riak']['package']['enterprise_key']}/#{major_minor}/#{version_str}"
 plat_ver_int = node['platform_version'].to_i
+
+# Enterprise download URL changed with release of 2.1
+if major_minor.to_f >= 2.1
+  ee_url_prefix = "http://private.downloads.basho.com/riak_ee/#{node['riak']['package']['enterprise_key']}/#{major_minor}/#{version_str}"
+else
+  ee_url_prefix = "http://private.downloads.basho.com/riak_ee/#{node['riak']['package']['enterprise_key']}/#{version_str}"
+end
 
 case  install_method
 when 'package', 'custom_repository'
