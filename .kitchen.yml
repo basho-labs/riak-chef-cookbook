@@ -101,6 +101,7 @@ suites:
 - name: search
   run_list:
   - recipe[riak]
+  - recipe[java]
   attributes:
     riak:
       manage_java: true

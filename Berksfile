@@ -7,4 +7,5 @@ group :integration do
   cookbook 'yum'
   cookbook 'freebsd'
   cookbook 'pkg_add', github: 'wanelo-chef/pkg_add'
+  cookbook 'java'
 end

@@ -31,13 +31,14 @@ depends 'apt', '~> 2.3'
 depends 'build-essential', '~> 2.1.2'
 depends 'erlang', '~> 1.5.2'
 depends 'git', '~> 3.0'
-depends 'java', '~> 1.28.0'
 depends 'sysctl', '~> 0.3.5'
 depends 'ulimit', '~> 0.3.2'
 depends 'yum', '~> 3.4'
 depends 'yum-epel', '~> 0.5.1'
 depends 'packagecloud'
 depends 'pkg_add'
+
+suggests 'java', '~> 1.28.0'
 
 %w{ubuntu debian centos redhat fedora amazon freebsd}.each do |os|
   supports os
