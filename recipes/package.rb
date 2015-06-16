@@ -124,8 +124,8 @@ when 'custom_package', 'enterprise_package'
       source "#{Chef::Config[:file_cache_path]}/#{package_file}"
       action :install
       provider value_for_platform_family(
-         %w(debian) => Chef::Provider::Package::Dpkg,
-         %w(rhel fedora) => Chef::Provider::Package::Rpm)
+        %w(debian) => Chef::Provider::Package::Dpkg,
+        %w(rhel fedora) => Chef::Provider::Package::Rpm)
       only_if do
         ::File.exist?("#{Chef::Config[:file_cache_path]}/#{package_file}") &&
           Digest::SHA256.file("#{Chef::Config[:file_cache_path]}/#{package_file}").hexdigest ==
