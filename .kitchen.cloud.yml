@@ -17,7 +17,7 @@ platforms:
     riak:
       package:
         local:
-          url: "http://s3.amazonaws.com/downloads.basho.com/riak/2.0/2.0.5/rhel/6"
+          url: "http://s3.amazonaws.com/downloads.basho.com/riak/2.1/2.1.1/rhel/6"
 - name: ubuntu-14-04-x64
   driver:
     name: digitalocean
@@ -25,7 +25,7 @@ platforms:
     riak:
       package:
         local:
-          url: "http://s3.amazonaws.com/downloads.basho.com/riak/2.0/2.0.5/ubuntu/trusty"
+          url: "http://s3.amazonaws.com/downloads.basho.com/riak/2.1/2.1.1/ubuntu/trusty"
   run_list:
   - recipe[apt]
 - name: ubuntu-12-04-x64
@@ -35,7 +35,7 @@ platforms:
     riak:
       package:
         local:
-          url: "http://s3.amazonaws.com/downloads.basho.com/riak/2.0/2.0.5/ubuntu/precise"
+          url: "http://s3.amazonaws.com/downloads.basho.com/riak/2.1/2.1.1/ubuntu/precise"
   run_list:
   - recipe[apt]
 - name: debian-7-0-x64
@@ -45,7 +45,7 @@ platforms:
     riak:
       package:
         local:
-          url: "http://s3.amazonaws.com/downloads.basho.com/riak/2.0/2.0.5/debian/7"
+          url: "http://s3.amazonaws.com/downloads.basho.com/riak/2.1/2.1.1/debian/7"
   run_list:
   - recipe[apt]
 - name: centos-7-0-x64
@@ -55,7 +55,7 @@ platforms:
     riak:
       package:
         local:
-          url: "http://s3.amazonaws.com/downloads.basho.com/riak/2.0/2.0.5/rhel/7"
+          url: "http://s3.amazonaws.com/downloads.basho.com/riak/2.1/2.1.1/rhel/7"
   run_list:
   - recipe[yum-epel]
 - name: centos-6-5-x64
@@ -67,7 +67,7 @@ platforms:
     riak:
       package:
         local:
-          url: "http://s3.amazonaws.com/downloads.basho.com/riak/2.0/2.0.5/rhel/6"
+          url: "http://s3.amazonaws.com/downloads.basho.com/riak/2.1/2.1.1/rhel/6"
 - name: centos-5-8-x64
   driver:
     name: digitalocean
@@ -77,7 +77,7 @@ platforms:
     riak:
       package:
         local:
-          url: "http://s3.amazonaws.com/downloads.basho.com/riak/2.0/2.0.5/rhel/5"
+          url: "http://s3.amazonaws.com/downloads.basho.com/riak/2.1/2.1.1/rhel/5"
 - name: fedora-19-x64
   driver:
     name: digitalocean
@@ -85,7 +85,7 @@ platforms:
     riak:
       package:
         local:
-          url: "http://s3.amazonaws.com/downloads.basho.com/riak/2.0/2.0.5/fedora/19"
+          url: "http://s3.amazonaws.com/downloads.basho.com/riak/2.1/2.1.1/fedora/19"
   provisioner:
     root_path: /home/vagrant/kitchen
 
@@ -100,8 +100,8 @@ suites:
           filename: ""
         version:
           major: "2"
-          minor: "0"
-          incremental: "5"
+          minor: "1"
+          incremental: "1"
 - name: search
   run_list:
   - recipe[riak]
@@ -111,8 +111,8 @@ suites:
       package:
         version:
           major: "2"
-          minor: "0"
-          incremental: "5"
+          minor: "1"
+          incremental: "1"
       config:
         search.top_level: "on"
   excludes: ["freebsd-10.1", "freebsd-9.2"]
@@ -124,8 +124,8 @@ suites:
       package:
         version:
           major: "2"
-          minor: "0"
-          incremental: "5"
+          minor: "1"
+          incremental: "1"
         local:
           url: ""
         enterprise_key: <%= (ENV["RIAK_ENTERPRISE_KEY"].nil? ? "" : ENV["RIAK_ENTERPRISE_KEY"]) %>
@@ -143,5 +143,5 @@ suites:
       install_method: "source"
       source:
         major: "2"
-        minor: "0"
-        incremental: "5"
+        minor: "1"
+        incremental: "1"
