@@ -19,33 +19,33 @@
 default['riak']['package']['enterprise_key'] = ''
 
 default['riak']['package']['version']['major'] = '2'
-default['riak']['package']['version']['minor'] = '0'
-default['riak']['package']['version']['incremental'] = '5'
+default['riak']['package']['version']['minor'] = '1'
+default['riak']['package']['version']['incremental'] = '1'
 default['riak']['package']['version']['build'] = '1'
 default['riak']['package']['local']['url'] = ''
 
 default['riak']['package']['local']['checksum'].tap do |checksum|
-  checksum['ubuntu']['14']   = '186f6b4890bb72aaab5c0a2b6cd31ff90f2098d8a50c955a8ed3a80e26d67c57'
-  checksum['ubuntu']['12']   = 'cad764ad5296c6d9a8d4b2bd4e60ece218a72206ea3369c9eb36d43c6737f5e6'
-  checksum['debian']['7']    = '4aa02b5e442fface7e17d00bd1958aecbfe5377d44005a87f85b0f17b723a974'
-  checksum['centos']['7']    = '6151acd0be1b916600c13da4cf55811afe055a0fc6a253a7e75751e239aff584'
-  checksum['centos']['6']    = '25434359e61eb284a595160fec552854b0971ffee3a569bdf9957c5cf04643b6'
-  checksum['centos']['5']    = '2fc3cc3e151bce4b4774bd503658b92f973e78ecae0ce2912cff19023a547638'
-  checksum['fedora']['19']   = 'f4213903776d50f336184fc0fb57a1d173d03a51838e84030dc82400598951fc'
-  checksum['freebsd']['10']  = '51030f81a5165baea71f17ba70d1ded47937c5893ae115de8353b09f96846196'
-  checksum['freebsd']['9']   = '408d4ee01b07c95c8f5fbe8d2236a4c79c77e0a0ec9fb1967da4cc9b0cde7c32'
+  checksum['ubuntu']['14']   = '2b28aeabb21488125b7e39f768c8f3b98ac816d1a30c0d618c9f82f99e6e89d9'
+  checksum['ubuntu']['12']   = '3671964ed9289434904b1617f382ee6a228c3be1d8dc6e57b918aa8c530a4038'
+  checksum['debian']['7']    = '21413331edf57ae912ecdc4d99c7852efd4f58abe5cc26f01c55515b66bcec02'
+  checksum['centos']['7']    = '8f801c9a33632a7102b5dcf44eea32e7557c9fd6c5e149acbe9de9d1363319ef'
+  checksum['centos']['6']    = '8133c2af6d4ce0b5705ed34fdebc27cca15478ce8dc608cb2855e24f4b6d5f47'
+  checksum['centos']['5']    = 'be4a5ccf4f75994fedc4d8c34fe73782df93a160daf079db48671e6c3a2fbbd2'
+  checksum['fedora']['19']   = 'd710124c0b322830b0c0aa64711bc722522a57b5edacccbaa7eb31f39984703b'
+  checksum['freebsd']['10']  = 'a5f82486d39ac23bef83091ff40bbcebb3ded342d4b73219295ffb05df115fc4'
+  checksum['freebsd']['9']   = '7547fd19ee8ddb1a8ae2555c9d0ff859b1ec3e5ecb56cc315eca3500bf905450'
   checksum['amazon']['2014'] = checksum['centos']['6']
 end
 
 default['riak']['package']['enterprise']['checksum'].tap do |checksum|
-  checksum['ubuntu']['14']   = '9067483379c3850603c84d68205e5dd2dbda7b05dddeb1c5f6a0635c645e7c60'
-  checksum['ubuntu']['12']   = '64732720e3576c05854728f885fd4d16822be4d5072fd279a84c3b1cb39a238b'
-  checksum['debian']['7']    = '33be225c6db815f0a6dbbdb26c5de3bb75cb0392f1748edd9711b56d77f22207'
-  checksum['centos']['7']    = 'c5332a5ee767526fd7633346042d50cfbe2b8393ba2541a62028f2739df62e86'
-  checksum['centos']['6']    = '2c3e46b01ae6c6715f32b8ff2d41c9818955412f079f25d374732182f4264b0e'
-  checksum['centos']['5']    = '77f890b6a9856144863bc2df7c9d361c340f3356263d6e0ed171e1c8ded0f5c7'
-  checksum['fedora']['19']   = '00eea47bca420d9a7e0a84679c0ee00a98b6058efa4156356765feb97a4290e5'
-  checksum['freebsd']['10']  = 'c9fda9077c6e4741cd8200d12a5f963bef0cebe2e09ae432ef17e6299c6ab65e'
-  checksum['freebsd']['9']   = '153305c12085acc6cd2440a71c177872d7d3fd0a9b5c2647ab81a09d5ca4d670'
+  checksum['ubuntu']['14']   = '0f37783ae2426d60187f24c9edcbf2322db38ff232a7e6b29ca89699ed3c8345'
+  checksum['ubuntu']['12']   = '072dec713ad1a4f9f5aa7f76f414b02b5f8cbac769fb497c918f2f19cd88c6c3'
+  checksum['debian']['7']    = '6d7da002dafef53f0c8b6b2f45de68629ad0efbd5a67f167bd56fbdc7467664a'
+  checksum['centos']['7']    = '52ac620e311caff1d857e705ce717f93d8e53e9fd7d8a29c190007cfed79351c'
+  checksum['centos']['6']    = '56266a8ced423f3cb53abd06112fe18a9ecb440c86b98d3de9266198e8283bdc'
+  checksum['centos']['5']    = '2ac99621f04be13ac6137bca538fcef427c0e476099b99a6ad6811b9b5e85c6b'
+  checksum['fedora']['19']   = '0f6889a81eb32fcd7e823dd5c73d4eb649c25e9f0072e270f50840d0d050141f'
+  checksum['freebsd']['10']  = 'df8312ef6ce4c8f0531d4c7a7ff1a6f03852702853955b24989fe1494e979c87'
+  checksum['freebsd']['9']   = '05b419392bc0af30a698acd6e3ac2753b2de5bec12a78789e2e6f6b7b1c95d24'
   checksum['amazon']['2014'] = checksum['centos']['6']
 end
