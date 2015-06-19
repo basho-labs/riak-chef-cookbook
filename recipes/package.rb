@@ -28,9 +28,9 @@ plat_ver_int = node['platform_version'].to_i
 
 # Enterprise download URL changed with release of 2.1
 if major_minor.to_f >= 2.1
-  ee_url_prefix = "http://private.downloads.basho.com/riak_ee/#{node['riak']['package']['enterprise_key']}/#{major_minor}/#{version_str}"
-else
   ee_url_prefix = "http://private.downloads.basho.com/riak_ee/#{node['riak']['package']['enterprise_key']}/#{version_str}"
+else
+  ee_url_prefix = "http://private.downloads.basho.com/riak_ee/#{node['riak']['package']['enterprise_key']}/#{major_minor}/#{version_str}"
 end
 
 case  install_method
