@@ -1,14 +1,23 @@
+<%
+version = '2.1.1'
+split = version.split('.')
+maj = split[0]
+min = split[1]
+inc = split[2]
+url = "http://s3.amazonaws.com/downloads.basho.com/riak/#{maj}.#{min}"
+%>
 ---
 
 provisioner:
   name: chef_zero
-  require_chef_omnibus: latest
+  require_chef_omnibus: 12.3.0
 
 platforms:
 - name: amazon-2014.09.01
   driver:
     name: ec2
-    image_id: ami-9a6ed3f2
+    image_id: ami-5ba7ea6b
+  transport:
     username: ec2-user
     ssh_key: <%= ENV["EC2_SSH_KEY_PATH"] %>
   run_list:
@@ -17,47 +26,47 @@ platforms:
     riak:
       package:
         local:
-          url: "http://s3.amazonaws.com/downloads.basho.com/riak/2.1/2.1.1/rhel/6"
+          url: "<%= url %>/<%= version %>/rhel/6"
 - name: ubuntu-14-04-x64
   driver:
     name: digitalocean
+  run_list:
+  - recipe[apt]
   attributes:
     riak:
       package:
         local:
-          url: "http://s3.amazonaws.com/downloads.basho.com/riak/2.1/2.1.1/ubuntu/trusty"
-  run_list:
-  - recipe[apt]
+          url: "<%= url %>/<%= version %>/ubuntu/trusty"
 - name: ubuntu-12-04-x64
   driver:
     name: digitalocean
+  run_list:
+  - recipe[apt]
   attributes:
     riak:
       package:
         local:
-          url: "http://s3.amazonaws.com/downloads.basho.com/riak/2.1/2.1.1/ubuntu/precise"
-  run_list:
-  - recipe[apt]
+          url: "<%= url %>/<%= version %>/ubuntu/precise"
 - name: debian-7-0-x64
   driver:
     name: digitalocean
+  run_list:
+  - recipe[apt]
   attributes:
     riak:
       package:
         local:
-          url: "http://s3.amazonaws.com/downloads.basho.com/riak/2.1/2.1.1/debian/7"
-  run_list:
-  - recipe[apt]
+          url: "<%= url %>/<%= version %>/debian/7"
 - name: centos-7-0-x64
   driver:
     name: digitalocean
+  run_list:
+  - recipe[yum-epel]
   attributes:
     riak:
       package:
         local:
-          url: "http://s3.amazonaws.com/downloads.basho.com/riak/2.1/2.1.1/rhel/7"
-  run_list:
-  - recipe[yum-epel]
+          url: "<%= url %>/<%= version %>/rhel/7"
 - name: centos-6-5-x64
   driver:
     name: digitalocean
@@ -67,7 +76,7 @@ platforms:
     riak:
       package:
         local:
-          url: "http://s3.amazonaws.com/downloads.basho.com/riak/2.1/2.1.1/rhel/6"
+          url: "<%= url %>/<%= version %>/rhel/6"
 - name: centos-5-8-x64
   driver:
     name: digitalocean
@@ -77,21 +86,12 @@ platforms:
     riak:
       package:
         local:
-          url: "http://s3.amazonaws.com/downloads.basho.com/riak/2.1/2.1.1/rhel/5"
-- name: fedora-19-x64
-  driver:
-    name: digitalocean
-  attributes:
-    riak:
-      package:
-        local:
-          url: "http://s3.amazonaws.com/downloads.basho.com/riak/2.1/2.1.1/fedora/19"
-  provisioner:
-    root_path: /home/vagrant/kitchen
+          url: "<%= url %>/<%= version %>/rhel/5"
 
 suites:
 - name: default
   run_list:
+  - recipe[riak::sysctl]
   - recipe[riak]
   attributes:
     riak:
@@ -99,49 +99,55 @@ suites:
         local:
           filename: ""
         version:
-          major: "2"
-          minor: "1"
-          incremental: "1"
+          major: <%= maj %>
+          minor: <%= min %>
+          incremental: <%= inc %>
 - name: search
   run_list:
+  - recipe[riak::sysctl]
   - recipe[riak]
   attributes:
     riak:
       manage_java: true
       package:
         version:
-          major: "2"
-          minor: "1"
-          incremental: "1"
+          major: <%= maj %>
+          minor: <%= min %>
+          incremental: <%= inc %>
       config:
         search.top_level: "on"
-  excludes: ["freebsd-10.1", "freebsd-9.2"]
 - name: enterprise
   run_list:
+  - recipe[riak::sysctl]
   - recipe[riak]
   attributes:
     riak:
       package:
         version:
-          major: "2"
-          minor: "1"
-          incremental: "1"
+          major: <%= maj %>
+          minor: <%= min %>
+          incremental: <%= inc %>
         local:
           url: ""
         enterprise_key: <%= (ENV["RIAK_ENTERPRISE_KEY"].nil? ? "" : ENV["RIAK_ENTERPRISE_KEY"]) %>
 - name: custom_package
   run_list:
+  - recipe[riak::sysctl]
   - recipe[riak]
   attributes:
     riak:
       install_method: "custom_package"
 - name: source
   run_list:
+  - recipe[riak::sysctl]
   - recipe[riak]
   attributes:
     riak:
       install_method: "source"
       source:
-        major: "2"
-        minor: "1"
-        incremental: "1"
+        major: <%= maj %>
+        minor: <%= min %>
+        incremental: <%= inc %>
+- name: sysctl
+  run_list:
+    - recipe[riak::sysctl]

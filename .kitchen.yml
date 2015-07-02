@@ -1,7 +1,15 @@
+<%
+version = '2.1.1'
+split = version.split('.')
+maj = split[0]
+min = split[1]
+inc = split[2]
+url = "http://s3.amazonaws.com/downloads.basho.com/riak/#{maj}.#{min}"
+%>
 ---
 driver:
   name: vagrant
-  require_chef_omnibus: true
+  require_chef_omnibus: 12.3.0
   customize:
     memory: 512
 
@@ -16,7 +24,7 @@ platforms:
     riak:
       package:
         local:
-          url: "http://s3.amazonaws.com/downloads.basho.com/riak/2.1/2.1.1/ubuntu/trusty"
+          url: "<%= url %>/<%= version %>/ubuntu/trusty"
 - name: ubuntu-12.04
   run_list:
   - recipe[apt]
@@ -24,7 +32,7 @@ platforms:
     riak:
       package:
         local:
-          url: "http://s3.amazonaws.com/downloads.basho.com/riak/2.1/2.1.1/ubuntu/precise"
+          url: "<%= url %>/<%= version %>/ubuntu/precise"
 - name: debian-7.8
   run_list:
   - recipe[apt]
@@ -32,15 +40,15 @@ platforms:
     riak:
       package:
         local:
-          url: "http://s3.amazonaws.com/downloads.basho.com/riak/2.1/2.1.1/debian/7"
-- name: centos-7.0
+          url: "<%= url %>/<%= version %>/debian/7"
+- name: centos-7.1
   run_list:
   - recipe[yum-epel]
   attributes:
     riak:
       package:
         local:
-          url: "http://s3.amazonaws.com/downloads.basho.com/riak/2.1/2.1.1/rhel/7"
+          url: "<%= url %>/<%= version %>/rhel/7"
 - name: centos-6.6
   run_list:
   - recipe[yum-epel]
@@ -48,7 +56,7 @@ platforms:
     riak:
       package:
         local:
-          url: "http://s3.amazonaws.com/downloads.basho.com/riak/2.1/2.1.1/rhel/6"
+          url: "<%= url %>/<%= version %>/rhel/6"
 - name: centos-5.11
   run_list:
   - recipe[yum-epel]
@@ -56,15 +64,7 @@ platforms:
     riak:
       package:
         local:
-          url: "http://s3.amazonaws.com/downloads.basho.com/riak/2.1/2.1.1/rhel/5"
-- name: fedora-19
-  attributes:
-    riak:
-      package:
-        local:
-          url: "http://s3.amazonaws.com/downloads.basho.com/riak/2.1/2.1.1/fedora/19"
-  provisioner:
-    root_path: /home/vagrant/kitchen
+          url: "<%= url %>/<%= version %>/rhel/5"
 - name: freebsd-10.1
   driver:
     guest: ":freebsd"
@@ -75,8 +75,8 @@ platforms:
     riak:
       package:
         local:
-          url: "http://s3.amazonaws.com/downloads.basho.com/riak/2.1/2.1.1/freebsd/10"
-- name: freebsd-9.2
+          url: "<%= url %>/<%= version %>/freebsd/10"
+- name: freebsd-9.3
   driver:
     guest: ":freebsd"
     vagrantfile_erb: vagrantfile_bsd.erb
@@ -86,58 +86,68 @@ platforms:
     riak:
       package:
         local:
-          url: "http://s3.amazonaws.com/downloads.basho.com/riak/2.1/2.1.1/freebsd/9.2"
+          url: "<%= url %>/<%= version %>/freebsd/9.2"
 suites:
 - name: default
   run_list:
+  - recipe[riak::sysctl]
   - recipe[riak]
   attributes:
     riak:
       package:
         version:
-          major: "2"
-          minor: "1"
-          incremental: "1"
+          major: <%= maj %>
+          minor: <%= min %>
+          incremental: <%= inc %>
 - name: search
   run_list:
+  - recipe[riak::sysctl]
   - recipe[riak]
   attributes:
     riak:
       manage_java: true
       package:
         version:
-          major: "2"
-          minor: "1"
-          incremental: "1"
+          major: <%= maj %>
+          minor: <%= min %>
+          incremental: <%= inc %>
       config:
         search.top_level: "on"
-  excludes: ["freebsd-10.1", "freebsd-9.2"]
+  excludes: ["freebsd-10.1", "freebsd-9.3"]
 - name: enterprise
   run_list:
+  - recipe[riak::sysctl]
   - recipe[riak]
   attributes:
     riak:
       package:
         version:
-          major: "2"
-          minor: "1"
-          incremental: "1"
+          major: <%= maj %>
+          minor: <%= min %>
+          incremental: <%= inc %>
         local:
           url: ""
         enterprise_key: <%= (ENV["RIAK_ENTERPRISE_KEY"].nil? ? "" : ENV["RIAK_ENTERPRISE_KEY"]) %>
 - name: custom_package
   run_list:
+  - recipe[riak::sysctl]
   - recipe[riak]
   attributes:
     riak:
       install_method: "custom_package"
 - name: source
   run_list:
+  - recipe[riak::sysctl]
   - recipe[riak]
   attributes:
     riak:
       install_method: "source"
       source:
-        major: "2"
-        minor: "1"
-        incremental: "1"
+        major: <%= maj %>
+        minor: <%= min %>
+        incremental: <%= inc %>
+  excludes: ["freebsd-10.1", "freebsd-9.3"]
+- name: sysctl
+  run_list:
+    - recipe[riak::sysctl]
+  excludes: ["freebsd-10.1", "freebsd-9.3"]

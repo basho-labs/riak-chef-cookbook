@@ -22,17 +22,6 @@ default['riak']['manage_java'] = false
 # ulimit
 default['riak']['limits']['nofile'] = 65_536
 
-# sysctl
-default['riak']['sysctl']['vm']['swappiness'] = 0
-default['riak']['sysctl']['net']['core']['somaxconn'] = 40_000
-default['riak']['sysctl']['net']['ipv4']['tcp_max_syn_backlog'] = 40_000
-default['riak']['sysctl']['net']['ipv4']['tcp_sack'] = 1
-default['riak']['sysctl']['net']['ipv4']['tcp_window_scaling'] = 1
-default['riak']['sysctl']['net']['ipv4']['tcp_fin_timeout'] = 15
-default['riak']['sysctl']['net']['ipv4']['tcp_keepalive_intvl'] = 30
-default['riak']['sysctl']['net']['ipv4']['tcp_tw_reuse'] = 1
-default['riak']['sysctl']['net']['ipv4']['tcp_moderate_rcvbuf'] = 1
-
 default['riak']['platform_bin_dir'] = '/usr/sbin'
 default['riak']['platform_data_dir'] = '/var/lib/riak'
 default['riak']['platform_etc_dir'] = '/etc/riak'
