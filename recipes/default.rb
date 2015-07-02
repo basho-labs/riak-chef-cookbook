@@ -18,18 +18,6 @@
 # limitations under the License.
 #
 
-node.default['sysctl']['params']['vm']['swappiness'] = node['riak']['sysctl']['vm']['swappiness']
-node.default['sysctl']['params']['net']['core']['somaxconn'] = node['riak']['sysctl']['net']['core']['somaxconn']
-node.default['sysctl']['params']['net']['ipv4']['tcp_max_syn_backlog'] = node['riak']['sysctl']['net']['ipv4']['tcp_max_syn_backlog']
-node.default['sysctl']['params']['net']['ipv4']['tcp_sack'] = node['riak']['sysctl']['net']['ipv4']['tcp_sack']
-node.default['sysctl']['params']['net']['ipv4']['tcp_window_scaling'] = node['riak']['sysctl']['net']['ipv4']['tcp_window_scaling']
-node.default['sysctl']['params']['net']['ipv4']['tcp_fin_timeout'] = node['riak']['sysctl']['net']['ipv4']['tcp_fin_timeout']
-node.default['sysctl']['params']['net']['ipv4']['tcp_keepalive_intvl'] = node['riak']['sysctl']['net']['ipv4']['tcp_keepalive_intvl']
-node.default['sysctl']['params']['net']['ipv4']['tcp_tw_reuse'] = node['riak']['sysctl']['net']['ipv4']['tcp_tw_reuse']
-node.default['sysctl']['params']['net']['ipv4']['tcp_moderate_rcvbuf'] = node['riak']['sysctl']['net']['ipv4']['tcp_moderate_rcvbuf']
-
-include_recipe 'ulimit' unless node['platform_family'] == 'debian'
-include_recipe 'sysctl'
 include_recipe 'riak::java' if node['riak']['manage_java']
 
 # validate the fqdn and if probalo then use IP address
@@ -48,9 +36,10 @@ when 'debian'
     owner 'root'
     mode 0644
     action :create
-    notifies :restart, "service[#{riak_service}]"
   end
 when 'rhel'
+  include_recipe 'ulimit'
+
   user_ulimit 'riak' do
     filehandle_limit node['riak']['limits']['nofile']
   end
@@ -62,6 +51,10 @@ when 'freebsd'
   when 9
     include_recipe 'pkg_add'
 
+    directory '/usr/local/etc/rc.d' do
+      mode 0755
+      action :create
+    end
     template '/usr/local/etc/rc.d/riak' do
       source 'rcd.erb'
       mode  0755
