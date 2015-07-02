@@ -71,7 +71,7 @@ describe file('/proc/sys/net/ipv4/tcp_moderate_rcvbuf') do
 end
 
 persistence_file = case host_inventory['platform']
-                   when 'redhat', 'fedora', 'amazon','debian', 'ubuntu'
+                   when 'redhat', 'fedora', 'amazon', 'debian', 'ubuntu'
                      '/etc/sysctl.d/99-chef-attributes.conf'
                    else
                      '/etc/sysctl.conf'

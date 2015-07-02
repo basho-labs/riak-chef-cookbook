@@ -10,10 +10,10 @@ when 'debian', 'rhel', 'fedora'
 
   node.default['sysctl']['params']['net']['core'].tap do |core|
     core['somaxconn']          = 40_000
-    core['wmem_default']       = 8388608
-    core['wmem_max']           = 8388608
-    core['rmem_default']       = 8388608
-    core['rmem_max']           = 8388608
+    core['wmem_default']       = 8_388_608
+    core['wmem_max']           = 8_388_608
+    core['rmem_default']       = 8_388_608
+    core['rmem_max']           = 8_388_608
     core['netdev_max_backlog'] = 10_000
   end
 
