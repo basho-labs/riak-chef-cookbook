@@ -1,3 +1,10 @@
+## v3.1.1
+
+* Riak `2.1.1` is now the default
+* Updated syctl tuning and made optional #169
+* Relaxed dependency constraints #168
+* Fixed building from source on Amazon #175
+
 ## v3.1.0
 
 * Riak `2.0.5` is now the default
