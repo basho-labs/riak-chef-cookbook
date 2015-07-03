@@ -11,7 +11,7 @@
 
 This repository is **community supported**. We both appreciate and need your contribution to keep it stable. For more on how to contribute, [take a look at the contribution process](#contribution).
 
-Thank you for being part of the community! We love you for it. 
+Thank you for being part of the community! We love you for it.
 
 ## Requirements
 
@@ -21,13 +21,12 @@ Thank you for being part of the community! We love you for it.
 
 * Ubuntu 14.04
 * Ubuntu 12.04
-* Debian 7
-* CentOS 7
-* CentOS 6
-* CentOS 5
-* Fedora 19
+* Debian 7.8
+* CentOS 7.1
+* CentOS 6.6
+* CentOS 5.11
 * FreeBSD 10.1
-* FreeBSD 9.2
+* FreeBSD 9.3
 
 ## Cookbook Dependencies
 
@@ -196,8 +195,11 @@ Thank you for being part of the community! We love you for it.
 
 * `node['riak']['manage_java']` - Installs and configures Java.
 
-**NOTE**: If `node['riak']['config']['search.top_level']` is set to `on` then Java must be 
+**NOTE**: If `node['riak']['config']['search.top_level']` is set to `on` then Java must be
         installed beforehand (either by another recipe or this one) or Riak will fail to start
+
+**NOTE**: As OpenJDK isn't supported officially and Sun Java for FreeBSD is only 32bit this recipe
+          doesn't work/isn't tested on FreeBSD.
 
 ## Usage
 
@@ -255,8 +257,8 @@ are set appropriately:
 
 ```ruby
 default['riak']['install_method'] = 'custom_package'
-default['riak']['package']['local']['checksum'] = '186f6b4890bb72aaab5c0a2b6cd31ff90f2098d8a50c955a8ed3a80e26d67c57'
-default['riak']['package']['local']['url'] = 'http://s3.amazonaws.com/downloads.basho.com/riak/2.0/2.0.5/ubuntu/trusty'
+default['riak']['package']['local']['checksum'] = '2b28aeabb21488125b7e39f768c8f3b98ac816d1a30c0d618c9f82f99e6e89d9'
+default['riak']['package']['local']['url'] = 'http://s3.amazonaws.com/downloads.basho.com/riak/2.1/2.1.1/ubuntu/trusty'
 ```
 
 **NOTE**: FreeBSD uses custom_package regardless.
@@ -274,7 +276,16 @@ Basho's) and want to install Riak from there, ensure that
 If you want to install Riak (and Erlang) from source, ensure that
 `node['riak']['install_method']` is set to `source`.
 
-##Contributions 
+
+### Optional Recipes
+
+#### riak::sysctl
+
+This is an optional recipe to set sysctl tunings such that Riak will not emit warnings to the log.
+As other systems or cookbooks may already configure these tunings, this recipe is optional. It should be placed
+in the run_list before `recipe['riak']` if desired.
+
+##Contributions
 
 Basho Labs repos survive because of community contribution. Here’s how to get started.
 
@@ -293,16 +304,15 @@ Basho Labs repos survive because of community contribution. Here’s how to get 
 
 You can [read the full guidelines](http://docs.basho.com/riak/latest/community/bugs/) for bug reporting and code contributions on the Riak Docs. And **thank you!** Your contribution is incredibly important to us.
 
-
 ## License and Authors
 
-* Author: Benjamin Black (<b@b3k.us>)
-* Author: Sean Carey (<sean@densone.com>)
+* Author: Benjamin Black ([GitHub](https://github.com/b))
+* Author: Sean Carey ([GitHub](https://github.com/densone))
 * Author: Hector Castro ([GitHub](https://github.com/hectcastro))
-* Author: Sean Cribbs (<sean@basho.com>)
-* Author: Seth Thomas (cheeseplus@chef.io)
+* Author: Sean Cribbs ([GitHub](https://github.com/seancribbs))
+* Author: Seth Thomas ([GitHub](https://github.com/cheeseplus))
 
-Copyright (c) 2014 Basho Technologies, Inc.
+Copyright (c) 2015 Basho Technologies, Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.

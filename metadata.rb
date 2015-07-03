@@ -22,10 +22,12 @@ maintainer        'Basho Technologies, Inc.'
 maintainer_email  'riak@basho.com'
 license           'Apache 2.0'
 description       'Installs and configures Riak distributed data store'
-version           '3.1.0'
+version           '3.1.1'
 
 recipe            'riak', 'Installs Riak from a package'
 recipe            'riak::source', 'Installs Erlang and Riak from source'
+recipe            'riak::java', 'Installs Java for Riak Search'
+recipe            'riak::sysctl', 'Applies sysctl tunings for Riak'
 
 depends 'apt', '>= 2.3'
 depends 'build-essential'
