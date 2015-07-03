@@ -77,7 +77,7 @@ file "#{node['riak']['platform_etc_dir']}/riak.conf" do
 end
 
 node['riak']['patches'].each do |patch|
-  cookbook_file "#{node['riak']['platform_data_dir']}/lib/basho-patches/#{patch}" do
+  cookbook_file "#{node['riak']['platform_lib_dir']}/basho-patches/#{patch}" do
     source patch
     owner 'root'
     mode 0644
