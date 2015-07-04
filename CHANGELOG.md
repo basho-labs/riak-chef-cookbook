@@ -1,3 +1,7 @@
+## v3.1.2
+
+* Fix basho-patches directory
+
 ## v3.1.1
 
 * Riak `2.1.1` is now the default
