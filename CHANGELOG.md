@@ -1,3 +1,7 @@
+## v3.1.3
+
+* Fix config content to be lazily evaluated
+
 ## v3.1.2
 
 * Fix basho-patches directory
