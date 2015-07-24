@@ -70,7 +70,7 @@ else
 end
 
 file "#{node['riak']['platform_etc_dir']}/riak.conf" do
-  content Cuttlefish.compile('', node['riak']['config']).join("\n")
+  content lazy { Cuttlefish.compile('', node['riak']['config']).join("\n") }
   owner 'root'
   mode 0644
   notifies :restart, "service[#{riak_service}]"
