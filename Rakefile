@@ -11,7 +11,6 @@ namespace :style do
   FoodCritic::Rake::LintTask.new(:chef) do |t|
     t.options = {
       fail_tags: ['any'],
-      tags: ['~FC0057', '~FC024']
     }
   end
 end
