@@ -18,7 +18,7 @@
 * Riak `2.0.5` is now the default
 * Removal of `enterprise_package recipe`
 * Removal of `custom_package recipe`
-* All logic for the removed recipes moved to `pacakge`
+* All logic for the removed recipes moved to `package`
 * Make Java install truely optional instead of based on config
 * Remove extraneous attributes
 * Checksums moved to attributes
