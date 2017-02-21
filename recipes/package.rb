@@ -26,8 +26,8 @@ package_version = "#{version_str}-#{node['riak']['package']['version']['build']}
 install_method = node['platform'] == 'freebsd' || oss_or_ee == 'riak-ee' ? 'custom_package' : node['riak']['install_method']
 plat_ver_int = node['platform_version'].to_i
 
-# Enterprise download URL changed with release of 2.1
-if major_minor.to_f >= 2.1
+# Enterprise download URL changed with release of 2.0.8 and greater
+if Gem::Version.new(version_str) >= Gem::Version.new('2.0.8')
   ee_url_prefix = "http://private.downloads.basho.com/riak_ee/#{node['riak']['package']['enterprise_key']}/#{version_str}"
 else
   ee_url_prefix = "http://private.downloads.basho.com/riak_ee/#{node['riak']['package']['enterprise_key']}/#{major_minor}/#{version_str}"
