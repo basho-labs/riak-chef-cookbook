@@ -1,3 +1,7 @@
+## v3.1.4
+
+* Fix URL location for new EE package locations
+
 ## v3.1.3
 
 * Fix config content to be lazily evaluated
