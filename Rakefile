@@ -1,5 +1,12 @@
 require 'bundler/setup'
 
+module TempFixForRakeLastComment
+  def last_comment
+    last_description
+  end
+end
+Rake::Application.send :include, TempFixForRakeLastComment
+
 # Style tests. Rubocop and Foodcritic
 namespace :style do
   require 'rubocop/rake_task'

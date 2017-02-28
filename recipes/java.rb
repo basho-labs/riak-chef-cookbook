@@ -19,9 +19,9 @@
 #
 
 node.default['java']['install_flavor'] = 'oracle'
-node.default['java']['jdk_version'] = 7
-node.default['java']['jdk']['7']['x86_64']['url'] = 'http://download.oracle.com/otn-pub/java/jdk/7u25-b15/jdk-7u25-linux-x64.tar.gz'
-node.default['java']['jdk']['7']['x86_64']['checksum'] = '83ba05e260813f7a9140b76e3d37ea33'
+node.default['java']['jdk_version'] = 8
+node.default['java']['jdk']['8']['x86_64']['url'] = 'http://download.oracle.com/otn-pub/java/jdk/8u121-b13/e9e7ea248e2c4826b92b3f075a80e441/jdk-8u121-linux-x64.tar.gz'
+node.default['java']['jdk']['8']['x86_64']['checksum'] = '97e30203f1aef324a07c94d9d078f5d19bb6c50e638e4492722debca588210bc'
 node.default['java']['oracle']['accept_oracle_download_terms'] = true
 
 include_recipe 'java'

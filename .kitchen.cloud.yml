@@ -10,7 +10,7 @@ url = "http://s3.amazonaws.com/downloads.basho.com/riak/#{maj}.#{min}"
 
 provisioner:
   name: chef_zero
-  require_chef_omnibus: 12.3.0
+  require_chef_omnibus: 12.6.0
 
 platforms:
 - name: amazon-2014.09.01
