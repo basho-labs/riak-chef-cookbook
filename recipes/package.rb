@@ -69,6 +69,13 @@ when 'custom_package', 'enterprise_package'
   when 'debian'
     package_file = "#{oss_or_ee}_#{package_version}_amd64.deb"
     ee_url_suffix = "/debian/#{plat_ver_int}/#{package_file}"
+    if Gem::Version.new(version_str) >= Gem::Version.new('2.2.0')
+      ee_url_suffix = "/debian/#{node['lsb']['codename']}/#{package_file}"
+    end
+    if Gem::Version.new(version_str) >= Gem::Version.new('2.0.8') &&
+       Gem::Version.new(version_str) < Gem::Version.new('2.1.0')
+      ee_url_suffix = "/debian/#{node['lsb']['codename']}/#{package_file}"
+    end
   when 'ubuntu'
     package_file = "#{oss_or_ee}_#{package_version}_amd64.deb"
     ee_url_suffix = "/ubuntu/#{node['lsb']['codename']}/#{package_file}"
