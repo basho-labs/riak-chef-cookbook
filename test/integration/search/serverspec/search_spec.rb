@@ -17,7 +17,7 @@ describe service('riak') do
 end
 
 describe command('java -version') do
-  its(:stdout) { is_expected.to match(/java version "1.7.0_25"/) }
+  its(:stderr) { is_expected.to match(/java version "1.8.0_121"/) }
 end
 
 describe process('java') do

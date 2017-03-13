@@ -6,16 +6,16 @@ group :lint do
 end
 
 group :unit do
-  gem 'berkshelf',  '~> 3.2.3'
+  gem 'berkshelf',  '~> 4.0'
   gem 'chefspec',   '~> 4.0'
 end
 
 group :kitchen_common do
-  gem 'test-kitchen', '~> 1.3.1'
+  gem 'test-kitchen', '~> 1.16.0'
 end
 
 group :kitchen_vagrant do
-  gem 'kitchen-vagrant', '~> 0.15'
+  gem 'kitchen-vagrant', '~> 1.0.2'
 end
 
 group :kitchen_cloud do
